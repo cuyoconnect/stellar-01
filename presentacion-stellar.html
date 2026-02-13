@@ -541,6 +541,12 @@
             width: 20px;
             height: 20px;
         }
+        .btn-add-to-cursor.is-copied {
+            background: #1f7a38;
+        }
+        .btn-add-to-cursor.is-copy-error {
+            background: #8f2222;
+        }
 
         /* Slides 6 y 7: botones Add to Cursor en gris #201e18 */
         .slide[data-slide="6"] .btn-add-to-cursor,
@@ -550,6 +556,18 @@
         .slide[data-slide="6"] .btn-add-to-cursor:hover,
         .slide[data-slide="7"] .btn-add-to-cursor:hover {
             background: var(--stellar-black);
+        }
+        .slide[data-slide="6"] .btn-add-to-cursor.is-copied,
+        .slide[data-slide="7"] .btn-add-to-cursor.is-copied,
+        .slide[data-slide="6"] .btn-add-to-cursor.is-copied:hover,
+        .slide[data-slide="7"] .btn-add-to-cursor.is-copied:hover {
+            background: #1f7a38;
+        }
+        .slide[data-slide="6"] .btn-add-to-cursor.is-copy-error,
+        .slide[data-slide="7"] .btn-add-to-cursor.is-copy-error,
+        .slide[data-slide="6"] .btn-add-to-cursor.is-copy-error:hover,
+        .slide[data-slide="7"] .btn-add-to-cursor.is-copy-error:hover {
+            background: #8f2222;
         }
 
         /* link-card = CTA según Stellar: Purple o Black, texto blanco, radius 4px, hover alto contraste */
@@ -920,8 +938,19 @@
         .slide[data-slide="7"] .add-to-cursor-buttons {
             margin-top: 20px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .slide[data-slide="7"] .skill-copy-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .slide[data-slide="7"] .skill-copy-item .skill-copy-note {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--stellar-gray-medium);
         }
 
         /* ========================================
@@ -1454,13 +1483,88 @@
                 if (!payload) return;
 
                 if (payload.type === 'skill') {
-                    if (labelNode) labelNode.textContent = 'Click para copiar.';
+                    const skillDescriptionByName = {
+                        'stellar-design': 'Genera UI y estilos alineados a la identidad visual de Stellar.',
+                        'stellar-image-generation': 'Genera prompts para imagenes con estilo visual Stellar.'
+                    };
+                    const defaultLabel = 'Add to Cursor';
+                    const hoverLabel = 'Click para copiar';
+                    const successLabel = 'Copiado!';
+                    const errorLabel = 'No se pudo copiar';
+                    let isHovered = false;
+                    let feedbackTimeoutId = null;
+
+                    const parent = anchor.parentElement;
+                    if (parent && !parent.classList.contains('skill-copy-item')) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'skill-copy-item';
+
+                        const note = document.createElement('p');
+                        note.className = 'skill-copy-note';
+                        note.textContent = skillDescriptionByName[payload.name] || 'Copia esta skill para usarla en Cursor.';
+
+                        parent.insertBefore(wrapper, anchor);
+                        wrapper.appendChild(note);
+                        wrapper.appendChild(anchor);
+                    }
+
+                    function setLabel(text) {
+                        if (labelNode) labelNode.textContent = text;
+                    }
+
+                    function resetFeedbackState() {
+                        anchor.classList.remove('is-copied');
+                        anchor.classList.remove('is-copy-error');
+                        setLabel(isHovered ? hoverLabel : defaultLabel);
+                    }
+
+                    setLabel(defaultLabel);
                     anchor.href = '#';
+                    anchor.addEventListener('mouseenter', function() {
+                        isHovered = true;
+                        if (!anchor.classList.contains('is-copied') && !anchor.classList.contains('is-copy-error')) {
+                            setLabel(hoverLabel);
+                        }
+                    });
+                    anchor.addEventListener('mouseleave', function() {
+                        isHovered = false;
+                        if (!anchor.classList.contains('is-copied') && !anchor.classList.contains('is-copy-error')) {
+                            setLabel(defaultLabel);
+                        }
+                    });
+                    anchor.addEventListener('focus', function() {
+                        isHovered = true;
+                        if (!anchor.classList.contains('is-copied') && !anchor.classList.contains('is-copy-error')) {
+                            setLabel(hoverLabel);
+                        }
+                    });
+                    anchor.addEventListener('blur', function() {
+                        isHovered = false;
+                        if (!anchor.classList.contains('is-copied') && !anchor.classList.contains('is-copy-error')) {
+                            setLabel(defaultLabel);
+                        }
+                    });
                     anchor.addEventListener('click', function(event) {
                         event.preventDefault();
-                        copyTextToClipboard(payload.text).catch(function() {
-                            // Keep silent to avoid interrupting the presentation flow.
-                        });
+                        if (feedbackTimeoutId) clearTimeout(feedbackTimeoutId);
+
+                        copyTextToClipboard(payload.text)
+                            .then(function() {
+                                anchor.classList.remove('is-copy-error');
+                                anchor.classList.add('is-copied');
+                                setLabel(successLabel);
+                                feedbackTimeoutId = setTimeout(function() {
+                                    resetFeedbackState();
+                                }, 1400);
+                            })
+                            .catch(function() {
+                                anchor.classList.remove('is-copied');
+                                anchor.classList.add('is-copy-error');
+                                setLabel(errorLabel);
+                                feedbackTimeoutId = setTimeout(function() {
+                                    resetFeedbackState();
+                                }, 1800);
+                            });
                     });
                     return;
                 }
