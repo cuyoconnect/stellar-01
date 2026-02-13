@@ -1130,15 +1130,15 @@
                 <h2 class="animate animate-delay-2">/ insights</h2>
                 <div class="divider animate animate-delay-3"></div>
                 <p class="animate animate-delay-3">
-                    <strong>cursor-failure-insights</strong> analiza transcripciones de sesiones con la IA en múltiples proyectos (22 repos, 285+ sesiones), extrae patrones de error reales y genera reglas que la IA debe seguir para no repetirlos. El resultado se instala como rule en Cursor.
+                    <strong>cursor-failure-insights</strong> analiza transcripciones de sesiones con la IA en multiples proyectos (22 repos, 285+ sesiones), extrae patrones de error reales y arma un slash command para aplicar esas lecciones en nuevas tareas.
                 </p>
                 <ul class="animate animate-delay-4" style="margin-top: 20px; padding-left: 24px; max-width: 640px;">
                     <li style="margin-bottom: 8px;"><strong>Input:</strong> Transcripciones de chats (ej. <code>agent-transcripts/*.jsonl</code>) donde vos reportaste fallas y la IA corrigió.</li>
                     <li style="margin-bottom: 8px;"><strong>Proceso:</strong> Análisis post-mortem → extracción de patrones recurrentes (compilación, tipos, sync, OAuth, paths Vercel, etc.).</li>
-                    <li style="margin-bottom: 8px;"><strong>Output:</strong> AGENTS.md / rule con “reglas críticas extraídas de errores reales” + checklist.</li>
+                    <li style="margin-bottom: 8px;"><strong>Output:</strong> Slash command <code>/insights</code> con pasos y checklist para prevenir errores recurrentes.</li>
                 </ul>
                 <div class="animate animate-delay-5" style="margin-top: 28px;">
-                    <a href="https://cursor.com/link/rule?name=cursor-failure-insights&text=%23%20Cursor%20Failure%20Insights%20-%20Lecciones%20de%20285%2B%20sesiones%0A%0AReglas%20cr%C3%ADticas%20%28resumen%29%3A%201%29%20Verificar%20build%2Fcheck%20despu%C3%A9s%20de%20cambios%20%28TS%3A%20pnpm%20run%20build%2C%20Rust%3A%20cargo%20check%29.%202%29%20Tipos%20concretos%20en%20refs%20%28HTMLDivElement%2C%20etc.%29%20y%20guardas%20antes%20de%20usar.%203%29%20En%20sync%2FOAuth%20leer%20flujo%20completo%20y%20usuario%20en%20contexto%3B%20hard%20reset%20si%20piden%20%22sincronizar%22.%204%29%20En%20Vercel%2Fserverless%20no%20usar%20solo%20fileURLToPath%28import.meta.url%29%20para%20paths.%205%29%20En%20scroll%2Fanimaciones%20revisar%20impacto%20en%20layout%20adyacente.%206%29%20Tests%20seg%C3%BAn%20comportamiento%20real%20%28%3F%3F%2C%20%22%22%29.%207%29%20Scripts%20con%20globs%3A%20usar%20find%20o%20compat%20zsh%2Fbash.%208%29%20Validar%20env%20al%20arranque.%209%29%20Refactors%3A%20sin%20cierres%20hu%C3%A9rfanos.%2010%29%20Tras%20editar%3A%20Read%20del%20archivo%20y%20build%2Fcheck.%0A%0AChecklist%3A%20%C2%BFLe%C3%AD%20todos%20los%20archivos%20del%20flujo%3F%20%C2%BFRef%2Fpropiedad%20admite%20null%3F%20%C2%BFBuild%2Fcheck%20ejecutado%3F%0AFuente%20completa%3A%20AGENTS.md%20en%20el%20repo." target="_blank" rel="noopener" class="btn-add-to-cursor"><svg class="cursor-icon" fill="none" height="22" width="22" viewBox="0 0 22 22" aria-hidden="true"><title class="sr-only">Cursor Logo</title><g clip-path="url(#cursor-logo-clip)" fill="currentColor"><path d="M19.162 5.452 10.698.565a.88.88 0 0 0-.879 0L1.356 5.452a.74.74 0 0 0-.37.64v9.853a.74.74 0 0 0 .37.64l8.464 4.887a.879.879 0 0 0 .879 0l8.464-4.886a.74.74 0 0 0 .37-.64V6.091a.74.74 0 0 0-.37-.64Zm-.531 1.035L10.46 20.639c-.055.095-.201.056-.201-.055v-9.266a.52.52 0 0 0-.26-.45L1.975 6.237c-.096-.056-.057-.202.054-.202h16.34c.233 0 .378.252.262.453Zm11.057-.555h3.602v1.984h-3.48c-1.877 0-3.342 1.083-3.342 3.372 0 2.29 1.465 3.373 3.342 3.373h3.48v1.984h-3.754c-3.144 0-5.372-1.847-5.372-5.356 0-3.51 2.38-5.357 5.524-5.357Zm5.432 0h2.227v6.546c0 1.633.748 2.396 2.503 2.396 1.755 0 2.503-.763 2.503-2.396V5.932h2.228v7.004c0 2.38-1.511 3.892-4.731 3.892-3.22 0-4.73-1.526-4.73-3.907v-6.99Zm21.106 3.036c0 1.19-.687 2.106-1.602 2.503v.03c.961.138 1.45.825 1.465 1.756l.045 3.388h-2.228l-.045-3.022c-.015-.671-.412-1.083-1.206-1.083h-3.708v4.105h-2.228V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.243.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.84 0 1.374-.504 1.374-1.42Zm10.67 4.242c0-.763-.489-1.083-1.221-1.144l-2.472-.229c-2.137-.198-3.251-1.038-3.251-3.068 0-2.03 1.374-3.143 3.342-3.143h5.463v1.922h-5.31c-.763 0-1.252.397-1.252 1.16 0 .763.504 1.13 1.267 1.19l2.518.214c1.908.168 3.159 1.038 3.159 3.083s-1.328 3.144-3.205 3.144h-5.707v-1.923h5.494c.717 0 1.175-.488 1.175-1.205Zm8.751-7.768c3.357 0 5.479 2.152 5.479 5.524 0 3.373-2.213 5.555-5.57 5.555-3.358 0-5.479-2.182-5.479-5.555 0-3.372 2.213-5.524 5.57-5.524Zm3.174 5.54c0-2.26-1.312-3.587-3.22-3.587-1.908 0-3.22 1.328-3.22 3.587 0 2.258 1.312 3.585 3.22 3.585 1.908 0 3.22-1.327 3.22-3.585Zm13.362-2.32c0 1.19-.686 2.106-1.602 2.503v.03c.962.138 1.45.825 1.465 1.756l.046 3.388h-2.228l-.045-3.022c-.016-.671-.413-1.083-1.206-1.083h-3.71v4.105h-2.227V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.242.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.839 0 1.374-.504 1.374-1.42Z"/></g></svg><span>Add to Cursor — Cursor Failure Insights</span></a>
+                    <a href="https://cursor.com/link/command?name=insights&amp;text=Analiza%20las%20transcripciones%20de%20sesiones%20con%20IA%20del%20proyecto%20y%20genera%20un%20resumen%20de%20patrones%20de%20error%20reales%20con%20acciones%20preventivas.%0A%0AChecklist%20minimo%3A%0A1.%20Verificar%20build%2Fcheck%20despues%20de%20cambios.%0A2.%20Validar%20tipos%20concretos%20en%20refs%20y%20manejo%20de%20null.%0A3.%20Revisar%20flujos%20end-to-end%20antes%20de%20cambiar%20sync%2FOAuth.%0A4.%20Confirmar%20que%20el%20archivo%20editado%20quedo%20bien%20y%20que%20compila.%0A%0ADevuelve%20recomendaciones%20priorizadas%20y%20pasos%20aplicables%20a%20la%20tarea%20actual." target="_blank" rel="noopener" class="btn-add-to-cursor"><svg class="cursor-icon" fill="none" height="22" width="22" viewBox="0 0 22 22" aria-hidden="true"><title class="sr-only">Cursor Logo</title><g clip-path="url(#cursor-logo-clip)" fill="currentColor"><path d="M19.162 5.452 10.698.565a.88.88 0 0 0-.879 0L1.356 5.452a.74.74 0 0 0-.37.64v9.853a.74.74 0 0 0 .37.64l8.464 4.887a.879.879 0 0 0 .879 0l8.464-4.886a.74.74 0 0 0 .37-.64V6.091a.74.74 0 0 0-.37-.64Zm-.531 1.035L10.46 20.639c-.055.095-.201.056-.201-.055v-9.266a.52.52 0 0 0-.26-.45L1.975 6.237c-.096-.056-.057-.202.054-.202h16.34c.233 0 .378.252.262.453Zm11.057-.555h3.602v1.984h-3.48c-1.877 0-3.342 1.083-3.342 3.372 0 2.29 1.465 3.373 3.342 3.373h3.48v1.984h-3.754c-3.144 0-5.372-1.847-5.372-5.356 0-3.51 2.38-5.357 5.524-5.357Zm5.432 0h2.227v6.546c0 1.633.748 2.396 2.503 2.396 1.755 0 2.503-.763 2.503-2.396V5.932h2.228v7.004c0 2.38-1.511 3.892-4.731 3.892-3.22 0-4.73-1.526-4.73-3.907v-6.99Zm21.106 3.036c0 1.19-.687 2.106-1.602 2.503v.03c.961.138 1.45.825 1.465 1.756l.045 3.388h-2.228l-.045-3.022c-.015-.671-.412-1.083-1.206-1.083h-3.708v4.105h-2.228V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.243.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.84 0 1.374-.504 1.374-1.42Zm10.67 4.242c0-.763-.489-1.083-1.221-1.144l-2.472-.229c-2.137-.198-3.251-1.038-3.251-3.068 0-2.03 1.374-3.143 3.342-3.143h5.463v1.922h-5.31c-.763 0-1.252.397-1.252 1.16 0 .763.504 1.13 1.267 1.19l2.518.214c1.908.168 3.159 1.038 3.159 3.083s-1.328 3.144-3.205 3.144h-5.707v-1.923h5.494c.717 0 1.175-.488 1.175-1.205Zm8.751-7.768c3.357 0 5.479 2.152 5.479 5.524 0 3.373-2.213 5.555-5.57 5.555-3.358 0-5.479-2.182-5.479-5.555 0-3.372 2.213-5.524 5.57-5.524Zm3.174 5.54c0-2.26-1.312-3.587-3.22-3.587-1.908 0-3.22 1.328-3.22 3.587 0 2.258 1.312 3.585 3.22 3.585 1.908 0 3.22-1.327 3.22-3.585Zm13.362-2.32c0 1.19-.686 2.106-1.602 2.503v.03c.962.138 1.45.825 1.465 1.756l.046 3.388h-2.228l-.045-3.022c-.016-.671-.413-1.083-1.206-1.083h-3.71v4.105h-2.227V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.242.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.839 0 1.374-.504 1.374-1.42Z"/></g></svg><span>Add to Cursor — /insights</span></a>
                 </div>
             </div>
         </div>
@@ -1386,6 +1386,51 @@
         });
 
         updateSlide();
+
+        // Build deeplinks with stable payloads for Add to Cursor buttons.
+        const IS_WEB = false;
+        function generateCursorDeeplink(type, name, text) {
+            const baseUrl = IS_WEB
+                ? 'https://cursor.com/link/' + type
+                : 'cursor://anysphere.cursor-deeplink/' + type;
+            const url = new URL(baseUrl);
+            url.searchParams.set('name', name);
+            url.searchParams.set('text', text);
+            return url.toString();
+        }
+
+        (function patchAddToCursorButtons() {
+            const payloadByLabel = {
+                'Add to Cursor — /insights': {
+                    type: 'command',
+                    name: 'insights',
+                    text: 'Analyze project AI transcripts and summarize recurring failure patterns with preventive actions.\n\nChecklist:\n1. Run build/check after code changes.\n2. Validate concrete ref types and null handling.\n3. Review end-to-end sync/OAuth flow before changes.\n4. Confirm edited files were written correctly and compile.\n\nReturn prioritized recommendations for the current task.'
+                },
+                'Add to Cursor — Stellar Design': {
+                    type: 'skill',
+                    name: 'stellar-design',
+                    text: '---\nname: stellar-design\ndescription: Expert in Stellar.org visual identity, design system, and illustration style.\n---\n\n# Stellar Design\n\nUse Stellar color tokens, typography, spacing, and component patterns to generate UI code aligned with the Stellar brand.'
+                },
+                'Add to Cursor — Stellar Image Generation': {
+                    type: 'skill',
+                    name: 'stellar-image-generation',
+                    text: '---\nname: stellar-image-generation\ndescription: Generate image prompts in Stellar illustration style.\n---\n\n# Stellar Image Generation\n\nCreate prompts with limited palette (#FDDA24, #673AB7, #0F0F0F, #FFFFFF), grain/stipple texture, rough ink outlines, flat colors, and high contrast editorial composition.'
+                },
+                'Add to Cursor — /vibecoding-validate': {
+                    type: 'command',
+                    name: 'vibecoding-validate',
+                    text: 'Run in order:\n1. cargo check\n2. cargo fmt -- --check (or cargo fmt)\n3. cargo test\n4. If Soroban contract: cargo scout-audit in the contract folder\n\nDo not skip steps. If a step fails, report and fix before continuing.'
+                }
+            };
+
+            document.querySelectorAll('.btn-add-to-cursor').forEach(function(anchor) {
+                const labelNode = anchor.querySelector('span');
+                const label = labelNode ? labelNode.textContent.trim() : '';
+                const payload = payloadByLabel[label];
+                if (!payload) return;
+                anchor.href = generateCursorDeeplink(payload.type, payload.name, payload.text);
+            });
+        })();
 
         // Normalize deeplinks to Cursor app format (IS_WEB = false).
         (function normalizeCursorDeeplinks() {
