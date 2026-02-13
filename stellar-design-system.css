@@ -1,0 +1,520 @@
+/**
+ * STELLAR.ORG DESIGN SYSTEM
+ * Sistema de diseño extraído de stellar.org
+ * Fecha: 11 de febrero de 2026
+ */
+
+/* ============================================
+   1. CSS VARIABLES (Custom Properties)
+   ============================================ */
+
+:root {
+  /* Colores Principales */
+  --stellar-yellow: #FDDA24;
+  --stellar-yellow-dark: #DCC436;
+  --stellar-purple: #673AB7;
+  --stellar-purple-hover: #764EBE;
+  --stellar-purple-light: #B7ACE8;
+  --stellar-purple-lighter: #BDB1F5;
+  --stellar-purple-lavender: #B6ADD4;
+  
+  /* Negro y Grises */
+  --stellar-black: #0F0F0F;
+  --stellar-black-soft: #212121;
+  --stellar-black-bg: #262626;
+  --stellar-gray-lightest: #F9F9F9;
+  --stellar-gray-light: #F2F2F2;
+  --stellar-gray-medium: #969696;
+  
+  /* Blanco */
+  --stellar-white: #FFFFFF;
+  
+  /* Colores de Acento */
+  --stellar-cyan: #00A7B5;
+  --stellar-error: #FF3F00;
+  
+  /* Opacidades del Negro */
+  --stellar-black-70: rgba(15, 15, 15, 0.7);
+  --stellar-black-44: rgba(15, 15, 15, 0.44);
+  --stellar-black-30: rgba(15, 15, 15, 0.3);
+  --stellar-black-10: rgba(15, 15, 15, 0.1);
+  
+  /* Tipografía */
+  --font-heading: 'Lora', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Schabo', 'Arial Black', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  
+  /* Espaciado */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2.5rem;     /* 40px */
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.375rem;  /* 6px */
+  --radius-lg: 1.5rem;    /* 24px */
+  --radius-pill: 6.25rem; /* 100px */
+  --radius-circle: 50%;
+  
+  /* Sombras */
+  --shadow-hard: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   2. TIPOGRAFÍA
+   ============================================ */
+
+/* Importar fuentes (ejemplo con Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Inter:wght@400;600&family=IBM+Plex+Mono&display=swap');
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--stellar-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Títulos */
+h1, .h1 {
+  font-family: var(--font-heading);
+  font-size: 3rem; /* 48px mobile */
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+  h1, .h1 {
+    font-size: 4rem; /* 64px desktop */
+  }
+}
+
+h2, .h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem; /* 32px mobile */
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+  h2, .h2 {
+    font-size: 3rem; /* 48px desktop */
+  }
+}
+
+h3, .h3 {
+  font-family: var(--font-body);
+  font-size: 1.5rem; /* 24px mobile */
+  line-height: 2.5rem;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+  h3, .h3 {
+    font-size: 2rem; /* 32px desktop */
+    line-height: 3rem;
+  }
+}
+
+/* Números grandes (estadísticas) */
+.big-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--stellar-black);
+}
+
+/* Texto de código */
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* Texto secundario */
+.text-secondary {
+  color: var(--stellar-black-70);
+}
+
+.text-tertiary {
+  color: var(--stellar-black-44);
+}
+
+/* ============================================
+   3. BOTONES
+   ============================================ */
+
+/* Botón base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+/* Botón primario (Violeta) */
+.btn-primary {
+  background-color: var(--stellar-purple);
+  color: var(--stellar-white);
+  border-color: var(--stellar-purple);
+  border-radius: var(--radius-md);
+}
+
+.btn-primary:hover {
+  background-color: var(--stellar-purple-hover);
+  border-color: var(--stellar-purple-hover);
+}
+
+/* Botón secundario (Negro, pill shape) */
+.btn-secondary {
+  background-color: var(--stellar-black);
+  color: var(--stellar-white);
+  border-color: var(--stellar-black);
+  border-radius: var(--radius-pill);
+  padding: 0.375rem 1.375rem;
+}
+
+.btn-secondary:hover {
+  background-color: var(--stellar-black-soft);
+}
+
+/* Botón outline */
+.btn-outline {
+  background-color: transparent;
+  color: var(--stellar-black);
+  border-color: var(--stellar-black);
+  border-radius: var(--radius-md);
+}
+
+.btn-outline:hover {
+  background-color: var(--stellar-black);
+  color: var(--stellar-white);
+}
+
+/* ============================================
+   4. FORMULARIOS
+   ============================================ */
+
+/* Input de texto */
+.input-text {
+  width: 100%;
+  padding: 0.625rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--stellar-black);
+  background-color: var(--stellar-white);
+  border: 1px solid var(--stellar-gray-medium);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s ease;
+}
+
+.input-text:focus {
+  outline: none;
+  border-color: var(--stellar-black);
+}
+
+.input-text:hover {
+  border-color: var(--stellar-black);
+}
+
+/* Textarea */
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.625rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--stellar-black);
+  background-color: var(--stellar-white);
+  border: 1px solid var(--stellar-gray-medium);
+  border-radius: var(--radius-lg);
+  resize: vertical;
+}
+
+/* Select */
+.select {
+  width: 100%;
+  padding: 0.625rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--stellar-black);
+  background-color: var(--stellar-white);
+  border: 1px solid var(--stellar-gray-medium);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+}
+
+/* Radio button personalizado */
+.radio-custom {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--stellar-gray-medium);
+  border-radius: var(--radius-circle);
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-custom:hover {
+  border-color: var(--stellar-black);
+}
+
+.radio-custom:checked {
+  background-color: var(--stellar-yellow);
+  border: 6px solid var(--stellar-black);
+}
+
+/* Checkbox personalizado */
+.checkbox-custom {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  border: 1px solid var(--stellar-gray-medium);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.2s ease;
+}
+
+.checkbox-custom:hover {
+  background-color: var(--stellar-gray-light);
+  border-color: var(--stellar-black);
+}
+
+.checkbox-custom:checked {
+  background-color: var(--stellar-black);
+  border-color: var(--stellar-black);
+  /* Necesitarás un SVG check amarillo como background-image */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FDDA24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* ============================================
+   5. TARJETAS Y CONTENEDORES
+   ============================================ */
+
+.card {
+  background-color: var(--stellar-white);
+  border: 1px solid var(--stellar-black);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+}
+
+.card-subtle {
+  background-color: var(--stellar-gray-lightest);
+  border: 1px solid var(--stellar-gray-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+}
+
+/* Contenedor de error */
+.error-container {
+  border: 0.125rem solid var(--stellar-error);
+  border-radius: 0.125rem;
+  padding: 0.75rem 1.5rem;
+  line-height: 2rem;
+  color: var(--stellar-error);
+}
+
+/* ============================================
+   6. UTILIDADES
+   ============================================ */
+
+/* Fondos */
+.bg-yellow {
+  background-color: var(--stellar-yellow);
+}
+
+.bg-purple {
+  background-color: var(--stellar-purple);
+}
+
+.bg-black {
+  background-color: var(--stellar-black);
+}
+
+.bg-gray-light {
+  background-color: var(--stellar-gray-light);
+}
+
+/* Colores de texto */
+.text-yellow {
+  color: var(--stellar-yellow);
+}
+
+.text-purple {
+  color: var(--stellar-purple);
+}
+
+.text-white {
+  color: var(--stellar-white);
+}
+
+.text-black {
+  color: var(--stellar-black);
+}
+
+/* Bordes */
+.border-black {
+  border: 1px solid var(--stellar-black);
+}
+
+.border-gray {
+  border: 1px solid var(--stellar-gray-medium);
+}
+
+/* Espaciado */
+.mt-xs { margin-top: var(--space-xs); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+
+.mb-xs { margin-bottom: var(--space-xs); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.mb-xl { margin-bottom: var(--space-xl); }
+
+.p-xs { padding: var(--space-xs); }
+.p-sm { padding: var(--space-sm); }
+.p-md { padding: var(--space-md); }
+.p-lg { padding: var(--space-lg); }
+.p-xl { padding: var(--space-xl); }
+
+/* ============================================
+   7. COMPONENTES ESPECÍFICOS
+   ============================================ */
+
+/* Hero Section (fondo amarillo típico) */
+.hero {
+  background-color: var(--stellar-yellow);
+  color: var(--stellar-black);
+  padding: var(--space-xl) var(--space-md);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Estadística destacada */
+.stat-card {
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--stellar-black);
+  margin-bottom: var(--space-sm);
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--stellar-black-70);
+  line-height: 1.5;
+}
+
+/* Tag/Badge */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--stellar-purple-light);
+  color: var(--stellar-black);
+  border-radius: var(--radius-md);
+}
+
+/* Link con estilo Stellar */
+.link-primary {
+  color: var(--stellar-purple);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.link-primary:hover {
+  color: var(--stellar-purple-hover);
+  text-decoration: underline;
+}
+
+/* ============================================
+   8. ANIMACIONES Y TRANSICIONES
+   ============================================ */
+
+/* Transición suave estándar */
+.transition-smooth {
+  transition: all 0.2s ease;
+}
+
+/* Hover lift (elevación sutil) */
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   9. RESPONSIVE UTILITIES
+   ============================================ */
+
+/* Ocultar en mobile */
+@media screen and (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Ocultar en desktop */
+@media screen and (min-width: 768px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   10. ACCESIBILIDAD
+   ============================================ */
+
+/* Focus visible para teclado */
+*:focus-visible {
+  outline: 2px solid var(--stellar-purple);
+  outline-offset: 2px;
+}
+
+/* Reducir movimiento para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   FIN DEL DESIGN SYSTEM
+   ============================================ */

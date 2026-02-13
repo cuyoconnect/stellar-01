@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar — AI Developer Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           STELLAR DESIGN SYSTEM - UNIFIED PRESENTATION
+           ======================================== */
+
+        :root {
+            /* Colores principales */
+            --stellar-yellow: #FDDA24;
+            --stellar-purple: #673AB7;
+            --stellar-purple-hover: #764EBE;
+            --stellar-black: #0F0F0F;
+            --stellar-white: #FFFFFF;
+            --stellar-beige: #F8F6F2;
+
+            /* Colores secundarios */
+            --stellar-purple-light: #B7ACE8;
+            --stellar-purple-very-light: #BDB1F5;
+            --stellar-lavender: #B6ADD4;
+            --stellar-cyan: #00A7B5;
+            --stellar-error: #FF3F00;
+
+            /* Grises */
+            --stellar-gray-very-light: #F9F9F9;
+            --stellar-gray-light: #F2F2F2;
+            --stellar-gray-medium: #969696;
+            --stellar-black-soft: #212121;
+            --stellar-code-gray: #2D2D2D;
+
+            /* Tipografía */
+            --font-heading: 'Lora', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+
+            /* Espaciado */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2.5rem;
+
+            /* Border radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 1.5rem;
+            --radius-pill: 6.25rem;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--stellar-black);
+            color: var(--stellar-black);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ========================================
+           SLIDE SYSTEM
+           ======================================== */
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            padding: 60px 80px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* ========================================
+           TIPOGRAFÍA
+           ======================================== */
+
+        h1 {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: var(--space-lg);
+        }
+
+        .title-gradient {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: var(--space-lg);
+        }
+
+        h3 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1.25rem;
+            line-height: 1.3;
+            margin-bottom: var(--space-sm);
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.75;
+            max-width: 700px;
+        }
+
+        .subtitle {
+            font-size: 1.35rem;
+            line-height: 1.8;
+            color: rgba(15, 15, 15, 0.7);
+        }
+
+        .stat-number {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 3.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(15, 15, 15, 0.7);
+            margin-top: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           LAYOUT HELPERS
+           ======================================== */
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+        }
+
+        .split-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .split-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .split-image img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+        }
+
+        .split--mcps .split-text {
+            align-items: flex-start;
+        }
+
+        .split--mcps .slide-figure img {
+            max-height: 42vh;
+            max-width: 100%;
+        }
+
+        .split-mcps-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        .center-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-figure {
+            margin: 0;
+            line-height: 0;
+        }
+
+        .slide-figure img {
+            max-width: 100%;
+            max-height: 55vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px 24px;
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            background: var(--stellar-white);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            background: var(--stellar-white);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: rgba(15, 15, 15, 0.7);
+            max-width: none;
+        }
+
+        .use-cases-list {
+            list-style: none;
+            margin-top: 32px;
+        }
+
+        .use-cases-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--stellar-gray-light);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .use-cases-list li:last-child { border-bottom: none; }
+
+        .use-case-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--stellar-yellow);
+            border: 1px solid var(--stellar-black);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .use-case-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .use-case-desc {
+            margin-top: 4px;
+            font-size: 1rem;
+            color: rgba(15, 15, 15, 0.7);
+        }
+
+        .use-case-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--stellar-purple);
+            text-decoration: none;
+        }
+
+        .use-case-link:hover { text-decoration: underline; }
+
+        .slide--dark .use-cases-list li { border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
+        .slide--dark .use-case-desc { color: rgba(255, 255, 255, 0.7); }
+        .slide--dark .use-case-link { color: var(--stellar-yellow); }
+
+        /* ========================================
+           SLIDE THEMES
+           ======================================== */
+
+        .slide--yellow {
+            background: var(--stellar-yellow);
+            color: var(--stellar-black);
+        }
+
+        .slide--white {
+            background: var(--stellar-white);
+            color: var(--stellar-black);
+        }
+
+        .slide--gray {
+            background: var(--stellar-gray-very-light);
+            color: var(--stellar-black);
+        }
+
+        .slide--beige {
+            background: var(--stellar-beige);
+            color: var(--stellar-black);
+        }
+
+        .slide--dark {
+            background: var(--stellar-black);
+            color: var(--stellar-white);
+        }
+
+        .slide--dark h1, .slide--dark h2 { color: var(--stellar-white); }
+        .slide--dark .subtitle { color: rgba(255, 255, 255, 0.7); }
+        .slide--dark p { color: rgba(255, 255, 255, 0.85); }
+
+        .slide--dark .stat-card {
+            background: var(--stellar-black-soft);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .slide--dark .stat-number { color: var(--stellar-yellow); }
+        .slide--dark .stat-label { color: rgba(255, 255, 255, 0.6); }
+
+        .slide--purple {
+            background: var(--stellar-purple);
+            color: var(--stellar-white);
+        }
+
+        .slide--purple h1, .slide--purple h2 { color: var(--stellar-white); }
+        .slide--purple p { color: rgba(255, 255, 255, 0.9); }
+        .slide--purple .subtitle { color: rgba(255, 255, 255, 0.75); }
+
+        /* Vibecoding: mismo sistema Stellar (sin gradients genéricos) */
+        .slide--vibecoding {
+            background: var(--stellar-black);
+            color: var(--stellar-white);
+        }
+
+        .slide--vibecoding h1,
+        .slide--vibecoding h2 {
+            color: var(--stellar-white);
+        }
+
+        .slide--vibecoding p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .slide--vibecoding .highlight {
+            display: inline-block;
+            padding: 0 6px;
+            background: var(--stellar-yellow);
+            color: var(--stellar-black);
+            border: 1px solid var(--stellar-white);
+            box-shadow: 2px 2px 0 var(--stellar-white);
+        }
+
+        .slide--vibecoding .vibecoding-punch {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            letter-spacing: -0.01em;
+            color: var(--stellar-yellow);
+        }
+
+        .slide--vibecoding .vibecoding-punch + .vibecoding-punch {
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ========================================
+           COMPONENTS
+           ======================================== */
+
+        /* Tags Stellar: pill (full rounded), acento purple */
+        .tag {
+            display: inline-block;
+            background: var(--stellar-purple-light);
+            color: var(--stellar-black);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-md);
+            border: 1px solid var(--stellar-black);
+        }
+
+        .tag--dark {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--stellar-yellow);
+        }
+
+        .tag--purple {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--stellar-white);
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--stellar-purple);
+            border-radius: 2px;
+            margin: var(--space-lg) 0;
+        }
+
+        .divider--yellow { background: var(--stellar-yellow); }
+        .divider--center { margin-left: auto; margin-right: auto; }
+
+        /* Botones Stellar: radius 4px, Purple o Black, texto blanco, hover alto contraste */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            min-height: 2.75rem;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--stellar-black);
+            text-decoration: none;
+        }
+
+        .btn--primary {
+            background: var(--stellar-purple);
+            color: var(--stellar-white);
+            border-color: var(--stellar-black);
+        }
+        .btn--primary:hover {
+            background: var(--stellar-black);
+        }
+
+        .btn--yellow {
+            background: var(--stellar-yellow);
+            color: var(--stellar-black);
+            border-color: var(--stellar-black);
+        }
+
+        .btn--dark-on-purple {
+            background: var(--stellar-black);
+            color: var(--stellar-white);
+            border: 1px solid var(--stellar-white);
+        }
+        .btn--dark-on-purple:hover {
+            background: var(--stellar-white);
+            color: var(--stellar-black);
+            border-color: var(--stellar-white);
+        }
+
+        .btn--outline-light {
+            background: transparent;
+            color: var(--stellar-white);
+            border: 1px solid var(--stellar-white);
+        }
+        .btn--outline-light:hover {
+            background: var(--stellar-white);
+            color: var(--stellar-black);
+            border-color: var(--stellar-white);
+        }
+
+        .btn-add-to-cursor {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: var(--stellar-purple);
+            color: var(--stellar-white);
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+        .btn-add-to-cursor:hover {
+            background: var(--stellar-black);
+            color: var(--stellar-white);
+            transform: translate(-1px, -1px);
+        }
+        .btn-add-to-cursor .cursor-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Slides 6 y 7: botones Add to Cursor en gris #201e18 */
+        .slide[data-slide="6"] .btn-add-to-cursor,
+        .slide[data-slide="7"] .btn-add-to-cursor {
+            background: #201e18;
+        }
+        .slide[data-slide="6"] .btn-add-to-cursor:hover,
+        .slide[data-slide="7"] .btn-add-to-cursor:hover {
+            background: var(--stellar-black);
+        }
+
+        /* link-card = CTA según Stellar: Purple o Black, texto blanco, radius 4px, hover alto contraste */
+        .link-card {
+            display: block;
+            padding: 24px 28px;
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            background: var(--stellar-purple);
+            text-decoration: none;
+            color: var(--stellar-white);
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            margin-bottom: 16px;
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+
+        .slide--dark .link-card {
+            background: var(--stellar-purple);
+            border-color: var(--stellar-yellow);
+            color: var(--stellar-white);
+        }
+
+        /* Slide 6/10 (Skills): mayoritariamente blancos y amarillos */
+        .slide[data-slide="5"] .link-card {
+            background: var(--stellar-white);
+            color: var(--stellar-black);
+            border: 1px solid var(--stellar-black);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+        .slide[data-slide="5"] .link-card:hover {
+            background: var(--stellar-yellow);
+            color: var(--stellar-black);
+            border-color: var(--stellar-black);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+        .slide[data-slide="5"] .link-card .url {
+            color: var(--stellar-black-soft);
+        }
+        .slide[data-slide="5"] .code-block {
+            background: var(--stellar-beige);
+            color: var(--stellar-black);
+            border: 1px solid var(--stellar-black);
+        }
+
+        .link-card:hover {
+            background: var(--stellar-black);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+            transform: translate(-1px, -1px);
+        }
+
+        .slide--dark .link-card:hover {
+            background: var(--stellar-black);
+            border-color: var(--stellar-yellow);
+            box-shadow: 4px 4px 0 var(--stellar-yellow);
+        }
+
+        .link-card h3 { margin-bottom: 4px; font-size: 1.1rem; font-weight: 600; color: inherit; }
+        .link-card .url {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .slide--dark .link-card .url { color: var(--stellar-yellow); }
+
+        .code-block {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            background: var(--stellar-code-gray);
+            color: var(--stellar-white);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--stellar-black);
+            margin: 12px 0;
+            text-align: left;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .slide--dark .code-block {
+            background: var(--stellar-black-soft);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 28px;
+        }
+
+        /* Cards Stellar: borde #0F0F0F, sombra dura 4px 4px 0, sin blur */
+        .tool-card {
+            padding: 24px;
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            background: var(--stellar-white);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+        }
+
+        .slide--dark .tool-card {
+            background: var(--stellar-black-soft);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 4px 4px 0 var(--stellar-yellow);
+        }
+
+        .tool-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tool-card p {
+            font-size: 0.95rem;
+            color: rgba(15, 15, 15, 0.7);
+            max-width: none;
+        }
+
+        .slide--dark .tool-card p { color: rgba(255, 255, 255, 0.7); }
+
+        .flow-loop {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 32px;
+        }
+
+        /* Pasos del ciclo = botones Stellar: Purple, texto blanco, radius 4px, hover → black */
+        .flow-loop span:not(.arrow) {
+            padding: 12px 20px;
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            background: var(--stellar-purple);
+            color: var(--stellar-white);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s ease;
+        }
+
+        .flow-loop span:not(.arrow):hover {
+            background: var(--stellar-black);
+        }
+
+        .flow-loop .arrow {
+            color: var(--stellar-purple);
+            font-size: 1.25rem;
+        }
+
+        .flow-steps {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            align-items: stretch;
+        }
+
+        .flow-step {
+            flex: 1;
+            padding: 28px 20px;
+            border: 1px solid var(--stellar-black);
+            border-radius: 4px;
+            background: var(--stellar-white);
+            box-shadow: 4px 4px 0 var(--stellar-black);
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--stellar-yellow);
+            border: 1px solid var(--stellar-black);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .flow-step h3 { font-size: 1rem; margin-bottom: 8px; }
+
+        .flow-step p {
+            font-size: 0.875rem;
+            color: rgba(15, 15, 15, 0.6);
+            max-width: none;
+            line-height: 1.5;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--stellar-purple);
+            flex-shrink: 0;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 40px;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--stellar-purple-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background: var(--stellar-purple);
+            border-radius: 50%;
+            border: 2px solid var(--stellar-white);
+        }
+
+        .timeline-item h3 { font-size: 1.1rem; margin-bottom: 4px; }
+        .timeline-item p { font-size: 1rem; color: rgba(15, 15, 15, 0.7); }
+
+        /* Section divider (transition slide between parts) */
+        .section-number {
+            font-family: var(--font-mono);
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 100;
+            background: rgba(15, 15, 15, 0.9);
+            padding: 8px 20px;
+            border-radius: var(--radius-pill);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: transparent;
+            color: var(--stellar-white);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--stellar-purple);
+            border-color: var(--stellar-purple);
+        }
+
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .nav-btn:disabled:hover { background: transparent; border-color: rgba(255, 255, 255, 0.3); }
+
+        .nav-counter {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-family: var(--font-mono);
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--stellar-purple);
+            transition: width 0.4s ease;
+            z-index: 100;
+        }
+
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide.active .animate { animation: fadeInUp 0.6s ease forwards; }
+        .slide.active .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .slide.active .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .slide.active .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .slide.active .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+        .slide.active .animate-delay-5 { animation-delay: 0.5s; opacity: 0; }
+        .slide.active .animate-delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+        /* ========================================
+           DRAGGABLE CARDS (slide 7)
+           ======================================== */
+
+        .draggable-cards-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 520px;
+            margin-top: 24px;
+            perspective: 3000px;
+        }
+
+        .draggable-card {
+            position: absolute;
+            width: 260px;
+            overflow: hidden;
+            border-radius: 8px;
+            background: var(--stellar-beige);
+            border: 1px solid var(--stellar-black);
+            box-shadow: 8px 8px 0 var(--stellar-black);
+            cursor: grab;
+            touch-action: none;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            z-index: 1;
+        }
+
+        .draggable-card:active,
+        .draggable-card.dragging {
+            cursor: grabbing;
+            z-index: 100;
+            box-shadow: 12px 12px 0 var(--stellar-black);
+        }
+
+        .draggable-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            pointer-events: none;
+            display: block;
+        }
+
+        .slide[data-slide="7"] .slide-content {
+            overflow: visible;
+        }
+
+        .slide[data-slide="7"] .add-to-cursor-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+
+        @media screen and (max-width: 767px) {
+            .slide { padding: 40px 24px; }
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .split { grid-template-columns: 1fr; gap: 24px; }
+            .split-image { order: -1; }
+            .slide-figure img { max-height: 40vh; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); justify-content: center; }
+            .flow-loop { flex-direction: column; }
+            .draggable-card { width: 180px; }
+            .draggable-card img { height: 140px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="presentation" id="presentation">
+        <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+            <defs>
+                <clipPath id="cursor-logo-clip"><rect width="22" height="22"/></clipPath>
+            </defs>
+        </svg>
+
+        <!-- SLIDE 1: PORTADA — VIBECODING EN WEB3 -->
+        <div class="slide slide--white active" data-slide="0">
+            <div class="slide-content">
+                <div class="split">
+                    <div class="split-text" style="align-items: flex-start;">
+                        <h1 class="animate animate-delay-2"><span class="title-gradient">Vibecoding</span> en web3</h1>
+                        <div class="divider animate animate-delay-3"></div>
+                        <p class="subtitle animate animate-delay-4" style="text-align: left; color: rgba(15,15,15,0.65); max-width: 480px;">
+                            Cómo mejorar el ciclo de desarrollo con IA, MCPs y el ecosistema Stellar.
+                        </p>
+                        <p class="animate animate-delay-5" style="margin-top: 24px; font-family: var(--font-mono); font-size: 0.875rem; color: rgba(15,15,15,0.5);">
+                            SoroPG · Stellar Game Studio · stellar-dev · MCPs · Insights
+                        </p>
+                    </div>
+                    <figure class="split-image slide-figure animate animate-delay-3">
+                        <img src="assets/vibecoding-web3.png" alt="Vibecoding en Web3 - programar con flow en el ecosistema blockchain">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: Introducción -->
+        <!-- SLIDE: ¿Qué es el AI Feedback Loop? -->
+        <div class="slide slide--white" data-slide="1">
+            <div class="slide-content">
+                <div class="split">
+                    <div class="split-text">
+                        <h2 class="animate animate-delay-2">¿Qué es el AI Feedback Loop?</h2>
+                        <div class="divider animate animate-delay-3"></div>
+                        
+                        <ul class="use-cases-list animate animate-delay-4" style="margin-top: 20px;">
+                            <li>
+                                <span class="use-case-icon">01</span>
+                                <div>
+                                    <div class="use-case-title">Prompt</div>
+                                    <div class="use-case-desc">Definís objetivo, constraints y contexto.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">02</span>
+                                <div>
+                                    <div class="use-case-title">IA genera</div>
+                                    <div class="use-case-desc">Propone código, texto o cambios.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">03</span>
+                                <div>
+                                    <div class="use-case-title">Probás</div>
+                                    <div class="use-case-desc">Corres, validás y encontrás fallas reales.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">04</span>
+                                <div>
+                                    <div class="use-case-title">Feedback</div>
+                                    <div class="use-case-desc">Ajustás el contexto y volvés a iterar.</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <p class="animate animate-delay-5" style="margin-top: 16px; font-size: 1rem; color: var(--stellar-gray-medium);">
+                            Cuanto más rápido y fiel sea ese ciclo, mejor será el resultado.
+                        </p>
+                    </div>
+                    <figure class="split-image slide-figure animate animate-delay-3">
+                        <img src="assets/ai-feedback-loop.png" alt="Ciclo de feedback con IA">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: La IA en el loop -->
+        <!-- SLIDE: MCPs — Vercel, Supabase, Browser Tools -->
+        <div class="slide slide--white" data-slide="4">
+            <div class="slide-content">
+                <div class="split split--mcps">
+                    <div class="split-text">
+                        <h2 class="animate animate-delay-2">MCPs que usamos</h2>
+                        <div class="divider animate animate-delay-3"></div>
+                        <p class="animate animate-delay-3">
+                            El feedback loop se acelera cuando la IA puede deployar, inspeccionar datos y validar la UI en tu entorno real.
+                        </p>
+                        <figure class="slide-figure animate animate-delay-3" style="margin-top: 24px;">
+                            <img src="assets/mcps-tools.png" alt="MCPs: Vercel, Supabase y Browser Tools">
+                        </figure>
+                    </div>
+                    <div class="split-mcps-list animate animate-delay-4">
+                        <ul class="use-cases-list" style="margin-top: 0;">
+                            <li>
+                                <span class="use-case-icon">01</span>
+                                <div>
+                                    <div class="use-case-title">Vercel MCP</div>
+                                    <div class="use-case-desc">Deploy, preview y logs desde el agente (builds, dominios, envs).</div>
+                                    <a class="use-case-link" href="https://vercel.com/docs/agent-resources/vercel-mcp" target="_blank" rel="noopener">vercel.com/docs/agent-resources/vercel-mcp</a>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">02</span>
+                                <div>
+                                    <div class="use-case-title">Supabase MCP</div>
+                                    <div class="use-case-desc">Postgres, Auth, Storage y Realtime con datos reales del proyecto.</div>
+                                    <a class="use-case-link" href="https://supabase.com/docs/guides/getting-started/mcp" target="_blank" rel="noopener">supabase.com/docs/guides/getting-started/mcp</a>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">03</span>
+                                <div>
+                                    <div class="use-case-title">Chrome DevTools MCP</div>
+                                    <div class="use-case-desc">Automatización y debugging en Chrome (snapshots, screenshots, consola, red).</div>
+                                    <a class="use-case-link" href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank" rel="noopener">github.com/ChromeDevTools/chrome-devtools-mcp</a>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">04</span>
+                                <div>
+                                    <div class="use-case-title">DeepWiki</div>
+                                    <div class="use-case-desc">Documentación conversacional por repo: entendés código más rápido.</div>
+                                    <a class="use-case-link" href="https://deepwiki.com/" target="_blank" rel="noopener">deepwiki.com</a>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">05</span>
+                                <div>
+                                    <div class="use-case-title">Trustless Work (GitBook MCP)</div>
+                                    <div class="use-case-desc">Docs AI-optimizadas: escrows, SDK y API en Stellar. Los sitios GitBook exponen MCP en <code>/~gitbook/mcp</code> para que la IA consulte documentación en tiempo real.</div>
+                                    <a class="use-case-link" href="https://docs.trustlesswork.com/trustless-work/introduction/readme/ai-optimized-docs" target="_blank" rel="noopener">docs.trustlesswork.com</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: Skills + stellar-dev -->
+        <div class="slide slide--white" data-slide="5">
+            <div class="slide-content">
+                <div class="split">
+                    <div class="split-text">
+                        <h2 class="animate animate-delay-2">Skills & stellar-dev</h2>
+                        <div class="divider divider--yellow animate animate-delay-3"></div>
+                        <p class="animate animate-delay-3">
+                            Las <strong>Skills</strong> son capacidades reutilizables para agentes de IA. <strong>stellar-dev</strong> es la skill oficial de Stellar: Soroban (Rust), SDK (JS/Python/Go), RPC/Horizon, wallets, testing.
+                        </p>
+                        <div class="animate animate-delay-4" style="margin-top: 20px;">
+                            <a href="https://skills.sh/" target="_blank" rel="noopener" class="link-card">
+                                <h3>skills.sh — The Agent Skills Directory</h3>
+                                <span class="url">https://skills.sh/</span>
+                                <p style="margin-top: 8px; font-size: 0.95rem;">Directorio abierto de skills para Cursor, Codex, Claude, Gemini, GitHub Copilot, Windsurf y más.</p>
+                            </a>
+                            <a href="https://skills.sh/stellar/stellar-dev-skill/stellar-dev" target="_blank" rel="noopener" class="link-card">
+                                <h3>stellar-dev — Stellar Development Skill</h3>
+                                <span class="url">https://skills.sh/stellar/stellar-dev-skill/stellar-dev</span>
+                            </a>
+                        </div>
+                        <div class="animate animate-delay-5" style="margin-top: 12px;">
+                            <p style="font-size: 0.95rem;">Instalación:</p>
+                            <pre class="code-block">npx skills add https://github.com/stellar/stellar-dev-skill --skill stellar-dev</pre>
+                        </div>
+                    </div>
+                    <figure class="split-image slide-figure animate animate-delay-3">
+                        <img src="assets/stellar-dev-skill.png" alt="stellar-dev skill">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: Afinar tu flujo -->
+        <!-- SLIDE: Insights -->
+        <div class="slide slide--beige" data-slide="6">
+            <div class="slide-content">
+                <h2 class="animate animate-delay-2">/ insights</h2>
+                <div class="divider animate animate-delay-3"></div>
+                <p class="animate animate-delay-3">
+                    <strong>cursor-failure-insights</strong> analiza transcripciones de sesiones con la IA en múltiples proyectos (22 repos, 285+ sesiones), extrae patrones de error reales y genera reglas que la IA debe seguir para no repetirlos. El resultado se instala como rule en Cursor.
+                </p>
+                <ul class="animate animate-delay-4" style="margin-top: 20px; padding-left: 24px; max-width: 640px;">
+                    <li style="margin-bottom: 8px;"><strong>Input:</strong> Transcripciones de chats (ej. <code>agent-transcripts/*.jsonl</code>) donde vos reportaste fallas y la IA corrigió.</li>
+                    <li style="margin-bottom: 8px;"><strong>Proceso:</strong> Análisis post-mortem → extracción de patrones recurrentes (compilación, tipos, sync, OAuth, paths Vercel, etc.).</li>
+                    <li style="margin-bottom: 8px;"><strong>Output:</strong> AGENTS.md / rule con “reglas críticas extraídas de errores reales” + checklist.</li>
+                </ul>
+                <div class="animate animate-delay-5" style="margin-top: 28px;">
+                    <a href="https://cursor.com/link/rule?name=cursor-failure-insights&text=%23%20Cursor%20Failure%20Insights%20-%20Lecciones%20de%20285%2B%20sesiones%0A%0AReglas%20cr%C3%ADticas%20%28resumen%29%3A%201%29%20Verificar%20build%2Fcheck%20despu%C3%A9s%20de%20cambios%20%28TS%3A%20pnpm%20run%20build%2C%20Rust%3A%20cargo%20check%29.%202%29%20Tipos%20concretos%20en%20refs%20%28HTMLDivElement%2C%20etc.%29%20y%20guardas%20antes%20de%20usar.%203%29%20En%20sync%2FOAuth%20leer%20flujo%20completo%20y%20usuario%20en%20contexto%3B%20hard%20reset%20si%20piden%20%22sincronizar%22.%204%29%20En%20Vercel%2Fserverless%20no%20usar%20solo%20fileURLToPath%28import.meta.url%29%20para%20paths.%205%29%20En%20scroll%2Fanimaciones%20revisar%20impacto%20en%20layout%20adyacente.%206%29%20Tests%20seg%C3%BAn%20comportamiento%20real%20%28%3F%3F%2C%20%22%22%29.%207%29%20Scripts%20con%20globs%3A%20usar%20find%20o%20compat%20zsh%2Fbash.%208%29%20Validar%20env%20al%20arranque.%209%29%20Refactors%3A%20sin%20cierres%20hu%C3%A9rfanos.%2010%29%20Tras%20editar%3A%20Read%20del%20archivo%20y%20build%2Fcheck.%0A%0AChecklist%3A%20%C2%BFLe%C3%AD%20todos%20los%20archivos%20del%20flujo%3F%20%C2%BFRef%2Fpropiedad%20admite%20null%3F%20%C2%BFBuild%2Fcheck%20ejecutado%3F%0AFuente%20completa%3A%20AGENTS.md%20en%20el%20repo." target="_blank" rel="noopener" class="btn-add-to-cursor"><svg class="cursor-icon" fill="none" height="22" width="22" viewBox="0 0 22 22" aria-hidden="true"><title class="sr-only">Cursor Logo</title><g clip-path="url(#cursor-logo-clip)" fill="currentColor"><path d="M19.162 5.452 10.698.565a.88.88 0 0 0-.879 0L1.356 5.452a.74.74 0 0 0-.37.64v9.853a.74.74 0 0 0 .37.64l8.464 4.887a.879.879 0 0 0 .879 0l8.464-4.886a.74.74 0 0 0 .37-.64V6.091a.74.74 0 0 0-.37-.64Zm-.531 1.035L10.46 20.639c-.055.095-.201.056-.201-.055v-9.266a.52.52 0 0 0-.26-.45L1.975 6.237c-.096-.056-.057-.202.054-.202h16.34c.233 0 .378.252.262.453Zm11.057-.555h3.602v1.984h-3.48c-1.877 0-3.342 1.083-3.342 3.372 0 2.29 1.465 3.373 3.342 3.373h3.48v1.984h-3.754c-3.144 0-5.372-1.847-5.372-5.356 0-3.51 2.38-5.357 5.524-5.357Zm5.432 0h2.227v6.546c0 1.633.748 2.396 2.503 2.396 1.755 0 2.503-.763 2.503-2.396V5.932h2.228v7.004c0 2.38-1.511 3.892-4.731 3.892-3.22 0-4.73-1.526-4.73-3.907v-6.99Zm21.106 3.036c0 1.19-.687 2.106-1.602 2.503v.03c.961.138 1.45.825 1.465 1.756l.045 3.388h-2.228l-.045-3.022c-.015-.671-.412-1.083-1.206-1.083h-3.708v4.105h-2.228V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.243.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.84 0 1.374-.504 1.374-1.42Zm10.67 4.242c0-.763-.489-1.083-1.221-1.144l-2.472-.229c-2.137-.198-3.251-1.038-3.251-3.068 0-2.03 1.374-3.143 3.342-3.143h5.463v1.922h-5.31c-.763 0-1.252.397-1.252 1.16 0 .763.504 1.13 1.267 1.19l2.518.214c1.908.168 3.159 1.038 3.159 3.083s-1.328 3.144-3.205 3.144h-5.707v-1.923h5.494c.717 0 1.175-.488 1.175-1.205Zm8.751-7.768c3.357 0 5.479 2.152 5.479 5.524 0 3.373-2.213 5.555-5.57 5.555-3.358 0-5.479-2.182-5.479-5.555 0-3.372 2.213-5.524 5.57-5.524Zm3.174 5.54c0-2.26-1.312-3.587-3.22-3.587-1.908 0-3.22 1.328-3.22 3.587 0 2.258 1.312 3.585 3.22 3.585 1.908 0 3.22-1.327 3.22-3.585Zm13.362-2.32c0 1.19-.686 2.106-1.602 2.503v.03c.962.138 1.45.825 1.465 1.756l.046 3.388h-2.228l-.045-3.022c-.016-.671-.413-1.083-1.206-1.083h-3.71v4.105h-2.227V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.242.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.839 0 1.374-.504 1.374-1.42Z"/></g></svg><span>Add to Cursor — Cursor Failure Insights</span></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: Deeplink — Agregar regla a Cursor -->
+        <div class="slide slide--beige" data-slide="7">
+            <div class="slide-content">
+                <h2 class="animate animate-delay-2">Agregar a Cursor en un click</h2>
+                <div class="divider animate animate-delay-3"></div>
+                <div class="draggable-cards-wrapper animate animate-delay-3">
+                    <div class="draggable-card" data-card style="top: 10px; left: 5%; transform: rotate(-5deg);">
+                        <img src="assets/vibecoding-web3.png" alt="Vibecoding en Web3">
+                    </div>
+                    <div class="draggable-card" data-card style="top: 160px; left: 8%; transform: rotate(-7deg);">
+                        <img src="assets/ai-feedback-loop.png" alt="Ciclo de feedback con IA">
+                    </div>
+                    <div class="draggable-card" data-card style="top: 5px; left: 28%; transform: rotate(8deg);">
+                        <img src="assets/soropg-playground.png" alt="Soroban Playground">
+                    </div>
+                    <div class="draggable-card" data-card style="top: 140px; left: 42%; transform: rotate(10deg);">
+                        <img src="assets/stellar-game-studio.png" alt="Stellar Game Studio">
+                    </div>
+                    <div class="draggable-card" data-card style="top: 60px; left: 58%; transform: rotate(2deg);">
+                        <img src="assets/mcps-tools.png" alt="MCPs Tools">
+                    </div>
+                    <div class="draggable-card" data-card style="top: 220px; left: 32%; transform: rotate(-7deg);">
+                        <img src="assets/stellar-dev-skill.png" alt="stellar-dev skill">
+                    </div>
+                </div>
+                <p class="animate animate-delay-4" style="margin-top: 12px; font-size: 0.9rem; color: var(--stellar-gray-medium);">
+                    <a href="https://cursor.com/docs/integrations/deeplinks" target="_blank" rel="noopener" style="color: var(--stellar-purple);">cursor.com/docs/integrations/deeplinks</a>
+                </p>
+                <div class="animate animate-delay-5 add-to-cursor-buttons">
+                    <a href="https://cursor.com/link/skill?name=stellar-design&amp;text=---%0Adescription%3A+Expert+in+Stellar.org+visual+identity%2C+design+system%2C+and+illustration+style.+Use+this+to+generate+compatible+UI+code%2C+CSS%2C+and+DALL-E%2FMidjourney+prompts+that+match+the+Stellar+brand.%0A---%0A%0A%23+Stellar+Design+System+%26+Visual+Identity+Skill%0A%0AThis+skill+provides+the+specific+design+tokens%2C+artistic+direction%2C+and+code+patterns+to+replicate+the+Stellar.org+brand+identity+%28specifically+the+DeFi+and+Tokenization+use-case+pages%29.%0A%0A%23%23+1.+Visual+Philosophy+%28The+%22Vibe%22%29%0A-+**Keywords%3A**+Optimistic%2C+Open%2C+Robust%2C+Technical+yet+Organic.%0A-+**Style%3A**+%22Digital+Brutalism%22+meets+%22Risograph+Print%22.+High+contrast%2C+sharp+lines%2C+grain+textures%2C+and+bold+typography.%0A-+**Composition%3A**+Asymmetrical+layouts%2C+floating+elements%2C+collage-style+layering.%0A%0A%23%23+2.+Color+Palette+%28Strict%29%0AUse+these+exact+hex+codes+for+UI+and+Illustrations.%0A%0A%7C+Role+%7C+Color+Name+%7C+Hex+%7C+Usage+%7C%0A%7C+%3A---+%7C+%3A---+%7C+%3A---+%7C+%3A---+%7C%0A%7C+**Primary**+%7C+%60Stellar+Yellow%60+%7C+%60%23FDDA24%60+%7C+Backgrounds%2C+heavy+accents%2C+illustrations.+%7C%0A%7C+**Secondary**+%7C+%60Stellar+Purple%60+%7C+%60%23673AB7%60+%7C+CTAs+%28Buttons%29%2C+links%2C+illustration+accents.+%7C%0A%7C+**Deep+Dark**+%7C+%60Off-Black%60+%7C+%60%230F0F0F%60+%7C+Text%2C+borders%2C+line+work.+%28Never+use+%23000000%29.+%7C%0A%7C+**Canvas**+%7C+%60Paper+White%60+%7C+%60%23FFFFFF%60+%7C+Main+background%2C+cards.+%7C%0A%7C+**Support**+%7C+%60Warm+Beige%60+%7C+%60%23F8F6F2%60+%7C+Secondary+backgrounds%2C+subtle+sections.+%7C%0A%7C+**Support**+%7C+%60Code+Gray%60+%7C+%60%232D2D2D%60+%7C+Code+blocks%2C+dark+cards.+%7C%0A%0A%23%23+3.+Web+Design+%26+UI+System%0A%0A%23%23%23+Typography%0A-+**Headings+%28H1-H3%29%3A**+%60Lora%60+%28Serif%29.+Gives+a+trustworthy%2C+editorial+feel.+Weight%3A+400-600.%0A-+**Body+%2F+UI%3A**+%60Inter%60+%28Sans-Serif%29.+Clean%2C+legible%2C+technical.+Weight%3A+400.%0A-+**Monospace%3A**+%60IBM+Plex+Mono%60+or+%60Fira+Code%60.+For+code+snippets+and+technical+data.%0A-+**Display%3A**+%60Schabo%60+%28Condensed%2C+Rough%29+-+Occasionally+used+for+massive+numbers+or+impact+text.%0A%0A%23%23%23+UI+Components+%28CSS%2FTailwind+Rules%29%0A-+**Buttons%3A**%0A++-+Background%3A+%60%23673AB7%60+%28Purple%29+or+%60%230F0F0F%60+%28Black%29.%0A++-+Text%3A+White.%0A++-+Border+Radius%3A+%604px%60+%28Slightly+rounded%2C+almost+square%29+or+%60pill%60+%28full+rounded%29+for+tags.%0A++-+Hover%3A+High+contrast+shift+%28e.g.%2C+Purple+-%3E+Black%29.%0A-+**Cards%2FContainers%3A**%0A++-+Border%3A+%601px+solid+%230F0F0F%60+%28Thin%2C+sharp+borders%29.%0A++-+Shadow%3A+None+%28Flat%29+or+Hard+Shadow+%28%60box-shadow%3A+4px+4px+0px+%230F0F0F%60%29.+No+blur.%0A++-+Padding%3A+Generous+whitespace+%28rem-based%29.%0A-+**Layout%3A**%0A++-+Grid-based+but+allows+elements+to+break+the+grid.%0A++-+Use+of+vertical+dividing+lines+%28%60border-right%3A+1px+solid+%23E5E5E5%60%29.%0A%0A%23%23+4.+Illustration+Style+%28Prompt+Engineering%29%0A%0AWhen+requesting+images%2C+use+these+prompt+structures+to+replicate+the+Stellar+art+style.%0A%0A%23%23%23+Key+Elements+to+Describe%3A%0A1.++**Technique%3A**+%22Digital+Risograph%2C%22+%22Linocut%2C%22+%22Screenprint+style.%22%0A2.++**Texture%3A**+%22Heavy+grain+noise%2C%22+%22Stipple+shading%2C%22+%22Halftone+dots.%22%0A3.++**Line+Work%3A**+%22Inky+black+outlines%2C%22+%22Variable+line+width%2C%22+%22Rough+edges%2C%22+%22Hand-drawn+vector.%22%0A4.++**Subjects%3A**+Abstract+representations+of+finance.+Hands+holding+coins%2C+floating+geometric+shapes%2C+architectural+elements+%28stairs%2C+arches%29%2C+organic+elements+%28leaves%2C+vines%29+growing+out+of+tech.%0A%0A%23%23%23+Example+Prompts+%28Copy+%26+Paste%29%3A%0A%0A**Option+A+%28The+%22Hand-Drawn+Tech%22+Look%29%3A**%0A%3E+%22A+flat%2C+risograph-style+illustration+of+%5BSUBJECT%2C+e.g.%2C+a+digital+wallet+connecting+to+a+globe%5D.+The+style+is+minimal+and+graphic+with+a+limited+color+palette+of+bright+yellow+%28%23FDDA24%29%2C+deep+purple+%28%23673AB7%29%2C+and+black+ink+%28%230F0F0F%29+on+a+white+background.+Include+heavy+grain+texture+and+stipple+shading.+The+lines+should+look+like+rough+ink+drawings.+Abstract+geometric+shapes+floating+in+the+background.+High+contrast%2C+editorial+illustration+style.%22%0A%0A**Option+B+%28The+%22Abstract+Finance%22+Look%29%3A**%0A%3E+%22An+abstract+composition+representing+%5BSUBJECT%2C+e.g.%2C+tokenization+of+real+estate%5D.+Collage+style.+Elements+include+a+stylized+house+and+digital+coins.+Use+a+grainy+texture+overlay.+The+colors+are+strictly+yellow%2C+purple%2C+and+black.+Brutalist+graphic+design+elements.+No+gradients%2C+flat+colors+only.+Sharp+edges.%22%0A%0A%23%23+5.+Code+Implementation+%28Tailwind+Config%29%0A%0A%60%60%60javascript%0A%2F%2F+tailwind.config.js+extension%0Amodule.exports+%3D+%7B%0A++theme%3A+%7B%0A++++extend%3A+%7B%0A++++++colors%3A+%7B%0A++++++++stellar%3A+%7B%0A++++++++++yellow%3A+%27%23FDDA24%27%2C%0A++++++++++purple%3A+%27%23673AB7%27%2C%0A++++++++++black%3A+%27%230F0F0F%27%2C%0A++++++++++beige%3A+%27%23F8F6F2%27%2C%0A++++++++%7D%0A++++++%7D%2C%0A++++++fontFamily%3A+%7B%0A++++++++serif%3A+%5B%27Lora%27%2C+%27serif%27%5D%2C%0A++++++++sans%3A+%5B%27Inter%27%2C+%27sans-serif%27%5D%2C%0A++++++++mono%3A+%5B%27IBM+Plex+Mono%27%2C+%27monospace%27%5D%2C%0A++++++%7D%2C%0A++++++boxShadow%3A+%7B%0A++++++++%27hard%27%3A+%274px+4px+0px+0px+%230F0F0F%27%2C%0A++++++%7D%0A++++%7D%0A++%7D%0A%7D%0A%60%60%60%0A" target="_blank" rel="noopener" class="btn-add-to-cursor"><svg class="cursor-icon" fill="none" height="22" width="22" viewBox="0 0 22 22" aria-hidden="true"><title class="sr-only">Cursor Logo</title><g clip-path="url(#cursor-logo-clip)" fill="currentColor"><path d="M19.162 5.452 10.698.565a.88.88 0 0 0-.879 0L1.356 5.452a.74.74 0 0 0-.37.64v9.853a.74.74 0 0 0 .37.64l8.464 4.887a.879.879 0 0 0 .879 0l8.464-4.886a.74.74 0 0 0 .37-.64V6.091a.74.74 0 0 0-.37-.64Zm-.531 1.035L10.46 20.639c-.055.095-.201.056-.201-.055v-9.266a.52.52 0 0 0-.26-.45L1.975 6.237c-.096-.056-.057-.202.054-.202h16.34c.233 0 .378.252.262.453Zm11.057-.555h3.602v1.984h-3.48c-1.877 0-3.342 1.083-3.342 3.372 0 2.29 1.465 3.373 3.342 3.373h3.48v1.984h-3.754c-3.144 0-5.372-1.847-5.372-5.356 0-3.51 2.38-5.357 5.524-5.357Zm5.432 0h2.227v6.546c0 1.633.748 2.396 2.503 2.396 1.755 0 2.503-.763 2.503-2.396V5.932h2.228v7.004c0 2.38-1.511 3.892-4.731 3.892-3.22 0-4.73-1.526-4.73-3.907v-6.99Zm21.106 3.036c0 1.19-.687 2.106-1.602 2.503v.03c.961.138 1.45.825 1.465 1.756l.045 3.388h-2.228l-.045-3.022c-.015-.671-.412-1.083-1.206-1.083h-3.708v4.105h-2.228V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.243.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.84 0 1.374-.504 1.374-1.42Zm10.67 4.242c0-.763-.489-1.083-1.221-1.144l-2.472-.229c-2.137-.198-3.251-1.038-3.251-3.068 0-2.03 1.374-3.143 3.342-3.143h5.463v1.922h-5.31c-.763 0-1.252.397-1.252 1.16 0 .763.504 1.13 1.267 1.19l2.518.214c1.908.168 3.159 1.038 3.159 3.083s-1.328 3.144-3.205 3.144h-5.707v-1.923h5.494c.717 0 1.175-.488 1.175-1.205Zm8.751-7.768c3.357 0 5.479 2.152 5.479 5.524 0 3.373-2.213 5.555-5.57 5.555-3.358 0-5.479-2.182-5.479-5.555 0-3.372 2.213-5.524 5.57-5.524Zm3.174 5.54c0-2.26-1.312-3.587-3.22-3.587-1.908 0-3.22 1.328-3.22 3.587 0 2.258 1.312 3.585 3.22 3.585 1.908 0 3.22-1.327 3.22-3.585Zm13.362-2.32c0 1.19-.686 2.106-1.602 2.503v.03c.962.138 1.45.825 1.465 1.756l.046 3.388h-2.228l-.045-3.022c-.016-.671-.413-1.083-1.206-1.083h-3.71v4.105h-2.227V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.242.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.839 0 1.374-.504 1.374-1.42Z"/></g></svg><span>Add to Cursor — Stellar Design</span></a>
+                    <a href="https://cursor.com/link/skill?name=stellar-image-generation&amp;text=---%0Aname%3A+stellar-image-generation%0Adescription%3A+Generates+DALL-E%2C+Midjourney%2C+or+other+image+prompts+that+replicate+Stellar.org+illustration+style.+Use+when+the+user+asks+to+generate+images%2C+illustrations%2C+or+visuals+in+Stellar+brand+style%2C+or+when+creating+artwork+for+Stellar-related+content+%28DeFi%2C+tokenization%2C+payments%29.%0A---%0A%0A%23+Stellar+Image+Generation%0A%0AGu%C3%ADa+para+generar+im%C3%A1genes+e+ilustraciones+que+repliquen+el+estilo+visual+de+Stellar.org+%28casos+de+uso+DeFi%2C+tokenizaci%C3%B3n%29.+Basada+en+la+auditor%C3%ADa+de+dise%C3%B1o+de+este+repositorio.%0A%0A%23%23+1.+Paleta+estricta+para+ilustraciones%0A%0AUsar+estos+hex+en+los+prompts.+No+usar+negro+puro+%28%23000000%29.%0A%0A%7C+Uso+%7C+Nombre+%7C+Hex+%7C%0A%7C-----%7C--------%7C-----%7C%0A%7C+Base+%2F+acentos+fuertes+%7C+Amarillo+Stellar+%7C+%60%23FDDA24%60+%7C%0A%7C+Acentos+%2F+CTAs+%7C+Violeta+Stellar+%7C+%60%23673AB7%60+%7C%0A%7C+L%C3%ADneas+%2F+contornos+%2F+texto+%7C+Off-black+%7C+%60%230F0F0F%60+%7C%0A%7C+Fondo+principal+%7C+Blanco+%7C+%60%23FFFFFF%60+%7C%0A%7C+Variantes+violeta+%28ilustraciones%29+%7C+P%C3%BArpura+claro+%2F+lavanda+%7C+%60%23B7ACE8%60%2C+%60%23BDB1F5%60%2C+%60%23B6ADD4%60+%7C%0A%7C+Opcional+%28tierra%29+%7C+Marr%C3%B3n+%2F+mostaza+%2F+beige+%7C+%60%235E4839%60%2C+%60%23A08C31%60%2C+%60%23D8CD88%60+%7C%0A%0A%23%23+2.+Estilo+visual+%28qu%C3%A9+pedir+en+el+prompt%29%0A%0A-+**T%C3%A9cnica%3A**+Risograph%2C+linocut%2C+screenprint%2C+%E2%80%9Cdigital+print%E2%80%9D.%0A-+**Textura%3A**+Grano+marcado%2C+stipple%2C+halftone+dots%2C+overlay+de+ruido.%0A-+**L%C3%ADnea%3A**+Contornos+negros+tipo+tinta%2C+grosor+variable%2C+bordes+%E2%80%9Crough%E2%80%9D+o+hand-drawn.%0A-+**Composici%C3%B3n%3A**+Capas+superpuestas%2C+collage%2C+formas+geom%C3%A9tricas+simples+%28c%C3%ADrculos%2C+rect%C3%A1ngulos+redondeados%29.+Mucho+espacio+negativo.%0A-+**Formas%3A**+Org%C3%A1nicas+%28curvas%2C+hojas%2C+enredaderas%29+mezcladas+con+tech+%28globos%2C+wallets%2C+monedas%2C+edificios%2Farquitectura%29.%0A-+**Restricciones%3A**+Sin+gradientes%3B+colores+planos.+Bordes+duros.+Alto+contraste.%0A%0A%23%23+3.+Plantillas+de+prompt+%28copiar+y+adaptar%29%0A%0A%23%23%23+Opci%C3%B3n+A+%E2%80%93+Ilustraci%C3%B3n+%E2%80%9Chand-drawn+tech%E2%80%9D%0A%0A%60%60%60%0AA+flat%2C+risograph-style+illustration+of+%5BTU+TEMA%3A+ej.+a+digital+wallet+connecting+to+a+globe%5D.+Minimal%2C+graphic+style.+Limited+palette%3A+bright+yellow+%28%23FDDA24%29%2C+deep+purple+%28%23673AB7%29%2C+and+black+ink+%28%230F0F0F%29+on+white+background.+Heavy+grain+texture+and+stipple+shading.+Rough+ink-like+lines.+Abstract+geometric+shapes+in+the+background.+High+contrast%2C+editorial+illustration.%0A%60%60%60%0A%0A%23%23%23+Opci%C3%B3n+B+%E2%80%93+Composici%C3%B3n+abstracta+%2F+finanzas%0A%0A%60%60%60%0AAbstract+composition+representing+%5BTU+TEMA%3A+ej.+tokenization+of+real+estate%5D.+Collage+style.+Stylized+%5Bobjeto%5D+and+digital%2Fcoin+elements.+Grainy+texture+overlay.+Colors+strictly+yellow%2C+purple%2C+and+black.+Brutalist+graphic+design.+No+gradients%2C+flat+colors+only.+Sharp+edges.%0A%60%60%60%0A%0A%23%23%23+Opci%C3%B3n+C+%E2%80%93+Estilo+Stellar+%28resumen+corto%29%0A%0A%60%60%60%0A%5BRisograph+%2F+linocut%5D+illustration+of+%5BSUBJECT%5D.+Limited+palette%3A+yellow+%23FDDA24%2C+purple+%23673AB7%2C+black+%230F0F0F+on+white.+Grain+texture%2C+stipple%2C+rough+ink+outlines.+Flat%2C+high+contrast%2C+editorial.+Abstract+shapes%2C+generous+negative+space.%0A%60%60%60%0A%0A%23%23+4.+Sustituir+%5BTU+TEMA%5D+%2F+%5BSUBJECT%5D%0A%0AEjemplos+alineados+con+Stellar%3A%0A%0A-+DeFi%3A+pr%C3%A9stamos%2C+liquidez%2C+pools%2C+conexi%C3%B3n+wallet%E2%80%93protocolo.%0A-+Tokenizaci%C3%B3n%3A+activos+reales+%28inmuebles%2C+commodities%29%2C+monedas+digitales%2C+representaci%C3%B3n+abstracta+de+%E2%80%9Ctoken%E2%80%9D.%0A-+Pagos%3A+env%C3%ADo+de+valor%2C+fronteras%2C+inclusi%C3%B3n+financiera.%0A-+Conceptos%3A+%E2%80%9Copen%E2%80%9D%2C+%E2%80%9Cglobal%E2%80%9D%2C+%E2%80%9Caccesible%E2%80%9D%2C+%E2%80%9Ccapas+de+valor%E2%80%9D.%0A%0A%23%23+5.+Referencias+en+este+repo%0A%0A-+**Paleta+y+uso+de+color%3A**+%60auditoria-diseno-stellar.md%60+%E2%86%92+secci%C3%B3n+1+%28Paleta%29+y+%E2%80%9CColores+de+Ilustraciones%E2%80%9D.%0A-+**An%C3%A1lisis+de+ilustraciones%3A**+%60auditoria-diseno-stellar.md%60+%E2%86%92+secci%C3%B3n+3+%E2%80%9CAn%C3%A1lisis+de+ilustraciones%E2%80%9D.%0A-+**Tokens+CSS+%28opcional%29%3A**+%60css-snippets.md%60+o+%60quick-reference.md%60+para+hex+y+nombres+de+variables.%0A%0A%23%23+Checklist+antes+de+generar%0A%0A-+%5B+%5D+Paleta+limitada+a+amarillo%2C+violeta%2C+negro+y+blanco+%28opcional+tonos+tierra%29.%0A-+%5B+%5D+Incluir+en+el+prompt%3A+grain%2Fstipple%2Fhalftone+y+l%C3%ADneas+tipo+tinta.%0A-+%5B+%5D+Pedir+%E2%80%9Cflat%2C+no+gradients%E2%80%9D+y+%E2%80%9Chigh+contrast%E2%80%9D.%0A-+%5B+%5D+Si+hace+falta%2C+mencionar+%E2%80%9Crisograph%E2%80%9D+o+%E2%80%9Ceditorial+illustration%E2%80%9D+para+afinar+estilo.%0A" target="_blank" rel="noopener" class="btn-add-to-cursor"><svg class="cursor-icon" fill="none" height="22" width="22" viewBox="0 0 22 22" aria-hidden="true"><title class="sr-only">Cursor Logo</title><g clip-path="url(#cursor-logo-clip)" fill="currentColor"><path d="M19.162 5.452 10.698.565a.88.88 0 0 0-.879 0L1.356 5.452a.74.74 0 0 0-.37.64v9.853a.74.74 0 0 0 .37.64l8.464 4.887a.879.879 0 0 0 .879 0l8.464-4.886a.74.74 0 0 0 .37-.64V6.091a.74.74 0 0 0-.37-.64Zm-.531 1.035L10.46 20.639c-.055.095-.201.056-.201-.055v-9.266a.52.52 0 0 0-.26-.45L1.975 6.237c-.096-.056-.057-.202.054-.202h16.34c.233 0 .378.252.262.453Zm11.057-.555h3.602v1.984h-3.48c-1.877 0-3.342 1.083-3.342 3.372 0 2.29 1.465 3.373 3.342 3.373h3.48v1.984h-3.754c-3.144 0-5.372-1.847-5.372-5.356 0-3.51 2.38-5.357 5.524-5.357Zm5.432 0h2.227v6.546c0 1.633.748 2.396 2.503 2.396 1.755 0 2.503-.763 2.503-2.396V5.932h2.228v7.004c0 2.38-1.511 3.892-4.731 3.892-3.22 0-4.73-1.526-4.73-3.907v-6.99Zm21.106 3.036c0 1.19-.687 2.106-1.602 2.503v.03c.961.138 1.45.825 1.465 1.756l.045 3.388h-2.228l-.045-3.022c-.015-.671-.412-1.083-1.206-1.083h-3.708v4.105h-2.228V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.243.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.84 0 1.374-.504 1.374-1.42Zm10.67 4.242c0-.763-.489-1.083-1.221-1.144l-2.472-.229c-2.137-.198-3.251-1.038-3.251-3.068 0-2.03 1.374-3.143 3.342-3.143h5.463v1.922h-5.31c-.763 0-1.252.397-1.252 1.16 0 .763.504 1.13 1.267 1.19l2.518.214c1.908.168 3.159 1.038 3.159 3.083s-1.328 3.144-3.205 3.144h-5.707v-1.923h5.494c.717 0 1.175-.488 1.175-1.205Zm8.751-7.768c3.357 0 5.479 2.152 5.479 5.524 0 3.373-2.213 5.555-5.57 5.555-3.358 0-5.479-2.182-5.479-5.555 0-3.372 2.213-5.524 5.57-5.524Zm3.174 5.54c0-2.26-1.312-3.587-3.22-3.587-1.908 0-3.22 1.328-3.22 3.587 0 2.258 1.312 3.585 3.22 3.585 1.908 0 3.22-1.327 3.22-3.585Zm13.362-2.32c0 1.19-.686 2.106-1.602 2.503v.03c.962.138 1.45.825 1.465 1.756l.046 3.388h-2.228l-.045-3.022c-.016-.671-.413-1.083-1.206-1.083h-3.71v4.105h-2.227V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.242.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.839 0 1.374-.504 1.374-1.42Z"/></g></svg><span>Add to Cursor — Stellar Image Generation</span></a>
+                </div>
+                <p class="animate animate-delay-6" style="margin-top: 20px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--stellar-gray-medium); max-width: 720px;">
+                    En desktop abre Cursor con la rule o skill lista para agregar; en web te lleva a cursor.com para copiar o abrir en la app.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE: Otras herramientas (Cargo, Scout, qué aportan al agente) -->
+        <div class="slide slide--white" data-slide="8">
+            <div class="slide-content">
+                <h2 class="animate animate-delay-2">Otras herramientas</h2>
+                <div class="divider divider--yellow animate animate-delay-3"></div>
+                <p class="animate animate-delay-3" style="margin-bottom: 8px; font-size: 0.95rem;">
+                    <a href="https://doc.rust-lang.org/cargo/commands/" target="_blank" rel="noopener" class="use-case-link">doc.rust-lang.org/cargo/commands</a>
+                    <span style="color: var(--stellar-gray-medium);"> · </span>
+                    <a href="https://github.com/StellarFoundation/scout" target="_blank" rel="noopener" class="use-case-link">github.com/StellarFoundation/scout</a>
+                </p>
+                <ul class="use-cases-list animate animate-delay-4" style="margin-top: 12px;">
+                    <li>
+                        <span class="use-case-icon">01</span>
+                        <div>
+                            <div class="use-case-title"><code>cargo check</code></div>
+                            <div class="use-case-desc">Verificar compilación sin generar binario (rápido).</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="use-case-icon">02</span>
+                        <div>
+                            <div class="use-case-title"><code>cargo fmt</code> / <code>cargo fmt -- --check</code></div>
+                            <div class="use-case-desc">Formatear o verificar formato sin cambiar archivos.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="use-case-icon">03</span>
+                        <div>
+                            <div class="use-case-title"><code>cargo test</code></div>
+                            <div class="use-case-desc">Ejecutar tests.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="use-case-icon">04</span>
+                        <div>
+                            <div class="use-case-title"><code>cargo scout-audit</code> (en la carpeta del contrato)</div>
+                            <div class="use-case-desc">Scout Soroban: análisis estático de vulnerabilidades.</div>
+                        </div>
+                    </li>
+                </ul>
+                <p class="animate animate-delay-5" style="margin-top: 24px; font-size: 1rem; line-height: 1.65; max-width: 640px; color: var(--stellar-black-soft);">
+                    <strong>Qué aportan al agente.</strong> Son deterministas (mismo comando → mismo resultado), ejecutables por el agente sin depender del IDE y más fiables que ReadLints para validar.
+                </p>
+                <div class="animate animate-delay-6" style="margin-top: 24px;">
+                    <a href="https://cursor.com/link/command?name=vibecoding-validate&amp;text=Ejecut%C3%A1%20en%20orden%20en%20la%20terminal%20del%20proyecto%3A%0A%0A1.%20%60cargo%20check%60%0A2.%20%60cargo%20fmt%20--%20--check%60%20(o%20%60cargo%20fmt%60%20para%20formatear)%0A3.%20%60cargo%20test%60%0A4.%20Si%20es%20un%20contrato%20Soroban%3A%20%60cargo%20scout-audit%60%20en%20la%20carpeta%20del%20contrato%0A%0ANo%20saltees%20pasos.%20Si%20alguno%20falla%2C%20report%C3%A1%20el%20error%20y%20correg%C3%AD%20antes%20de%20seguir." target="_blank" rel="noopener" class="btn-add-to-cursor"><svg class="cursor-icon" fill="none" height="22" width="22" viewBox="0 0 22 22" aria-hidden="true"><title class="sr-only">Cursor Logo</title><g clip-path="url(#cursor-logo-clip)" fill="currentColor"><path d="M19.162 5.452 10.698.565a.88.88 0 0 0-.879 0L1.356 5.452a.74.74 0 0 0-.37.64v9.853a.74.74 0 0 0 .37.64l8.464 4.887a.879.879 0 0 0 .879 0l8.464-4.886a.74.74 0 0 0 .37-.64V6.091a.74.74 0 0 0-.37-.64Zm-.531 1.035L10.46 20.639c-.055.095-.201.056-.201-.055v-9.266a.52.52 0 0 0-.26-.45L1.975 6.237c-.096-.056-.057-.202.054-.202h16.34c.233 0 .378.252.262.453Zm11.057-.555h3.602v1.984h-3.48c-1.877 0-3.342 1.083-3.342 3.372 0 2.29 1.465 3.373 3.342 3.373h3.48v1.984h-3.754c-3.144 0-5.372-1.847-5.372-5.356 0-3.51 2.38-5.357 5.524-5.357Zm5.432 0h2.227v6.546c0 1.633.748 2.396 2.503 2.396 1.755 0 2.503-.763 2.503-2.396V5.932h2.228v7.004c0 2.38-1.511 3.892-4.731 3.892-3.22 0-4.73-1.526-4.73-3.907v-6.99Zm21.106 3.036c0 1.19-.687 2.106-1.602 2.503v.03c.961.138 1.45.825 1.465 1.756l.045 3.388h-2.228l-.045-3.022c-.015-.671-.412-1.083-1.206-1.083h-3.708v4.105h-2.228V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.243.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.84 0 1.374-.504 1.374-1.42Zm10.67 4.242c0-.763-.489-1.083-1.221-1.144l-2.472-.229c-2.137-.198-3.251-1.038-3.251-3.068 0-2.03 1.374-3.143 3.342-3.143h5.463v1.922h-5.31c-.763 0-1.252.397-1.252 1.16 0 .763.504 1.13 1.267 1.19l2.518.214c1.908.168 3.159 1.038 3.159 3.083s-1.328 3.144-3.205 3.144h-5.707v-1.923h5.494c.717 0 1.175-.488 1.175-1.205Zm8.751-7.768c3.357 0 5.479 2.152 5.479 5.524 0 3.373-2.213 5.555-5.57 5.555-3.358 0-5.479-2.182-5.479-5.555 0-3.372 2.213-5.524 5.57-5.524Zm3.174 5.54c0-2.26-1.312-3.587-3.22-3.587-1.908 0-3.22 1.328-3.22 3.587 0 2.258 1.312 3.585 3.22 3.585 1.908 0 3.22-1.327 3.22-3.585Zm13.362-2.32c0 1.19-.686 2.106-1.602 2.503v.03c.962.138 1.45.825 1.465 1.756l.046 3.388h-2.228l-.045-3.022c-.016-.671-.413-1.083-1.206-1.083h-3.71v4.105h-2.227V5.932h6.15c2.014 0 3.357 1.022 3.357 3.037Zm-2.242.306c0-.916-.489-1.42-1.404-1.42h-3.632v2.839h3.662c.839 0 1.374-.504 1.374-1.42Z"/></g></svg><span>Add to Cursor — /vibecoding-validate</span></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: Herramientas del ecosistema Stellar -->
+        <!-- SLIDE: SoroPG — Soroban Playground -->
+        <div class="slide slide--white" data-slide="2">
+            <div class="slide-content">
+                <div class="split">
+                    <div class="split-text">
+                        <h2 class="animate animate-delay-2">SoroPG — Soroban Playground</h2>
+                        <div class="divider animate animate-delay-3"></div>
+                        <p class="animate animate-delay-3">
+                            Escribí, compilá, testeá y desplegá contratos Soroban (Rust) directamente en el navegador. Ideal para iterar sin instalar Stellar CLI local.
+                        </p>
+                        <ul class="use-cases-list animate animate-delay-4" style="margin-top: 20px;">
+                            <li>
+                                <span class="use-case-icon">01</span>
+                                <div>
+                                    <div class="use-case-title">Iteración sin setup local</div>
+                                    <div class="use-case-desc">Editás y corrés contratos Soroban en el browser.</div>
+                                    <a class="use-case-link" href="https://soropg.com/" target="_blank" rel="noopener">soropg.com</a>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">02</span>
+                                <div>
+                                    <div class="use-case-title">Validación inmediata</div>
+                                    <div class="use-case-desc">Build + test + deploy + explore en el mismo loop.</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <p class="animate animate-delay-5" style="font-size: 0.95rem; color: rgba(15,15,15,0.6); margin-top: 12px;">
+                            <strong>Feedback loop:</strong> Create &rarr; Build &rarr; Test &rarr; Deploy &rarr; Explore.
+                        </p>
+                    </div>
+                    <figure class="split-image slide-figure animate animate-delay-3">
+                        <img src="assets/soropg-playground.png" alt="Soroban Playground en el navegador">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: Stellar Game Studio -->
+        <div class="slide slide--white" data-slide="3">
+            <div class="slide-content">
+                <div class="split">
+                    <div class="split-text">
+                        <h2 class="animate animate-delay-2">Stellar Game Studio</h2>
+                        <div class="divider animate animate-delay-3"></div>
+                        <p class="animate animate-delay-3">
+                            Entorno y recursos para construir juegos y experiencias interactivas sobre Stellar/Soroban. Forma parte del feedback loop cuando el producto es una dApp o un juego on-chain.
+                        </p>
+                        <ul class="use-cases-list animate animate-delay-4" style="margin-top: 20px;">
+                            <li>
+                                <span class="use-case-icon">01</span>
+                                <div>
+                                    <div style="font-weight: 700;">Game Studio</div>
+                                    <div style="color: rgba(15, 15, 15, 0.7); margin-top: 4px; font-size: 1rem;">
+                                        Wallets, assets y contratos, usados dentro de experiencias lúdicas.
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="use-case-icon">02</span>
+                                <div>
+                                    <div style="font-weight: 700;">En el loop</div>
+                                    <div style="color: rgba(15, 15, 15, 0.7); margin-top: 4px; font-size: 1rem;">
+                                        Probás en testnet, la IA sugiere, vos iterás con datos reales.
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <p class="animate animate-delay-5" style="font-size: 0.95rem; color: rgba(15,15,15,0.7); margin-top: 12px;">
+                            <a class="use-case-link" href="https://dorahacks.io/hackathon/stellar-hacks-zk-gaming/quickstart-guide" target="_blank" rel="noopener">dorahacks.io/hackathon/stellar-hacks-zk-gaming/quickstart-guide</a>
+                        </p>
+                    </div>
+                    <figure class="split-image slide-figure animate animate-delay-3">
+                        <img src="assets/stellar-game-studio.png" alt="Stellar Game Studio">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled aria-label="Anterior">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="nav-counter" id="navCounter">1 / 9</span>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()" aria-label="Siguiente">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    </nav>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progressBar');
+        const navCounter = document.getElementById('navCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateSlide() {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide);
+            });
+            progressBar.style.width = ((currentSlide + 1) / totalSlides) * 100 + '%';
+            navCounter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) { currentSlide++; updateSlide(); }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) { currentSlide--; updateSlide(); }
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) { currentSlide = index; updateSlide(); }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight': case 'ArrowDown': case ' ':
+                    e.preventDefault(); nextSlide(); break;
+                case 'ArrowLeft': case 'ArrowUp':
+                    e.preventDefault(); prevSlide(); break;
+                case 'Home': e.preventDefault(); goToSlide(0); break;
+                case 'End': e.preventDefault(); goToSlide(totalSlides - 1); break;
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                diffX > 0 ? nextSlide() : prevSlide();
+            }
+        });
+
+        updateSlide();
+
+        // Normalize deeplinks to Cursor app format (IS_WEB = false).
+        (function normalizeCursorDeeplinks() {
+            const deeplinkTypes = ['rule', 'skill', 'command'];
+
+            deeplinkTypes.forEach(function(type) {
+                const selector = 'a[href*="cursor.com/link/' + type + '"]';
+                document.querySelectorAll(selector).forEach(function(anchor) {
+                    try {
+                        const current = new URL(anchor.href);
+                        const name = current.searchParams.get('name');
+                        const text = current.searchParams.get('text');
+                        if (!name || !text) return;
+
+                        const appUrl = new URL('cursor://anysphere.cursor-deeplink/' + type);
+                        appUrl.searchParams.set('name', name);
+                        appUrl.searchParams.set('text', text);
+                        anchor.href = appUrl.toString();
+                    } catch (_error) {
+                        // Ignore malformed URLs to avoid breaking the slideshow.
+                    }
+                });
+            });
+        })();
+
+        /* Draggable cards (slide 8) */
+        (function initDraggableCards() {
+            const cards = document.querySelectorAll('.draggable-card[data-card]');
+            cards.forEach(function(card) {
+                let baseX = 0, baseY = 0;
+                let startPointerX = 0, startPointerY = 0;
+
+                function getCardPos() {
+                    const rect = card.getBoundingClientRect();
+                    const wrapper = card.parentElement;
+                    if (!wrapper) return { x: 0, y: 0 };
+                    const wrapRect = wrapper.getBoundingClientRect();
+                    return {
+                        x: rect.left - wrapRect.left,
+                        y: rect.top - wrapRect.top
+                    };
+                }
+
+                function onPointerDown(e) {
+                    if (e.button !== 0 && e.type === 'mousedown') return;
+                    e.preventDefault?.();
+                    const pos = getCardPos();
+                    baseX = pos.x;
+                    baseY = pos.y;
+                    startPointerX = e.clientX ?? e.touches[0].clientX;
+                    startPointerY = e.clientY ?? e.touches[0].clientY;
+                    card.classList.add('dragging');
+                    card.style.left = baseX + 'px';
+                    card.style.top = baseY + 'px';
+                    document.addEventListener('mousemove', onPointerMove);
+                    document.addEventListener('mouseup', onPointerUp);
+                    document.addEventListener('touchmove', onPointerMove, { passive: false });
+                    document.addEventListener('touchend', onPointerUp);
+                }
+
+                function onPointerMove(e) {
+                    e.preventDefault();
+                    const clientX = e.clientX ?? (e.touches && e.touches[0].clientX);
+                    const clientY = e.clientY ?? (e.touches && e.touches[0].clientY);
+                    const dx = clientX - startPointerX;
+                    const dy = clientY - startPointerY;
+                    card.style.left = (baseX + dx) + 'px';
+                    card.style.top = (baseY + dy) + 'px';
+                }
+
+                function onPointerUp(e) {
+                    const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+                    const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+                    if (clientX != null && clientY != null) {
+                        baseX += (clientX - startPointerX);
+                        baseY += (clientY - startPointerY);
+                    }
+                    card.classList.remove('dragging');
+                    document.removeEventListener('mousemove', onPointerMove);
+                    document.removeEventListener('mouseup', onPointerUp);
+                    document.removeEventListener('touchmove', onPointerMove);
+                    document.removeEventListener('touchend', onPointerUp);
+                }
+
+                card.addEventListener('mousedown', onPointerDown);
+                card.addEventListener('touchstart', onPointerDown, { passive: false });
+            });
+        })();
+    </script>
+</body>
+</html>

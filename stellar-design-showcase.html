@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Design System - Showcase</title>
+    <link rel="stylesheet" href="stellar-design-system.css">
+    <style>
+        /* Estilos adicionales para el showcase */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .showcase-section {
+            padding: 3rem 1.5rem;
+            border-bottom: 1px solid var(--stellar-gray-medium);
+        }
+        
+        .showcase-title {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--stellar-black-70);
+            margin-bottom: 1.5rem;
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .color-swatch {
+            text-align: center;
+        }
+        
+        .color-box {
+            width: 100%;
+            height: 100px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--stellar-gray-medium);
+            margin-bottom: 0.5rem;
+        }
+        
+        .color-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .color-hex {
+            font-size: 0.625rem;
+            color: var(--stellar-black-70);
+            font-family: var(--font-mono);
+        }
+        
+        .button-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .typography-sample {
+            margin-bottom: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="mb-lg">Stellar Design System</h1>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem;">
+                Guía de estilo completa extraída de stellar.org
+            </p>
+            <div class="button-grid" style="justify-content: center;">
+                <button class="btn btn-primary">Botón Primario</button>
+                <button class="btn btn-secondary">Botón Secundario</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paleta de Colores -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-title">Paleta de Colores</div>
+            
+            <h3 class="mb-md">Colores Principales</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-yellow);"></div>
+                    <div class="color-name">Amarillo Stellar</div>
+                    <div class="color-hex">#FDDA24</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-purple);"></div>
+                    <div class="color-name">Violeta Stellar</div>
+                    <div class="color-hex">#673AB7</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-black); border: none;"></div>
+                    <div class="color-name">Negro Stellar</div>
+                    <div class="color-hex">#0F0F0F</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-white);"></div>
+                    <div class="color-name">Blanco</div>
+                    <div class="color-hex">#FFFFFF</div>
+                </div>
+            </div>
+
+            <h3 class="mb-md mt-xl">Colores Secundarios</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-purple-light);"></div>
+                    <div class="color-name">Púrpura Claro</div>
+                    <div class="color-hex">#B7ACE8</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-purple-lighter);"></div>
+                    <div class="color-name">Púrpura Muy Claro</div>
+                    <div class="color-hex">#BDB1F5</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-cyan);"></div>
+                    <div class="color-name">Cian</div>
+                    <div class="color-hex">#00A7B5</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-error);"></div>
+                    <div class="color-name">Error</div>
+                    <div class="color-hex">#FF3F00</div>
+                </div>
+            </div>
+
+            <h3 class="mb-md mt-xl">Grises</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-gray-lightest);"></div>
+                    <div class="color-name">Gris Muy Claro</div>
+                    <div class="color-hex">#F9F9F9</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-gray-light);"></div>
+                    <div class="color-name">Gris Claro</div>
+                    <div class="color-hex">#F2F2F2</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-gray-medium);"></div>
+                    <div class="color-name">Gris Medio</div>
+                    <div class="color-hex">#969696</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--stellar-black-soft);"></div>
+                    <div class="color-name">Negro Suave</div>
+                    <div class="color-hex">#212121</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tipografía -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-title">Tipografía</div>
+            
+            <div class="typography-sample">
+                <h1>Título H1 - Lora 48px/64px</h1>
+                <p class="text-secondary" style="margin-top: 0.5rem;">
+                    Font: Lora, Line-height: 1.1, Weight: 400
+                </p>
+            </div>
+
+            <div class="typography-sample">
+                <h2>Título H2 - Lora 32px/48px</h2>
+                <p class="text-secondary" style="margin-top: 0.5rem;">
+                    Font: Lora, Line-height: 1.1, Weight: 400
+                </p>
+            </div>
+
+            <div class="typography-sample">
+                <h3>Título H3 - Inter 24px/32px</h3>
+                <p class="text-secondary" style="margin-top: 0.5rem;">
+                    Font: Inter, Line-height: 2.5rem/3rem, Weight: 400
+                </p>
+            </div>
+
+            <div class="typography-sample">
+                <p style="font-size: 1rem; line-height: 1.75rem;">
+                    Cuerpo de texto - Inter 16px con line-height de 28px. 
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    Stellar es una red blockchain diseñada para pagos y tokenización de activos.
+                </p>
+                <p class="text-secondary" style="margin-top: 0.5rem;">
+                    Font: Inter, Size: 1rem (16px), Line-height: 1.75rem (28px), Weight: 400
+                </p>
+            </div>
+
+            <div class="typography-sample">
+                <div class="big-number">10.1M</div>
+                <p class="text-secondary" style="margin-top: 0.5rem;">
+                    Números grandes - Font: Schabo (Display), Size: 3rem
+                </p>
+            </div>
+
+            <div class="typography-sample">
+                <code style="display: block; padding: 1rem; background: var(--stellar-black-bg); color: var(--stellar-purple-light); border-radius: var(--radius-md);">
+                    const stellar = "blockchain";<br>
+                    console.log(stellar);
+                </code>
+                <p class="text-secondary" style="margin-top: 0.5rem;">
+                    Código - Font: IBM Plex Mono
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botones -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-title">Botones</div>
+            
+            <h3 class="mb-md">Variantes de Botones</h3>
+            <div class="button-grid">
+                <button class="btn btn-primary">Botón Primario</button>
+                <button class="btn btn-secondary">Botón Secundario</button>
+                <button class="btn btn-outline">Botón Outline</button>
+            </div>
+
+            <h3 class="mb-md mt-xl">Estados</h3>
+            <div class="button-grid">
+                <button class="btn btn-primary">Normal</button>
+                <button class="btn btn-primary" style="opacity: 0.7;">Disabled</button>
+                <button class="btn btn-primary" style="background-color: var(--stellar-purple-hover);">Hover</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formularios -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-title">Formularios</div>
+            
+            <div style="max-width: 600px;">
+                <div class="form-group">
+                    <label class="form-label" for="text-input">Input de Texto</label>
+                    <input type="text" id="text-input" class="input-text" placeholder="Ingresa tu texto aquí">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email-input">Email</label>
+                    <input type="email" id="email-input" class="input-text" placeholder="tu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="select-input">Select</label>
+                    <select id="select-input" class="select">
+                        <option>Opción 1</option>
+                        <option>Opción 2</option>
+                        <option>Opción 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="textarea-input">Textarea</label>
+                    <textarea id="textarea-input" class="textarea" placeholder="Escribe tu mensaje..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Radio Buttons</label>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="radio-demo" class="radio-custom" checked>
+                            <span>Opción 1</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="radio-demo" class="radio-custom">
+                            <span>Opción 2</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Checkboxes</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" class="checkbox-custom" checked>
+                            <span>Acepto los términos y condiciones</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" class="checkbox-custom">
+                            <span>Deseo recibir notificaciones</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary">Enviar Formulario</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tarjetas -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-title">Tarjetas y Contenedores</div>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h3 class="mb-md">Tarjeta Estándar</h3>
+                    <p class="text-secondary">
+                        Esta es una tarjeta con borde negro sólido y fondo blanco.
+                        Ideal para contenido destacado.
+                    </p>
+                </div>
+
+                <div class="card-subtle">
+                    <h3 class="mb-md">Tarjeta Sutil</h3>
+                    <p class="text-secondary">
+                        Esta es una tarjeta con fondo gris claro y borde gris.
+                        Perfecta para contenido secundario.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-xl">
+                <div class="error-container">
+                    <strong>Error:</strong> Este es un contenedor de error con borde rojo.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estadísticas -->
+    <section class="showcase-section bg-gray-light">
+        <div class="container">
+            <div class="showcase-title">Estadísticas</div>
+            
+            <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="stat-card">
+                    <div class="stat-number">10.1M</div>
+                    <div class="stat-label">Direcciones Totales</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">475K+</div>
+                    <div class="stat-label">Ramps Globales</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">5.1B</div>
+                    <div class="stat-label">Total de Operaciones</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tags y Enlaces -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-title">Tags y Enlaces</div>
+            
+            <h3 class="mb-md">Tags/Badges</h3>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="tag">DeFi</span>
+                <span class="tag">Tokenización</span>
+                <span class="tag">Soroban</span>
+                <span class="tag">Smart Contracts</span>
+            </div>
+
+            <h3 class="mb-md mt-xl">Enlaces</h3>
+            <p>
+                Este es un párrafo con un 
+                <a href="#" class="link-primary">enlace primario</a> 
+                que usa el color violeta de Stellar.
+            </p>
+        </div>
+    </section>
+
+    <!-- Especificaciones Técnicas -->
+    <section class="showcase-section bg-black text-white">
+        <div class="container">
+            <div class="showcase-title" style="color: rgba(255,255,255,0.7);">
+                Especificaciones Técnicas
+            </div>
+            
+            <div class="grid-2">
+                <div>
+                    <h3 class="mb-md">Border Radius</h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li>Pequeño: <code>0.25rem (4px)</code></li>
+                        <li>Medio: <code>0.375rem (6px)</code></li>
+                        <li>Grande: <code>1.5rem (24px)</code></li>
+                        <li>Pill: <code>6.25rem (100px)</code></li>
+                        <li>Circular: <code>50%</code></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="mb-md">Espaciado</h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li>XS: <code>0.25rem (4px)</code></li>
+                        <li>SM: <code>0.5rem (8px)</code></li>
+                        <li>MD: <code>1rem (16px)</code></li>
+                        <li>LG: <code>1.5rem (24px)</code></li>
+                        <li>XL: <code>2.5rem (40px)</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-xl">
+                <h3 class="mb-md">Características del Diseño</h3>
+                <ul style="line-height: 2; padding-left: 1.5rem;">
+                    <li>Diseño <strong>flat</strong> sin sombras suaves</li>
+                    <li>Bordes sólidos de 1px</li>
+                    <li>Transiciones suaves de 0.2s</li>
+                    <li>Sistema de espaciado basado en rem</li>
+                    <li>Tipografía con fallbacks optimizados</li>
+                    <li>Paleta de colores limitada y vibrante</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="showcase-section" style="text-align: center; border-bottom: none;">
+        <div class="container">
+            <p class="text-secondary">
+                Stellar Design System - Auditoría realizada el 11 de febrero de 2026
+            </p>
+            <p class="text-tertiary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+                Basado en stellar.org/es/casos-de-uso/defi y stellar.org/es/casos-de-uso/tokenizacion
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
