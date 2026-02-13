@@ -1399,12 +1399,36 @@
             return url.toString();
         }
 
+        function copyTextToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text);
+            }
+
+            return new Promise(function(resolve, reject) {
+                try {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.setAttribute('readonly', '');
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    const copied = document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    if (copied) resolve();
+                    else reject(new Error('Clipboard copy failed'));
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
         (function patchAddToCursorButtons() {
             const payloadByLabel = {
                 'Add to Cursor — /insights': {
                     type: 'command',
                     name: 'insights',
-                    text: 'Analyze project AI transcripts and summarize recurring failure patterns with preventive actions.\n\nChecklist:\n1. Run build/check after code changes.\n2. Validate concrete ref types and null handling.\n3. Review end-to-end sync/OAuth flow before changes.\n4. Confirm edited files were written correctly and compile.\n\nReturn prioritized recommendations for the current task.'
+                    text: 'Analiza profundamente todas las conversaciones con la IA en todos mis proyectos de Cursor para identificar patrones de error, fallos recurrentes y lecciones aprendidas. Genera un AGENTS.md accionable con mejores practicas extraidas de errores reales.\n\nIMPORTANTE\n- Los agent transcripts estan en ~/.cursor/projects/*/agent-transcripts/*.txt\n- Los mensajes del usuario estan dentro de tags <user_query>...</user_query>\n- Los turnos del asistente empiezan con A: y los bloques de razonamiento con [Thinking]\n- Las llamadas a herramientas estan marcadas con [Tool call] y [Tool result]\n- Usa subagentes en paralelo (maximo 4) para analizar multiples proyectos\n\nFASE 1: DESCUBRIMIENTO (EJECUTAR EN PARALELO)\n1.1 Listar proyectos con transcripciones\nfind ~/.cursor/projects -type d -name "agent-transcripts" 2>/dev/null | while read dir; do\n  project=$(echo "$dir" | sed \'s|.*/projects/||\' | cut -d\'/\' -f1)\n  count=$(find "$dir" -name "*.txt" 2>/dev/null | wc -l | tr -d \' \')\n  total_kb=$(du -sk "$dir" 2>/dev/null | cut -f1)\n  echo "$count transcripts (${total_kb}KB) - $project"\ndone | sort -t\' \' -k1 -nr\n\n1.2 Estadisticas globales de errores\necho "=== QUEJAS DEL USUARIO ==="\nrg -c -i "no funciona|no anda|esta mal|no sirve|sigue sin|sigue fallando|de nuevo|otra vez|por que|why does|why is|doesn\'t work|not working|still broken|still failing|wrong|broke|ENCONTRE UN ERROR" ~/.cursor/projects/*/agent-transcripts/*.txt 2>/dev/null | awk -F: \'{sum+=$NF} END {print "Total lineas con quejas:", sum}\'\n\necho ""\necho "=== AUTO-CORRECCIONES DE LA IA ==="\nrg -c -i "disculpa|I apologize|my mistake|tienes razon|you\'re right|me equivoque|was incorrect|lo corrijo|I was wrong|sorry for" ~/.cursor/projects/*/agent-transcripts/*.txt 2>/dev/null | awk -F: \'{sum+=$NF} END {print "Total auto-correcciones:", sum}\'\n\necho ""\necho "=== ERRORES BUILD/LINT ==="\nrg -c -i "error TS|SyntaxError|TypeError|ReferenceError|Module not found|Cannot find module|failed to compile|Build error|ENOENT|EACCES|Permission denied" ~/.cursor/projects/*/agent-transcripts/*.txt 2>/dev/null | awk -F: \'{sum+=$NF} END {print "Total errores build/lint:", sum}\'\n\nFASE 2: ANALISIS PROFUNDO CON 4 SUBAGENTES EN PARALELO\nSubagente 1: Quejas directas del usuario\n- Buscar mensajes del usuario que indiquen que la IA hizo algo mal.\n- Extraer contexto: que pidio, que hizo mal la IA, y como se resolvio.\n- Clasificar cada caso: wrong_approach | wrong_code | missing_context | ignored_instruction | broke_existing | wrong_file | other\n\nConsulta sugerida:\nrg -i -A10 "<user_query>" ~/.cursor/projects/*/agent-transcripts/*.txt 2>/dev/null | rg -i -B1 -A10 "no funciona|no anda|esta mal|no sirve|sigue sin|sigue fallando|de nuevo|otra vez|por que esto|arregla esto|fix this|why does|why is|doesn\'t work|not working|still broken|wrong|broke|ENCONTRE UN ERROR|pero te dije|ya te dije|te pedi|eso no es lo que|that\'s not what|rompiste|se rompio"\n\nSubagente 2: Auto-correcciones y retrocesos de la IA\n- Buscar momentos donde la IA se corrige a si misma o reconoce error.\n- Extraer: que estaba mal, que correccion aplico, y si lo detecto sola o por senal del usuario.\n\nConsulta sugerida:\nrg -i -B5 -A5 "disculpa|I apologize|my mistake|tienes razon|you\'re right|me equivoque|was incorrect|lo corrijo|I was wrong|sorry for the|let me fix|dejame corregir|actually, I should|en realidad deberia" ~/.cursor/projects/*/agent-transcripts/*.txt 2>/dev/null\n\nSubagente 3: Errores tecnicos repetidos (build, lint, runtime)\n- Buscar errores tecnicos en tool results y agrupar por frecuencia.\n- Identificar cuales se repiten mas.\n\nConsulta sugerida:\nrg -i -B2 -A5 "error TS|SyntaxError|TypeError|ReferenceError|Module not found|Cannot find module|failed to compile|Build error|ENOENT|Command failed|npm ERR|yarn ERR|pnpm ERR|Unexpected token|is not a function|is not defined|Cannot read propert|null is not|undefined is not" ~/.cursor/projects/*/agent-transcripts/*.txt 2>/dev/null\n\nSubagente 4: Patrones de ida y vuelta (loops de correccion)\n- Detectar transcripciones con muchos turnos del usuario (>5).\n- Leer casos top y analizar por que no se resolvio a la primera.\n\nConsulta sugerida:\nfind ~/.cursor/projects -name "*.txt" -path "*/agent-transcripts/*" 2>/dev/null | while read f; do\n  turns=$(rg -c "<user_query>" "$f" 2>/dev/null || echo 0)\n  if [ "$turns" -gt 5 ]; then\n    project=$(echo "$f" | sed \'s|.*/projects/||\' | cut -d\'/\' -f1)\n    echo "$turns turnos - $project - $(basename $f)"\n  fi\ndone | sort -t\' \' -k1 -nr | head -20\n\nFASE 3: SINTESIS Y CATEGORIZACION\nDespues de recibir resultados de los 4 subagentes, sintetizar en:\n1) RESUMEN EJECUTIVO\n- Total de sesiones analizadas\n- Sesiones con fallos detectados (cantidad y porcentaje)\n- Top 3 proyectos mas problematicos\n- Categoria de error mas comun\n\n2) TOP 10 ERRORES MAS FRECUENTES\nPara cada error: descripcion del patron, frecuencia, proyectos afectados, ejemplo concreto, leccion aprendida.\n\n3) CATEGORIAS DE FALLOS (con porcentaje)\n- Enfoque equivocado\n- Ignoro instrucciones\n- Rompio codigo existente\n- Codigo incorrecto\n- Falta de contexto\n- Loop de correccion\n- Archivo equivocado\n- Hardcoded/asumio valores\n\n4) ERRORES POR PROYECTO\nTabla: Proyecto | Sesiones | Fallos | Tasa de error | Tipo mas comun\n\n5) PATRONES TEMPORALES\n- Si errores son mas comunes por tipo de tarea (setup, refactor, feature, fix)\n- Si se repiten errores en el tiempo\n- Si algun proyecto concentra errores desproporcionadamente\n\nFASE 4: GENERACION DE AGENTS.MD\nGenerar AGENTS.md en la raiz del proyecto actual con formato:\n- Titulo: AGENTS.md - Lecciones aprendidas de [N] sesiones de IA\n- Reglas criticas con secciones Por que / Hacer / No hacer\n- Patrones a evitar\n- Checklist antes de implementar\n- Contexto especifico por tipo de tarea (tech/framework, refactors, features)\n\nFORMATO DE SALIDA\n- Primero Resumen Ejecutivo (datos duros)\n- Luego Top 10 Errores (accionable)\n- Despues Categorias y analisis por proyecto\n- Finalmente preguntar si quiero generar AGENTS.md con las lecciones aprendidas\n- Usar markdown con headers, bullets, negrita para metricas clave y ejemplos concretos'
                 },
                 'Add to Cursor — Stellar Design': {
                     type: 'skill',
@@ -1428,6 +1452,19 @@
                 const label = labelNode ? labelNode.textContent.trim() : '';
                 const payload = payloadByLabel[label];
                 if (!payload) return;
+
+                if (payload.type === 'skill') {
+                    if (labelNode) labelNode.textContent = 'Click para copiar.';
+                    anchor.href = '#';
+                    anchor.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        copyTextToClipboard(payload.text).catch(function() {
+                            // Keep silent to avoid interrupting the presentation flow.
+                        });
+                    });
+                    return;
+                }
+
                 anchor.href = generateCursorDeeplink(payload.type, payload.name, payload.text);
             });
         })();
