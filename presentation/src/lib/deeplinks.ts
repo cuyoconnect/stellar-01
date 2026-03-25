@@ -21,7 +21,8 @@ export const IDE_OPTIONS: { value: IdeTarget; label: string }[] = [
 
 export type DeeplinkPayload = {
   kind: 'cursor-command' | 'cursor-rule'
-  type: 'command' | 'rule'
+  /** Segmento del deeplink Cursor: `command` o `skill` (reglas van como skill). */
+  type: 'command' | 'skill'
   name: string
   text: string
 }
@@ -43,7 +44,7 @@ Salida: markdown listo para pegar en AGENTS.md del proyecto actual.`,
   },
   'stellar-design': {
     kind: 'cursor-rule',
-    type: 'rule',
+    type: 'skill',
     name: 'stellar-design',
     text: `---
 name: stellar-design
@@ -56,7 +57,7 @@ Use Stellar color tokens, typography, spacing, and component patterns to generat
   },
   'stellar-image-generation': {
     kind: 'cursor-rule',
-    type: 'rule',
+    type: 'skill',
     name: 'stellar-image-generation',
     text: `---
 name: stellar-image-generation
