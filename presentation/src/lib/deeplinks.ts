@@ -83,8 +83,10 @@ Do not skip steps. If a step fails, report and fix before continuing.`,
 
 export type DeeplinkPayloadKey = keyof typeof DEEPLINK_PAYLOADS
 
-export function generateCursorDeeplink(type: 'command' | 'skill', name: string, text: string): string {
-  const baseUrl = 'cursor://anysphere.cursor-deeplink/' + type
+/** En la URL de Cursor, las rules van como segmento `skill`. */
+export function generateCursorDeeplink(type: 'command' | 'rule', name: string, text: string): string {
+  const pathSegment = type === 'rule' ? 'skill' : 'command'
+  const baseUrl = 'cursor://anysphere.cursor-deeplink/' + pathSegment
   const url = new URL(baseUrl)
   url.searchParams.set('name', name)
   url.searchParams.set('text', text)
