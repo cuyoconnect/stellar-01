@@ -53,16 +53,19 @@ export const slideTitleSelectEffect =
 export function SlideTitle({
   children,
   className = '',
+  highlight = true,
 }: {
   children: React.ReactNode
   className?: string
+  /** Por defecto resaltado amarillo; `false` = título sin fondo (p. ej. slide 2). */
+  highlight?: boolean
 }) {
   return (
-    <SlideItem className="w-full">
+    <SlideItem className="flex w-full flex-col items-center">
       <h2
-        className={`font-serif text-3xl font-normal tracking-[-0.03em] md:text-[2.75rem] md:leading-tight ${className}`}
+        className={`w-full text-center font-serif text-3xl font-normal tracking-[-0.03em] text-[#0f0f0f] md:text-[2.75rem] md:leading-tight ${className}`}
       >
-        <span className={slideTitleSelectEffect}>{children}</span>
+        {highlight ? <span className={slideTitleSelectEffect}>{children}</span> : children}
       </h2>
     </SlideItem>
   )
@@ -76,9 +79,9 @@ export function SlideSubtitle({
   className?: string
 }) {
   return (
-    <SlideItem className="w-full">
+    <SlideItem className="flex w-full flex-col items-center">
       <p
-        className={`mt-3 max-w-3xl text-pretty text-lg leading-relaxed text-[#0f0f0f]/70 md:text-xl ${className}`}
+        className={`mt-3 w-full max-w-3xl text-pretty text-center text-lg leading-relaxed text-[#0f0f0f]/70 md:text-xl ${className}`}
       >
         {children}
       </p>

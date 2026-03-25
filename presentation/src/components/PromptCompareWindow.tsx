@@ -45,7 +45,7 @@ export function PromptCompareWindow({
         className={
           showWindowChrome
             ? 'overflow-hidden rounded-xl border border-[#0f0f0f]/12 bg-white shadow-[0_1px_0_0_rgba(15,15,15,0.04),0_12px_32px_-8px_rgba(15,15,15,0.12)]'
-            : 'overflow-hidden rounded-xl border border-[#0f0f0f]/10 bg-white shadow-sm'
+            : 'overflow-hidden rounded-xl bg-transparent'
         }
       >
         {showWindowChrome ? (
@@ -64,7 +64,7 @@ export function PromptCompareWindow({
         <div
           className={
             isMinimal
-              ? 'flex flex-wrap gap-x-8 gap-y-1 border-b border-[#0f0f0f]/10 px-4 pt-1 sm:px-5'
+              ? 'flex flex-wrap gap-x-8 gap-y-1 px-4 pt-1 sm:px-5'
               : 'flex flex-wrap gap-1 border-b border-[#0f0f0f]/8 bg-[#fafafa] px-2 py-2'
           }
           role="tablist"
