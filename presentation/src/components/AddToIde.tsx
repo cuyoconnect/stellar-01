@@ -87,13 +87,13 @@ export function AddToIde({ ide, payloadKey, label, variant = 'default' }: Props)
       ? 'border border-emerald-200 bg-[#f0faf2] text-emerald-950 shadow-sm hover:bg-[#e8f6ea]'
       : flash === 'err'
         ? 'border border-rose-200 bg-rose-50 text-rose-950 shadow-sm hover:bg-rose-50'
-        : 'border border-[#e8dfd6] bg-[#faf9f6] text-[#1c1917] shadow-[0_1px_2px_rgba(28,25,23,0.04)] hover:-translate-y-px hover:bg-[#f4efe8] hover:border-[#d4c4b4] hover:shadow-md'
+        : 'border border-[#e8dfd6] bg-[#faf9f6] text-[#1c1917] hover:bg-[#f4efe8] hover:border-[#d4c4b4]'
 
   const defaultShellClass =
-    'bg-[var(--atc-bg)] text-white hover:bg-[var(--atc-hover)] hover:shadow-lg ' +
+    'bg-[var(--atc-bg)] text-white hover:bg-[var(--atc-hover)] ' +
     (isCursor
-      ? 'border border-white/[0.08] shadow-[0_1px_0_rgba(255,255,255,0.06)_inset,0_2px_8px_rgba(0,0,0,0.35)]'
-      : 'shadow-md')
+      ? 'border border-white/[0.08] shadow-[0_1px_0_rgba(255,255,255,0.06)_inset,0_1px_4px_rgba(0,0,0,0.25)]'
+      : 'shadow-sm')
 
   const iconWrapClass = isClaudeShell
     ? flash === 'ok'
@@ -120,15 +120,8 @@ export function AddToIde({ ide, payloadKey, label, variant = 'default' }: Props)
         title={actionPreview.description}
         aria-label={`${buttonLabel}. ${actionPreview.description}`}
         className={
-          'inline-flex w-full min-h-[48px] items-center gap-3 rounded-xl px-4 py-3 text-[0.9375rem] font-semibold tracking-[-0.02em] no-underline transition active:translate-y-0 sm:px-5 ' +
+          'inline-flex w-full min-h-[48px] items-center gap-3 rounded-lg px-4 py-3 text-[0.9375rem] font-semibold tracking-[-0.02em] no-underline transition active:translate-y-0 sm:px-5 ' +
           (isClaudeShell ? claudeShellClass : defaultShellClass)
-        }
-        style={
-          !isClaudeShell && !isCursor
-            ? {
-                boxShadow: '0 2px 8px rgba(15, 15, 15, 0.12), 0 1px 2px rgba(15, 15, 15, 0.06)',
-              }
-            : undefined
         }
       >
         <span

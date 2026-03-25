@@ -47,17 +47,17 @@ export function CodeBlock({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-xl border border-[#0f0f0f]/12 bg-[#262626] shadow-lg shadow-[#0f0f0f]/15 ${className}`}
+      className={`relative overflow-hidden rounded-lg border border-[#0f0f0f]/10 bg-[#262626] ${className}`}
     >
       {title ? (
-        <div className="border-b border-white/10 bg-[#1a1a1a] px-4 py-2 text-left text-xs font-medium uppercase tracking-wide text-white/55">
+        <div className="border-b border-white/[0.07] px-4 py-2 text-left text-[10px] font-medium uppercase tracking-[0.12em] text-white/45">
           {title}
         </div>
       ) : null}
       <button
         type="button"
         onClick={handleCopy}
-        className="absolute right-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#0f0f0f] shadow-md transition hover:bg-[#f9f9f9]"
+        className="absolute right-2.5 top-2.5 z-10 flex items-center gap-1 rounded-md border border-white/10 bg-white/95 px-2.5 py-1 text-[11px] font-medium text-[#0f0f0f] transition hover:bg-white"
         aria-label="Copiar código"
       >
         {copied ? (
