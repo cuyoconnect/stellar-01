@@ -66,7 +66,7 @@ export function Slide01Title() {
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:justify-between md:gap-16 lg:gap-24">
           <div className="relative z-10 min-w-0 flex-1 text-left">
             <h1 className="font-serif text-5xl font-normal leading-[1.2] tracking-[-0.03em] md:text-6xl md:leading-[1.18] lg:text-7xl lg:leading-[1.15]">
-              <span className={slideTitleSelectEffect}>Vibecoding en Web3</span>
+              <span className={slideTitleSelectEffect}>Workshop en IA en Web3</span>
             </h1>
           </div>
           <div className="relative z-0 flex w-full shrink-0 flex-col items-center gap-4 text-center md:w-auto">
@@ -100,9 +100,9 @@ function ConceptCard({
   body: string
 }) {
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-[#0f0f0f]/10 bg-[#fafafa]/80 p-6 shadow-[0_1px_0_0_rgba(15,15,15,0.04)]">
-      <div className="flex justify-center">
-        <span className="flex size-9 items-center justify-center rounded-full border-2 border-[#fdda24] bg-[#0f0f0f] text-[13px] font-semibold tabular-nums text-[#fdda24]">
+    <div className="flex h-full flex-col">
+      <div className="flex justify-start">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#fdda24] text-[13px] font-semibold tabular-nums text-[#0f0f0f]">
           {index + 1}
         </span>
       </div>
@@ -130,26 +130,28 @@ export function Slide02Vibecoding() {
 
   return (
     <Slide>
-      <SlideTitle>Desarrollar con IA: 3 ideas base</SlideTitle>
-      <SlideSubtitle>
-        Para trabajar mejor con agentes no alcanza con "prompting": importa qué contexto reciben y
-        qué señal les devolvés.
-      </SlideSubtitle>
-      <SlideItem className="mt-8 grid w-full max-w-5xl grid-cols-1 gap-5 text-left sm:gap-6 md:grid-cols-2 md:gap-x-8 md:gap-y-6">
-        {concepts.slice(0, 2).map((concept, index) => (
+      <SlideTitle highlight={false}>Desarrollar con IA: 3 ideas base</SlideTitle>
+      <SlideItem className="mt-8 w-full max-w-4xl md:mt-10">
+        <figure className="mx-auto text-left md:text-center">
+          <img
+            src="/lost-in-the-middle-context.png"
+            alt="Gráfico de desempeño según la posición en la ventana de contexto: el modelo tiende a usar peor la información en el medio (lost in the middle)."
+            className="mx-auto max-h-[280px] w-full max-w-3xl object-contain object-left sm:max-h-[300px] md:max-h-[340px] md:object-center rounded-lg border border-[#0f0f0f]/8 shadow-[0_1px_0_rgba(15,15,15,0.04)]"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption className="mt-2 max-w-2xl text-[11px] leading-relaxed text-[#0f0f0f]/48 md:mx-auto">
+            Ilustración del paper <em>Lost in the Middle</em> (Liu et al.): la atención no es
+            uniforme; encuadrá lo importante al inicio o al final si la ventana se llena.
+          </figcaption>
+        </figure>
+      </SlideItem>
+      <SlideItem className="mt-8 grid w-full max-w-5xl grid-cols-1 gap-5 text-left sm:gap-6 md:grid-cols-3 md:gap-x-6 md:gap-y-6 lg:gap-x-8">
+        {concepts.map((concept, index) => (
           <ConceptCard key={concept.title} index={index} title={concept.title} body={concept.body} />
         ))}
-        <div className="flex justify-center md:col-span-2">
-          <div className="w-full max-w-xl md:max-w-2xl">
-            <ConceptCard
-              index={2}
-              title={concepts[2].title}
-              body={concepts[2].body}
-            />
-          </div>
-        </div>
       </SlideItem>
-      <SlideItem className="mt-4 max-w-2xl">
+      <SlideItem className="mt-6 max-w-2xl md:mt-8">
         <p className="text-xs leading-relaxed text-[#0f0f0f]/45">
           <strong className="font-medium text-[#0f0f0f]/55">Regla práctica:</strong> contexto curado y
           validación real; menos ruido, más señal.
@@ -274,7 +276,7 @@ export function Slide05Mcps() {
 export function Slide06Skills() {
   return (
     <Slide>
-      <SlideTitle>Skills y stellar-dev</SlideTitle>
+      <SlideTitle>Skills : stellar-dev</SlideTitle>
       <SlideSubtitle>
         Las skills son playbooks de dominio que el agente carga y usa de forma progresiva.{' '}
         <strong className="text-[#0f0f0f]">stellar-dev</strong> es la skill oficial del ecosistema
@@ -310,6 +312,45 @@ export function Slide06Skills() {
   )
 }
 
+export function Slide06FrontendDesignSkill() {
+  return (
+    <Slide>
+      <SlideTitle>Skills: frontend design</SlideTitle>
+      <SlideSubtitle>
+        Skill de <strong className="text-[#0f0f0f]">Anthropic</strong> para interfaces web con
+        criterio de diseño: tipografía, color, motion y composición — y evitar el look genérico de
+        salida de IA.
+      </SlideSubtitle>
+      <SlideItem className="mt-6 w-full max-w-2xl space-y-6 text-left">
+        <ul className="space-y-2 text-sm text-[#0f0f0f]/70">
+          {[
+            'Pensar propósito, tono y diferenciación antes de codear.',
+            'Tipografía, paleta, animación y layout con intención (no Inter + gradiente violeta).',
+            'Código real: HTML/CSS/JS, React, Vue según el stack.',
+          ].map((t) => (
+            <li key={t} className="flex gap-2">
+              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#00a7b5]" />
+              <span>{t}</span>
+            </li>
+          ))}
+        </ul>
+        <CodeBlock
+          className="w-full"
+          code="npx skills add https://github.com/anthropics/skills --skill frontend-design"
+          language="bash"
+          title="Instalación"
+        />
+      </SlideItem>
+      <SlideItem className="mt-8 flex w-full flex-wrap justify-center gap-3">
+        <LinkPill href="https://skills.sh/anthropics/skills/frontend-design">
+          skills.sh — frontend-design
+        </LinkPill>
+        <LinkPill href="https://github.com/anthropics/skills">anthropics/skills (repo)</LinkPill>
+      </SlideItem>
+    </Slide>
+  )
+}
+
 export function Slide07Validation() {
   return (
     <Slide>
@@ -319,18 +360,35 @@ export function Slide07Validation() {
         IDE.
       </SlideSubtitle>
       <SlideItem className="mt-6 w-full max-w-2xl space-y-3">
-        <CodeBlock code="cargo check" language="bash" title="Compilación rápida" />
-        <CodeBlock code="cargo clippy -- -D warnings" language="bash" title="Linting estricto" />
-        <CodeBlock code="cargo test" language="bash" title="Suite de tests" />
+        <CodeBlock
+          code="cargo check"
+          language="bash"
+          title="Compilación rápida"
+          hint="Comprueba que el proyecto compila sin errores, sin generar el binario final (más rápido que cargo build)."
+        />
+        <CodeBlock
+          code="cargo clippy -- -D warnings"
+          language="bash"
+          title="Linting estricto"
+          hint="Ejecuta el linter de Rust; -D warnings trata cada advertencia como error y obliga a limpiar el código."
+        />
+        <CodeBlock
+          code="cargo test"
+          language="bash"
+          title="Suite de tests"
+          hint="Corre los tests unitarios e integración del crate (o workspace) para validar comportamiento real."
+        />
         <CodeBlock
           code="stellar contract build"
           language="bash"
           title="Artefacto WASM (contratos Soroban)"
+          hint="Compila el contrato a WASM y deja los artefactos listos para desplegar o probar en testnet."
         />
         <CodeBlock
           code="cargo scout-audit"
           language="bash"
           title="Análisis de vulnerabilidades (en la carpeta del contrato)"
+          hint="Pasa reglas de seguridad estáticas sobre el código del contrato; complementa tests, no sustituye auditoría humana."
         />
       </SlideItem>
       <SlideItem className="mt-4">
@@ -429,10 +487,32 @@ export function Slide14Prompts() {
     <Slide>
       <SlideTitle>Prompts listos</SlideTitle>
       <SlideSubtitle>Tres arranques distintos — copiá y adaptá al repo.</SlideSubtitle>
-      <SlideItem className="mt-6 w-full max-w-2xl space-y-3">
-        <CodeBlock code={PROMPT_MVP} language="markdown" title="MVP pagos USDC" />
-        <CodeBlock code={PROMPT_DEFI} language="markdown" title="DeFi dashboard" />
-        <CodeBlock code={PROMPT_ESCROW} language="markdown" title="Escrow Soroban" />
+      <SlideItem className="mt-6 w-full max-w-5xl text-left">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+          <div className="md:col-span-2">
+            <CodeBlock
+              className="w-full"
+              code={PROMPT_MVP}
+              language="markdown"
+              title="MVP pagos USDC"
+              maxScrollHeight="min(52vh, 480px)"
+            />
+          </div>
+          <CodeBlock
+            className="w-full"
+            code={PROMPT_DEFI}
+            language="markdown"
+            title="DeFi dashboard"
+            maxScrollHeight="min(34vh, 300px)"
+          />
+          <CodeBlock
+            className="w-full"
+            code={PROMPT_ESCROW}
+            language="markdown"
+            title="Escrow Soroban"
+            maxScrollHeight="min(34vh, 300px)"
+          />
+        </div>
       </SlideItem>
     </Slide>
   )
@@ -570,6 +650,64 @@ export function Slide16Installation() {
   )
 }
 
+export function Slide16ComponentLibraries() {
+  const rows = [
+    {
+      name: 'Aceternity UI',
+      role: 'Componentes y bloques React con Tailwind CSS y Framer Motion — listos para copiar y adaptar.',
+      href: 'https://ui.aceternity.com/',
+    },
+    {
+      name: 'React Bits',
+      role: 'Animaciones, backgrounds y micro-interacciones en React — snippets con código.',
+      href: 'https://reactbits.dev/',
+    },
+    {
+      name: 'Magic UI',
+      role: 'Componentes estilo shadcn/ui sobre Tailwind: marketing, layouts y efectos.',
+      href: 'https://magicui.design/',
+    },
+    {
+      name: '21st.dev',
+      role: 'Plataforma que reúne y cura componentes de muchas fuentes; buen punto de partida para explorar y comparar.',
+      href: 'https://21st.dev/',
+    },
+  ]
+
+  return (
+    <Slide>
+      <SlideTitle>UI lista para usar</SlideTitle>
+      <SlideSubtitle>
+        Librerías y catálogos de componentes web alineados con un front moderno (React, Tailwind).
+        Úsalos como base y adaptalos al diseño del proyecto.
+      </SlideSubtitle>
+      <SlideItem className="mt-6 w-full max-w-3xl divide-y divide-[#0f0f0f]/10 text-left">
+        {rows.map((r) => (
+          <a
+            key={r.name}
+            href={r.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Abrir ${r.name}`}
+            className="group -mx-2 flex flex-col items-stretch justify-between gap-3 rounded-lg px-2 py-4 transition first:pt-0 hover:bg-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0f0f0f]/20 focus-visible:ring-offset-2 sm:flex-row sm:items-center"
+          >
+            <div className="min-w-0 flex-1 sm:pr-2">
+              <div className="font-semibold text-[#0f0f0f]">{r.name}</div>
+              <p className="mt-1 text-sm text-[#0f0f0f]/55">{r.role}</p>
+            </div>
+            <span
+              className="flex size-8 shrink-0 items-center justify-center self-end rounded-full bg-[#fdda24] text-[#0f0f0f] transition group-hover:bg-[#0f0f0f] group-hover:text-white group-hover:ring-1 group-hover:ring-white/25 sm:self-center"
+              aria-hidden
+            >
+              <ArrowUpRight className="size-3.5" />
+            </span>
+          </a>
+        ))}
+      </SlideItem>
+    </Slide>
+  )
+}
+
 export function Slide17Resources() {
   const blocks = [
     {
@@ -597,17 +735,14 @@ export function Slide17Resources() {
     <Slide>
       <SlideTitle>Recursos</SlideTitle>
       <SlideSubtitle>Links esenciales para seguir después del workshop.</SlideSubtitle>
-      <SlideItem className="mt-10 w-full max-w-5xl">
-        <div className="mx-auto grid w-full grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 md:items-stretch md:gap-10 lg:gap-14">
+      <SlideItem className="mt-10 w-full max-w-4xl text-left">
+        <div className="mx-auto grid w-full grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-8 md:gap-y-0 lg:gap-x-14">
           {blocks.map((b) => (
-            <div
-              key={b.title}
-              className="flex h-full min-h-0 flex-col rounded-2xl border border-[#0f0f0f]/10 bg-[#fafafa]/50 p-6 sm:p-7"
-            >
-              <h3 className="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/45">
+            <section key={b.title}>
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/38">
                 {b.title}
               </h3>
-              <ul className="mt-4 flex flex-1 flex-col gap-2.5 border-t border-[#0f0f0f]/10 pt-4 text-left">
+              <ul className="mt-4 flex flex-col gap-2.5">
                 {b.links.map(([label, href]) => (
                   <li key={href}>
                     <a
@@ -621,7 +756,7 @@ export function Slide17Resources() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
           ))}
         </div>
       </SlideItem>
@@ -630,33 +765,45 @@ export function Slide17Resources() {
 }
 
 export function Slide18Close() {
+  const linktreeUrl = 'https://linktr.ee/matiboldrini'
+  const linktreeLabel = 'linktr.ee/matiboldrini'
+
   return (
     <Slide className="min-h-[60vh]">
-      <SlideTitle>Tu próximo paso</SlideTitle>
-      <SlideItem className="mt-6 w-full max-w-xl text-left">
-        <p className="border-l-2 border-[#fdda24] pl-4 text-sm font-medium leading-relaxed text-[#0f0f0f]/85">
-          Hoy: armá un proyecto testnet e instalá stellar-dev.
-        </p>
+      <SlideItem className="w-full">
+        <h2 className="flex flex-col items-center gap-1.5 font-serif font-normal tracking-[-0.03em] text-[#0f0f0f] md:gap-2">
+          <span className="text-base font-medium uppercase tracking-[0.28em] text-[#0f0f0f]/42 md:text-lg">
+            fin
+          </span>
+          <span className={`text-4xl md:text-[3.5rem] md:leading-[1.08] ${slideTitleSelectEffect}`}>
+            Gracias
+          </span>
+        </h2>
       </SlideItem>
-      <SlideItem className="mt-4 w-full max-w-xl text-left">
-        <ul className="space-y-2 text-sm text-[#0f0f0f]/65">
-          {[
-            'Conectá un MCP (Vercel, Supabase o Stellar XDR).',
-            'Cerrá el loop: prompt → código → comando real → feedback.',
-          ].map((t) => (
-            <li key={t} className="flex gap-2">
-              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#0f0f0f]/30" />
-              <span>{t}</span>
-            </li>
-          ))}
-        </ul>
-      </SlideItem>
-      <SlideItem className="mt-8 max-w-xl">
-        <p className="text-sm text-[#0f0f0f]/65">
-          Recordá:{' '}
-          <strong className="text-[#0f0f0f]">confiá pero verificá</strong>, especialmente en
-          transacciones y contratos.
-        </p>
+      <SlideItem className="mt-10 flex w-full flex-col items-center gap-8">
+        <a
+          href={linktreeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex rounded-2xl border border-[#0f0f0f]/10 bg-white p-4 shadow-sm transition hover:border-[#0f0f0f]/18"
+          aria-label="Abrir Linktree"
+        >
+          <img
+            src="/matiboldrini.png"
+            alt="Código QR al Linktree"
+            className="size-[min(72vw,17rem)] max-w-[280px] object-contain sm:size-[18rem] md:size-[20rem] md:max-w-none"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <a
+          href={linktreeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-lg font-medium text-[#00a7b5] underline-offset-[3px] hover:underline md:text-xl"
+        >
+          {linktreeLabel}
+        </a>
       </SlideItem>
     </Slide>
   )
