@@ -80,30 +80,51 @@ export function Presentation({ slides }: Props) {
       <ProgressBar current={index} total={total} />
 
       <div className="relative z-10 flex min-h-dvh flex-col">
-        <header className="flex shrink-0 items-center justify-between border-b border-[#0f0f0f]/10 bg-white/80 px-4 py-4 backdrop-blur-md md:px-8">
-          <div className="text-xs font-medium uppercase tracking-[0.2em] text-[#0f0f0f]/60">
+        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[#0f0f0f]/10 bg-white/80 px-4 py-3 backdrop-blur-md md:px-8">
+          <div className="min-w-0 text-xs font-medium uppercase tracking-[0.2em] text-[#0f0f0f]/60">
             Vibecoding · Web3 · Stellar
           </div>
-          <div className="flex items-center gap-2">
-            <span className="rounded-full border border-[#0f0f0f]/15 bg-[#f9f9f9] px-3 py-1 text-xs font-medium text-[#0f0f0f]/70">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              onClick={prev}
+              disabled={index === 0}
+              className="inline-flex items-center gap-1 rounded-full border border-[#0f0f0f]/20 bg-white px-2.5 py-1.5 text-xs font-medium text-[#0f0f0f] transition enabled:hover:bg-[#f9f9f9] disabled:cursor-not-allowed disabled:opacity-35 sm:px-3"
+              aria-label="Diapositiva anterior"
+            >
+              <ChevronLeft className="size-3.5 sm:size-4" />
+              <span className="hidden sm:inline">Anterior</span>
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              disabled={index >= total - 1}
+              className="inline-flex items-center gap-1 rounded-full bg-[#0f0f0f] px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition enabled:hover:bg-[#212121] disabled:cursor-not-allowed disabled:opacity-35 sm:px-3"
+              aria-label="Diapositiva siguiente"
+            >
+              <span className="hidden sm:inline">Siguiente</span>
+              <ChevronRight className="size-3.5 sm:size-4" />
+            </button>
+            <span className="mx-0.5 hidden h-4 w-px shrink-0 bg-[#0f0f0f]/15 sm:block" aria-hidden />
+            <span className="rounded-full border border-[#0f0f0f]/15 bg-[#f9f9f9] px-2.5 py-1 text-[11px] font-medium tabular-nums text-[#0f0f0f]/70">
               {index + 1} / {total}
             </span>
             <button
               type="button"
               onClick={toggleFullscreen}
-              className="rounded-full border border-[#0f0f0f]/15 bg-white p-2 text-[#0f0f0f] transition hover:bg-[#f9f9f9]"
+              className="rounded-full border border-[#0f0f0f]/15 bg-white p-1.5 text-[#0f0f0f] transition hover:bg-[#f9f9f9]"
               aria-label={isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
             >
               {isFullscreen ? (
-                <Minimize className="size-4" />
+                <Minimize className="size-3.5" />
               ) : (
-                <Expand className="size-4" />
+                <Expand className="size-3.5" />
               )}
             </button>
           </div>
         </header>
 
-        <main className="flex flex-1 flex-col items-center justify-center pb-24">
+        <main className="flex flex-1 flex-col items-center justify-center pb-8">
           <AnimatePresence mode="wait" custom={direction}>
             {Current ? (
               <motion.div
@@ -120,27 +141,6 @@ export function Presentation({ slides }: Props) {
             ) : null}
           </AnimatePresence>
         </main>
-
-        <footer className="fixed bottom-0 left-0 right-0 z-20 flex items-center justify-center gap-4 border-t border-[#0f0f0f]/10 bg-white/90 px-4 py-4 backdrop-blur-md">
-          <button
-            type="button"
-            onClick={prev}
-            disabled={index === 0}
-            className="flex items-center gap-2 rounded-full border border-[#0f0f0f] bg-white px-5 py-3 text-sm font-medium text-[#0f0f0f] transition enabled:hover:bg-[#f9f9f9] disabled:cursor-not-allowed disabled:opacity-35"
-          >
-            <ChevronLeft className="size-5" />
-            Anterior
-          </button>
-          <button
-            type="button"
-            onClick={next}
-            disabled={index >= total - 1}
-            className="flex items-center gap-2 rounded-full bg-[#0f0f0f] px-6 py-3 text-sm font-semibold text-white shadow-md transition enabled:hover:bg-[#212121] disabled:cursor-not-allowed disabled:opacity-35"
-          >
-            Siguiente
-            <ChevronRight className="size-5" />
-          </button>
-        </footer>
       </div>
     </div>
   )

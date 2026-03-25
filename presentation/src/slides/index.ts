@@ -1,37 +1,32 @@
 import {
   Slide01Title,
   Slide02Vibecoding,
-  Slide03FeedbackLoop,
+  Slide03PromptCompare,
   Slide05Mcps,
   Slide06Skills,
   Slide07Validation,
-  Slide08VibecodingValidate,
-  Slide09Insights,
-  Slide10SoroPG,
   Slide12SetupAi,
-  Slide13ClaudeCode,
   Slide14Prompts,
-  Slide15Tools,
   Slide16Installation,
   Slide17Resources,
   Slide18Close,
 } from './registry'
 
+/** Poné en `true` para mostrar la slide "Instalación" (IDE + Add to Cursor). */
+export const SHOW_INSTALLATION_SLIDE = false
+
 export const slides = [
   { id: '01-title', component: Slide01Title },
   { id: '02-ai-basics', component: Slide02Vibecoding },
-  { id: '03-agents-md', component: Slide03FeedbackLoop },
+  { id: '03-prompt-compare', component: Slide03PromptCompare },
   { id: '05-mcps', component: Slide05Mcps },
   { id: '06-skills', component: Slide06Skills },
   { id: '07-validation', component: Slide07Validation },
-  { id: '08-validate-cmd', component: Slide08VibecodingValidate },
-  { id: '09-insights', component: Slide09Insights },
-  { id: '10-soropg', component: Slide10SoroPG },
   { id: '12-setup-ai', component: Slide12SetupAi },
-  { id: '13-claude', component: Slide13ClaudeCode },
   { id: '14-prompts', component: Slide14Prompts },
-  { id: '15-tools', component: Slide15Tools },
-  { id: '16-instalacion', component: Slide16Installation },
+  ...(SHOW_INSTALLATION_SLIDE
+    ? [{ id: '16-instalacion' as const, component: Slide16Installation }]
+    : []),
   { id: '17-resources', component: Slide17Resources },
   { id: '18-close', component: Slide18Close },
 ] as const

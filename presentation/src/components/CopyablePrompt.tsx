@@ -27,27 +27,27 @@ export function CopyablePrompt({
 
   return (
     <div
-      className={`relative rounded-xl border border-[#0f0f0f]/12 bg-[#f9f9f9] ${className}`}
+      className={`relative border-l-2 border-[#00a7b5]/45 bg-[#fafafa]/80 pl-5 pr-3 pt-3 ${className}`}
     >
       <button
         type="button"
         onClick={handleCopy}
-        className="absolute right-3 top-3 z-10 flex items-center gap-2 rounded-full bg-[#0f0f0f] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-[#212121]"
+        className="absolute right-2 top-2 z-10 flex items-center gap-1.5 rounded-md border border-[#0f0f0f]/10 bg-white px-2.5 py-1.5 text-xs font-medium text-[#0f0f0f] transition hover:bg-[#f5f5f5]"
       >
         {copied ? (
           <>
-            <Check className="size-4 text-[#fdda24]" />
+            <Check className="size-3.5 text-[#00a7b5]" />
             Copiado
           </>
         ) : (
           <>
-            <Copy className="size-4" />
+            <Copy className="size-3.5" />
             {label}
           </>
         )}
       </button>
       <pre
-        className="overflow-auto p-4 pr-36 text-left font-mono text-[13px] leading-relaxed text-[#0f0f0f]"
+        className="overflow-auto pb-3 pr-28 text-left font-mono text-[13px] leading-relaxed text-[#0f0f0f]"
         style={{ maxHeight }}
       >
         {text}

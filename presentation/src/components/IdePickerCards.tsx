@@ -33,7 +33,7 @@ function OtrosStackedIcons() {
           return (
             <div
               key={id}
-              className="flex size-11 items-center justify-center rounded-2xl border-2 border-white bg-[#fafafa] shadow-sm"
+              className="flex size-11 items-center justify-center rounded-xl bg-[#f5f5f5]"
               style={{ zIndex: i + 1 }}
             >
               <IdeIcon visual={v} className="size-6 shrink-0" color={v.bgDark} />
@@ -66,7 +66,7 @@ export function IdePickerCards({ onSelect }: Props) {
               <button
                 type="button"
                 onClick={() => onSelect(o.value)}
-                className="group flex h-full w-full flex-col items-center rounded-2xl border-2 border-[#0f0f0f]/10 bg-white p-5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#0f0f0f]/22 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ide-brand)] focus-visible:ring-offset-2"
+                className="group flex h-full w-full flex-col items-center rounded-xl border border-[#0f0f0f]/10 bg-white p-5 text-center transition hover:border-[#0f0f0f]/18 hover:bg-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ide-brand)] focus-visible:ring-offset-2"
                 style={{ '--ide-brand': v.bg } as CSSProperties}
               >
                 <div
@@ -85,7 +85,7 @@ export function IdePickerCards({ onSelect }: Props) {
           <button
             type="button"
             onClick={() => onSelect('others')}
-            className="group flex h-full w-full flex-col items-center rounded-2xl border-2 border-[#0f0f0f]/10 bg-white p-5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#0f0f0f]/22 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9ca3af] focus-visible:ring-offset-2"
+            className="group flex h-full w-full flex-col items-center rounded-xl border border-[#0f0f0f]/10 bg-white p-5 text-center transition hover:border-[#0f0f0f]/18 hover:bg-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9ca3af] focus-visible:ring-offset-2"
           >
             <OtrosStackedIcons />
             <span className="font-semibold tracking-tight text-[#0f0f0f]">Otros</span>

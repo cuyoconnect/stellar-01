@@ -43,6 +43,13 @@ export function SlideItem({ children, className = '' }: Props) {
   )
 }
 
+/**
+ * Amarillo Stellar a mitad de camino entre el resaltado suave (50%) y el de botones/flechas (100%):
+ * mismo tono #fdda24, menos saturación visual sobre el texto.
+ */
+export const slideTitleSelectEffect =
+  'rounded-[2px] bg-[#fdda24]/75 px-[0.2em] py-[0.1em] text-[#0f0f0f] box-decoration-clone [box-decoration-break:clone] selection:bg-[#d4be1f]'
+
 export function SlideTitle({
   children,
   className = '',
@@ -53,9 +60,9 @@ export function SlideTitle({
   return (
     <SlideItem className="w-full">
       <h2
-        className={`font-serif text-3xl font-normal tracking-[-0.03em] text-[#0f0f0f] md:text-[2.75rem] md:leading-tight ${className}`}
+        className={`font-serif text-3xl font-normal tracking-[-0.03em] md:text-[2.75rem] md:leading-tight ${className}`}
       >
-        {children}
+        <span className={slideTitleSelectEffect}>{children}</span>
       </h2>
     </SlideItem>
   )
