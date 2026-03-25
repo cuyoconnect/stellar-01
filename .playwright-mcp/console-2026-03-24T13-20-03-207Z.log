@@ -1,0 +1,9 @@
+[    1297ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at rO (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:46430)
+    at oG (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:96476)
+    at sw (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:127563)
+    at https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:127408
+    at sS (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:127416)
+    at sc (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:122791)
+    at sJ (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:145929)
+    at MessagePort._ (https://stellar.org/_next/static/chunks/framework-d52c5f6d7c48ae4c.js:1:9412)
