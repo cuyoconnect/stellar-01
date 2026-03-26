@@ -18,10 +18,10 @@ export function AnimatedDiagram() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.15, type: 'spring', stiffness: 300 }}
-              className="relative min-w-[140px] rounded-2xl border border-[#0f0f0f]/12 bg-white p-4 shadow-sm"
+              className="relative min-w-[140px] rounded-lg border border-[#0f0f0f]/12 bg-white p-4 shadow-sm"
             >
               <motion.div
-                className="absolute inset-0 rounded-2xl bg-[#fdda24]/10"
+                className="absolute inset-0 rounded-lg bg-[#fdda24]/10"
                 animate={{ opacity: [0.35, 0.65, 0.35] }}
                 transition={{
                   duration: 3,
