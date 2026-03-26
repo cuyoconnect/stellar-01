@@ -1,5 +1,5 @@
 import { Check, Copy, Info } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { copyToClipboard } from '../utils/clipboard'
 import { highlightCode } from '../utils/shikiHighlighter'
 
@@ -24,6 +24,9 @@ export function CodeBlock({
 }: Props) {
   const [html, setHtml] = useState<string>('')
   const [copied, setCopied] = useState(false)
+  const [hintOpen, setHintOpen] = useState(false)
+  const hintWrapRef = useRef<HTMLDivElement>(null)
+  const hintId = useId()
 
   useEffect(() => {
     let cancelled = false
@@ -42,6 +45,25 @@ export function CodeBlock({
       cancelled = true
     }
   }, [code, language])
+
+  useEffect(() => {
+    if (!hintOpen) return
+    const close = (e: MouseEvent) => {
+      if (hintWrapRef.current && !hintWrapRef.current.contains(e.target as Node)) {
+        setHintOpen(false)
+      }
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setHintOpen(false)
+    }
+    const t = window.setTimeout(() => document.addEventListener('click', close), 0)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      window.clearTimeout(t)
+      document.removeEventListener('click', close)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [hintOpen])
 
   const handleCopy = async () => {
     const ok = await copyToClipboard(code)
@@ -74,7 +96,7 @@ export function CodeBlock({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#1a1a1a] ${className}`}
+      className={`relative rounded-lg border border-white/[0.08] bg-[#1a1a1a] ${className}`}
     >
       {title ? (
         <div className="flex items-center justify-between gap-3 border-b border-white/[0.07] px-4 py-3 sm:px-5">
@@ -87,21 +109,42 @@ export function CodeBlock({
         <div className="absolute right-2.5 top-2.5 z-10">{copyBtn}</div>
       )}
       <div
-        className={`flex items-start gap-2 px-4 py-4 text-left sm:px-5 sm:pb-5 ${title ? '' : 'pr-24 pt-14'}`}
+        className={`flex items-start gap-3 px-4 py-4 text-left sm:px-5 sm:pb-5 ${title ? '' : 'pr-24 pt-14'}`}
       >
         <div
-          className="shiki-wrapper min-w-0 flex-1 overflow-auto text-[#f9f9f9] [&_pre]:whitespace-pre-wrap [&_pre]:break-words"
+          className="shiki-wrapper min-w-0 min-h-0 flex-1 overflow-auto text-[#f9f9f9] [&_pre]:whitespace-pre-wrap [&_pre]:break-words"
           style={{ maxHeight: maxScrollHeight }}
           dangerouslySetInnerHTML={{ __html: html || '<pre class="opacity-40">…</pre>' }}
         />
         {hint ? (
-          <span
-            className="mt-0.5 shrink-0 cursor-help text-white/35 transition hover:text-white/55"
-            title={hint}
+          <div
+            ref={hintWrapRef}
+            className="relative shrink-0 self-start pt-0.5"
           >
-            <Info className="size-4" strokeWidth={2} aria-hidden />
-            <span className="sr-only">{hint}</span>
-          </span>
+            <button
+              type="button"
+              id={`${hintId}-trigger`}
+              aria-expanded={hintOpen}
+              aria-controls={hintId}
+              aria-label="Más información sobre este comando"
+              onClick={(e) => {
+                e.stopPropagation()
+                setHintOpen((o) => !o)
+              }}
+              className="flex text-white/40 transition hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a1a1a]"
+            >
+              <Info className="size-4" strokeWidth={2} aria-hidden />
+            </button>
+            {hintOpen ? (
+              <div
+                id={hintId}
+                role="tooltip"
+                className="absolute right-0 top-full z-20 mt-2 w-[min(18rem,calc(100vw-2rem))] rounded-md border border-white/12 bg-[#0f0f0f] px-3 py-2.5 text-left text-xs leading-relaxed text-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
+              >
+                {hint}
+              </div>
+            ) : null}
+          </div>
         ) : null}
       </div>
     </div>

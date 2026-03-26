@@ -44,8 +44,8 @@ export function PromptCompareWindow({
       <div
         className={
           showWindowChrome
-            ? 'overflow-hidden rounded-xl border border-[#0f0f0f]/12 bg-white shadow-[0_1px_0_0_rgba(15,15,15,0.04),0_12px_32px_-8px_rgba(15,15,15,0.12)]'
-            : 'overflow-hidden rounded-xl bg-transparent'
+            ? 'overflow-hidden rounded-md border border-[#0f0f0f]/12 bg-white shadow-[0_1px_0_0_rgba(15,15,15,0.04),0_12px_32px_-8px_rgba(15,15,15,0.12)]'
+            : 'overflow-hidden rounded-md bg-transparent'
         }
       >
         {showWindowChrome ? (

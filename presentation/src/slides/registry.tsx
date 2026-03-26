@@ -234,9 +234,10 @@ export function Slide05Mcps() {
       href: 'https://docs.trustlesswork.com/',
     },
     {
-      name: 'Stellar XDR MCP',
-      role: 'Encode/decode XDR de Stellar — depuración de contratos Soroban.',
-      href: 'https://github.com/stellar/mcp-stellar-xdr',
+      name: 'Google Stitch MCP',
+      role:
+        'Diseño UI con IA (Stitch, Google): pantallas y componentes desde prompts — servidor MCP remoto (beta).',
+      href: 'https://stitch.withgoogle.com/docs/mcp/guide/',
     },
   ]
   return (
@@ -573,8 +574,8 @@ export function Slide16Installation() {
                       <div
                         className={
                           isOtros
-                            ? 'flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fff7f2]/80'
-                            : 'flex size-12 shrink-0 items-center justify-center rounded-xl'
+                            ? 'flex size-12 shrink-0 items-center justify-center rounded-lg bg-[#fff7f2]/80'
+                            : 'flex size-12 shrink-0 items-center justify-center rounded-lg'
                         }
                         style={
                           isOtros
@@ -785,7 +786,7 @@ export function Slide18Close() {
           href={linktreeUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex rounded-2xl border border-[#0f0f0f]/10 bg-white p-4 shadow-sm transition hover:border-[#0f0f0f]/18"
+          className="inline-flex rounded-lg border border-[#0f0f0f]/10 bg-white p-4 shadow-sm transition hover:border-[#0f0f0f]/18"
           aria-label="Abrir Linktree"
         >
           <img
