@@ -17,47 +17,8 @@ import { IDE_OPTIONS, type IdeTarget } from '../lib/deeplinks'
 import { IdeIcon } from '../components/IdeIcon'
 import { visualForIde } from '../lib/ideTheme'
 
-const PROMPT_MVP = `Necesito crear una aplicación web que permita a usuarios argentinos enviar
-pagos en USDC a través de Stellar. El stack es Next.js 15 con TypeScript
-y Tailwind CSS. La wallet es Freighter.
-
-Requisitos:
-1. Conectar Freighter wallet
-2. Mostrar balance de XLM y USDC (con trustline)
-3. Formulario para enviar USDC a otra dirección Stellar
-4. Historial de transacciones (últimas 20 operaciones vía Horizon)
-
-Usamos Stellar testnet. Si el USDC no existe en testnet, proponé un issuer
-de prueba con USDC como asset code. Empezá con el plan de arquitectura antes de codear.`
-
-const PROMPT_DEFI = `Quiero construir un dashboard DeFi que muestre información de protocolos
-Stellar. El usuario conecta su Freighter wallet y ve:
-
-1. Su balance de XLM, USDC y otros assets
-2. Sus posiciones en Blend (lending/borrowing)
-3. Liquidez aportada en Soroswap/Phoenix
-
-Stack: Next.js, TypeScript, Tailwind, stellar-sdk.
-Red: testnet para desarrollo, pero la UI debe servir para mainnet después.
-
-MVP: solo balances + una vista de posiciones (mock si la API no tiene SDK estable).
-P&L y resumen de ganancias/pérdidas quedan para fase 2.
-Planificá primero la arquitectura.`
-
 const PRESENTATION_URL = 'https://stellar-01.vercel.app/'
 const PRESENTATION_HOST = 'stellar-01.vercel.app'
-
-const PROMPT_ESCROW = `Necesito crear un contrato Soroban en Rust que implemente un sistema de
-escrow simple:
-
-1. Un usuario deposita USDC en el contrato
-2. Define un beneficiario y una condición (timestamp de ledger)
-3. Después del timestamp, el beneficiario puede retirar
-4. Antes del timestamp, el depositante puede cancelar
-
-Usá ledger_timestamp() de Soroban para el tiempo.
-Incluí roles explícitos (depositor / beneficiary) y eventos emitidos en cada operación.
-Empezá con la estructura del contrato y los tests en soroban-sdk.`
 
 export function Slide01Title() {
   return (
@@ -66,7 +27,7 @@ export function Slide01Title() {
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:justify-between md:gap-16 lg:gap-24">
           <div className="relative z-10 min-w-0 flex-1 text-left">
             <h1 className="font-serif text-5xl font-normal leading-[1.2] tracking-[-0.03em] md:text-6xl md:leading-[1.18] lg:text-7xl lg:leading-[1.15]">
-              <span className={slideTitleSelectEffect}>Workshop en IA en Web3</span>
+              <span className={slideTitleSelectEffect}>Workshop en Claude Code en Web3</span>
             </h1>
           </div>
           <div className="relative z-0 flex w-full shrink-0 flex-col items-center gap-4 text-center md:w-auto">
@@ -155,6 +116,201 @@ export function Slide02Vibecoding() {
         <p className="text-xs leading-relaxed text-[#0f0f0f]/45">
           <strong className="font-medium text-[#0f0f0f]/55">Regla práctica:</strong> contexto curado y
           validación real; menos ruido, más señal.
+        </p>
+      </SlideItem>
+
+      <SlideItem className="mt-10 w-full max-w-5xl text-left md:mt-12">
+        <div className="mb-4 flex flex-col gap-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#00a7b5]">
+            Setup
+          </p>
+          <h3 className="font-serif text-2xl tracking-tight text-[#0f0f0f] md:text-3xl">
+            Instalar Claude Code y configurar tu API key
+          </h3>
+          <p className="text-sm leading-relaxed text-[#0f0f0f]/60">
+            Requiere Node.js 18+. Elegí tu sistema, instalá la CLI y exportá la clave para dejar
+            todo listo antes del workshop.
+          </p>
+        </div>
+
+        <div className="grid w-full gap-5 md:grid-cols-2">
+          <div className="flex flex-col gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
+              macOS / Linux
+            </p>
+            <CodeBlock
+              className="w-full"
+              code="npm install -g @anthropic-ai/claude-code"
+              language="bash"
+              title="Instalar Claude Code"
+            />
+            <CodeBlock
+              className="w-full"
+              code={`export ANTHROPIC_API_KEY="sk-ant-..."\necho 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc`}
+              language="bash"
+              title="Configurar API key (zsh)"
+              hint="La primera línea la usa esta sesión; la segunda la deja persistente."
+            />
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
+              Windows (PowerShell)
+            </p>
+            <CodeBlock
+              className="w-full"
+              code="npm install -g @anthropic-ai/claude-code"
+              language="powershell"
+              title="Instalar Claude Code"
+            />
+            <CodeBlock
+              className="w-full"
+              code={`$env:ANTHROPIC_API_KEY = "sk-ant-..."\nsetx ANTHROPIC_API_KEY "sk-ant-..."`}
+              language="powershell"
+              title="Configurar API key"
+              hint="$env:... aplica a la sesión actual; setx la guarda para futuras terminales."
+            />
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-col gap-2">
+          <CodeBlock
+            className="w-full"
+            code="claude"
+            language="bash"
+            title="Verificar la instalación"
+            hint="Abrí cualquier proyecto y ejecutá `claude` en la terminal."
+          />
+          <p className="text-[11px] leading-relaxed text-[#0f0f0f]/45">
+            Generá tu clave en{' '}
+            <a
+              href="https://console.anthropic.com/settings/keys"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#00a7b5] underline-offset-2 hover:underline"
+            >
+              console.anthropic.com/settings/keys
+            </a>
+            . Reemplazá <code className="font-mono">sk-ant-...</code> por tu clave real y reabrí la
+            terminal después de <code className="font-mono">setx</code>.
+          </p>
+        </div>
+      </SlideItem>
+    </Slide>
+  )
+}
+
+export function Slide03Models() {
+  const models = [
+    {
+      name: 'Claude Opus 4.5',
+      tag: 'Máxima capacidad',
+      command: '/model opus',
+      input: 'US$ 5',
+      output: 'US$ 25',
+      swe: '80.9%',
+      use: 'Refactors grandes, debugging profundo, agentes con muchos pasos. Más caro pero el que menos se traba en tareas largas.',
+      accent: '#00a7b5',
+    },
+    {
+      name: 'Claude Sonnet 4.5',
+      tag: 'Default recomendado',
+      command: '/model sonnet',
+      input: 'US$ 3',
+      output: 'US$ 15',
+      swe: '77.2%',
+      use: 'Día a día de coding: features, tests, revisión. Mejor relación precio / calidad para trabajar con Claude Code.',
+      accent: '#0f0f0f',
+    },
+    {
+      name: 'Claude Haiku 4.5',
+      tag: 'Rápido y barato',
+      command: '/model haiku',
+      input: 'US$ 1',
+      output: 'US$ 5',
+      swe: '73.3%',
+      use: 'Tareas chicas y de alto volumen: clasificar, extraer datos, autocompletar, loops de validación.',
+      accent: '#fdda24',
+    },
+  ]
+
+  return (
+    <Slide>
+      <SlideTitle>Elegí el modelo: /model</SlideTitle>
+      <SlideSubtitle>
+        Dentro de Claude Code escribí <code className="font-mono text-[#0f0f0f]">/model</code> para
+        cambiar el modelo activo. Cada uno tiene un trade-off entre precio, velocidad y capacidad.
+      </SlideSubtitle>
+
+      <SlideItem className="mt-6 w-full max-w-2xl">
+        <CodeBlock
+          className="w-full"
+          code={`/model            # ver modelo actual y opciones\n/model sonnet     # usar Claude Sonnet 4.5\n/model opus       # usar Claude Opus 4.5\n/model haiku      # usar Claude Haiku 4.5`}
+          language="bash"
+          title="Comando /model en Claude Code"
+        />
+      </SlideItem>
+
+      <SlideItem className="mt-8 grid w-full max-w-6xl gap-5 text-left md:grid-cols-3">
+        {models.map((m) => (
+          <div
+            key={m.name}
+            className="flex h-full flex-col rounded-xl border border-[#0f0f0f]/10 bg-white p-5"
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className="size-2 shrink-0 rounded-full"
+                style={{ backgroundColor: m.accent }}
+              />
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
+                {m.tag}
+              </p>
+            </div>
+            <h3 className="mt-2 font-serif text-2xl tracking-tight text-[#0f0f0f]">{m.name}</h3>
+            <code className="mt-1 font-mono text-xs text-[#00a7b5]">{m.command}</code>
+
+            <div className="mt-4 grid grid-cols-3 gap-2 border-y border-[#0f0f0f]/8 py-3">
+              <div>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#0f0f0f]/45">
+                  Input
+                </p>
+                <p className="mt-0.5 font-mono text-sm font-medium text-[#0f0f0f]">{m.input}</p>
+                <p className="text-[9px] text-[#0f0f0f]/40">/ MTok</p>
+              </div>
+              <div>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#0f0f0f]/45">
+                  Output
+                </p>
+                <p className="mt-0.5 font-mono text-sm font-medium text-[#0f0f0f]">{m.output}</p>
+                <p className="text-[9px] text-[#0f0f0f]/40">/ MTok</p>
+              </div>
+              <div>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#0f0f0f]/45">
+                  SWE-bench
+                </p>
+                <p className="mt-0.5 font-mono text-sm font-medium text-[#0f0f0f]">{m.swe}</p>
+                <p className="text-[9px] text-[#0f0f0f]/40">verified</p>
+              </div>
+            </div>
+
+            <p className="mt-3 text-sm leading-6 text-[#0f0f0f]/62">{m.use}</p>
+          </div>
+        ))}
+      </SlideItem>
+
+      <SlideItem className="mt-6 max-w-3xl">
+        <p className="text-[11px] leading-relaxed text-[#0f0f0f]/45">
+          Precios por millón de tokens (MTok) según{' '}
+          <a
+            href="https://www.anthropic.com/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#00a7b5] underline-offset-2 hover:underline"
+          >
+            anthropic.com/pricing
+          </a>
+          . Output cuesta 5× más que input: si el modelo escribe mucho código, el costo se va
+          principalmente por ahí. Empezá con Sonnet y subí a Opus solo cuando el problema lo pida.
         </p>
       </SlideItem>
     </Slide>
@@ -352,113 +508,6 @@ export function Slide06FrontendDesignSkill() {
   )
 }
 
-export function Slide07Validation() {
-  return (
-    <Slide>
-      <SlideTitle>Validación reproducible</SlideTitle>
-      <SlideSubtitle>
-        Comandos que el agente ejecuta en orden — no depender solo del "parece que compiló" en el
-        IDE.
-      </SlideSubtitle>
-      <SlideItem className="mt-6 w-full max-w-2xl space-y-3">
-        <CodeBlock
-          code="cargo check"
-          language="bash"
-          title="Compilación rápida"
-          hint="Comprueba que el proyecto compila sin errores, sin generar el binario final (más rápido que cargo build)."
-        />
-        <CodeBlock
-          code="cargo clippy -- -D warnings"
-          language="bash"
-          title="Linting estricto"
-          hint="Ejecuta el linter de Rust; -D warnings trata cada advertencia como error y obliga a limpiar el código."
-        />
-        <CodeBlock
-          code="cargo test"
-          language="bash"
-          title="Suite de tests"
-          hint="Corre los tests unitarios e integración del crate (o workspace) para validar comportamiento real."
-        />
-        <CodeBlock
-          code="stellar contract build"
-          language="bash"
-          title="Artefacto WASM (contratos Soroban)"
-          hint="Compila el contrato a WASM y deja los artefactos listos para desplegar o probar en testnet."
-        />
-        <CodeBlock
-          code="cargo scout-audit"
-          language="bash"
-          title="Análisis de vulnerabilidades (en la carpeta del contrato)"
-          hint="Pasa reglas de seguridad estáticas sobre el código del contrato; complementa tests, no sustituye auditoría humana."
-        />
-      </SlideItem>
-      <SlideItem className="mt-4">
-        <p className="mb-3 text-xs text-[#0f0f0f]/40">
-          Scout: análisis estático — complementa tests, no reemplaza auditoría.
-        </p>
-        <div className="flex flex-wrap justify-center gap-2">
-          <LinkPill href="https://doc.rust-lang.org/cargo/">Cargo</LinkPill>
-          <LinkPill href="https://coinfabrik.github.io/scout-audit/docs/intro">Scout Audit</LinkPill>
-          <LinkPill href="https://developers.stellar.org/docs/tools/stellar-cli">Stellar CLI</LinkPill>
-        </div>
-      </SlideItem>
-    </Slide>
-  )
-}
-
-export function Slide08FreeApi() {
-  return (
-    <Slide>
-      <SlideTitle>APIs con free tier</SlideTitle>
-      <SlideSubtitle>
-        Capa gratuita para probar modelos desde código: límites de uso, no necesariamente “sin
-        tope”.
-      </SlideSubtitle>
-      <SlideItem className="mt-8 grid w-full max-w-5xl gap-5 text-left md:grid-cols-[1fr_1.05fr]">
-        <div className="space-y-4">
-          <div className="rounded-lg border border-[#0f0f0f]/10 bg-white p-4">
-            <h3 className="text-[15px] font-semibold text-[#0f0f0f]">Google AI Studio</h3>
-            <p className="mt-2 text-sm leading-6 text-[#0f0f0f]/65">
-              API key del Gemini API con cuota inicial para desarrollo; el techo depende del modelo
-              y de la política actual de Google.
-            </p>
-          </div>
-          <div className="rounded-lg border border-[#0f0f0f]/10 bg-white p-4">
-            <h3 className="text-[15px] font-semibold text-[#0f0f0f]">Créditos y pruebas</h3>
-            <p className="mt-2 text-sm leading-6 text-[#0f0f0f]/65">
-              Algunos proveedores regalan créditos al alta o períodos de prueba; siempre revisá
-              precios y límites en la doc antes de mandar a producción.
-            </p>
-          </div>
-          <div className="rounded-lg border border-[#0f0f0f]/10 bg-white p-4">
-            <h3 className="text-[15px] font-semibold text-[#0f0f0f]">Groq — free tier</h3>
-            <p className="mt-2 text-sm leading-6 text-[#0f0f0f]/65">
-              Groq Cloud ofrece un plan gratuito para desarrolladores: creás cuenta, generás API key
-              y consumís modelos alojados (p. ej. Llama, Qwen, Mixtral) con inferencia muy rápida.
-              No pagás por token mientras te movés dentro del tier; te frenan límites de uso
-              (requests y tokens por ventana de tiempo), que varían según el modelo. Sirve para
-              aprender, scripts y demos; los números exactos están en el panel y la documentación
-              oficial.
-            </p>
-            <div className="mt-3">
-              <LinkPill href="https://console.groq.com/">Groq Console</LinkPill>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col justify-center rounded-lg border border-[#0f0f0f]/10 bg-[#fafafa]/80 p-5 md:p-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0f0f0f]/40">
-            Regla para la charla
-          </p>
-          <p className="mt-3 text-sm leading-7 text-[#0f0f0f]/70">
-            Lo gratis alcanza para aprender, iterar y demostrar. Si el proyecto crece o necesitás
-            más throughput, conviene planificar costo o alternativas.
-          </p>
-        </div>
-      </SlideItem>
-    </Slide>
-  )
-}
-
 export function Slide12SetupAi() {
   const tools = [
     {
@@ -531,42 +580,6 @@ export function Slide12SetupAi() {
           Los free tiers cambian rapido. Si una herramienta no publica un numero exacto, lo
           resumimos como cuota o preview gratis.
         </p>
-      </SlideItem>
-    </Slide>
-  )
-}
-
-export function Slide14Prompts() {
-  return (
-    <Slide>
-      <SlideTitle>Prompts listos</SlideTitle>
-      <SlideSubtitle>Tres arranques distintos — copiá y adaptá al repo.</SlideSubtitle>
-      <SlideItem className="mt-6 w-full max-w-5xl text-left">
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-          <div className="md:col-span-2">
-            <CodeBlock
-              className="w-full"
-              code={PROMPT_MVP}
-              language="markdown"
-              title="MVP pagos USDC"
-              maxScrollHeight="min(52vh, 480px)"
-            />
-          </div>
-          <CodeBlock
-            className="w-full"
-            code={PROMPT_DEFI}
-            language="markdown"
-            title="DeFi dashboard"
-            maxScrollHeight="min(34vh, 300px)"
-          />
-          <CodeBlock
-            className="w-full"
-            code={PROMPT_ESCROW}
-            language="markdown"
-            title="Escrow Soroban"
-            maxScrollHeight="min(34vh, 300px)"
-          />
-        </div>
       </SlideItem>
     </Slide>
   )
@@ -757,241 +770,6 @@ export function Slide16ComponentLibraries() {
             </span>
           </a>
         ))}
-      </SlideItem>
-    </Slide>
-  )
-}
-
-export function Slide17Resources() {
-  const blocks = [
-    {
-      title: 'Documentación',
-      links: [
-        ['Stellar Docs (incl. Soroban)', 'https://developers.stellar.org'],
-        ['Smart Contracts — Getting Started', 'https://developers.stellar.org/docs/build/smart-contracts/getting-started'],
-        ['JS SDK (@stellar/stellar-sdk)', 'https://stellar.github.io/js-stellar-sdk/'],
-        ['Stellar Lab', 'https://lab.stellar.org'],
-        ['Stellar CLI', 'https://developers.stellar.org/docs/tools/stellar-cli'],
-        ['Freighter', 'https://docs.freighter.app'],
-      ],
-    },
-    {
-      title: 'Protocolos / comunidad',
-      links: [
-        ['Blend', 'https://docs.blend.capital'],
-        ['Soroswap', 'https://docs.soroswap.finance'],
-        ['Trustless Work', 'https://docs.trustlesswork.com/'],
-        ['Discord dev community', 'https://discord.gg/stellardev'],
-      ],
-    },
-    {
-      title: 'Anthropic — web, docs y producto',
-      links: [
-        ['Documentación para desarrolladores (Claude)', 'https://docs.claude.com/'],
-        [
-          'Guía de recursos de prompt engineering (índice en docs)',
-          'https://docs.claude.com/claude/docs/guide-to-anthropics-prompt-engineering-resources',
-        ],
-        ['Consola (API keys y facturación)', 'https://console.anthropic.com/'],
-        ['Claude Code — documentación', 'https://code.claude.com/docs/en/overview'],
-        ['Claude Code — instalación y setup', 'https://code.claude.com/docs/en/setup'],
-        [
-          'Skills en la API (quickstart, skills personalizados)',
-          'https://docs.claude.com/en/api/skills-guide',
-        ],
-        [
-          'Soporte: qué son los Agent Skills en Claude',
-          'https://support.claude.com/en/articles/12512176-what-are-skills',
-        ],
-        [
-          'Soporte: usar skills en Claude',
-          'https://support.claude.com/en/articles/12512180-using-skills-in-claude',
-        ],
-        [
-          'Soporte: crear skills personalizados',
-          'https://support.claude.com/en/articles/12512198-creating-custom-skills',
-        ],
-        [
-          'Ingeniería: Agent Skills en el mundo real (blog)',
-          'https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills',
-        ],
-        ['Especificación Agent Skills (estándar)', 'https://agentskills.io/'],
-        [
-          'Especificación (Markdown, agentskills.io)',
-          'https://agentskills.io/specification.md',
-        ],
-        [
-          'Buenas prácticas al escribir skills',
-          'https://agentskills.io/skill-creation/best-practices.md',
-        ],
-        [
-          'Claude (docs) — visión de Claude Code',
-          'https://docs.claude.com/en/docs/claude-code/overview',
-        ],
-        [
-          'Plataforma Claude — visión de Agent Skills',
-          'https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview',
-        ],
-        [
-          'Claude Code — mapa de toda la documentación (llms.txt)',
-          'https://code.claude.com/docs/llms.txt',
-        ],
-        ['Claude Code — quickstart', 'https://code.claude.com/docs/en/quickstart'],
-        [
-          'Claude Code — costes, límites y equipos',
-          'https://code.claude.com/docs/en/costs',
-        ],
-        ['Claude Code — integración MCP', 'https://code.claude.com/docs/en/mcp'],
-        [
-          'Claude Code — skills en el agente',
-          'https://code.claude.com/docs/en/skills',
-        ],
-        [
-          'Claude Code — descubrir plugins (marketplaces)',
-          'https://code.claude.com/docs/en/discover-plugins',
-        ],
-        ['Soporte web (portal general Anthropic)', 'https://support.anthropic.com'],
-        [
-          'Intro a prompting (docs clásicos, Anthropic)',
-          'https://docs.anthropic.com/en/docs/intro-to-prompting',
-        ],
-        ['skills.sh — catálogo e instalación (CLI)', 'https://skills.sh'],
-        ['Cursor — context skills', 'https://cursor.com/docs/context/skills'],
-        ['Discord — desarrolladores', 'https://www.anthropic.com/discord'],
-        ['Política de datos — Claude Code', 'https://code.claude.com/docs/en/data-usage'],
-      ],
-    },
-    {
-      title: 'Anthropic — GitHub, cursos y manuales',
-      links: [
-        ['Organización GitHub: anthropics', 'https://github.com/anthropics'],
-        [
-          'Estándar Agent Skills (repo comunidad)',
-          'https://github.com/agentskills/agentskills',
-        ],
-        [
-          'skills — ejemplos, plugins marketplace y spec',
-          'https://github.com/anthropics/skills',
-        ],
-        [
-          'Especificación (repo) — ./spec',
-          'https://github.com/anthropics/skills/tree/main/spec',
-        ],
-        [
-          'claude-cookbooks — recetas, tool use, visión, RAG…',
-          'https://github.com/anthropics/claude-cookbooks',
-        ],
-        [
-          'anthropic-cookbook — muchos .ipynb enlazados desde el README de cookbooks',
-          'https://github.com/anthropics/anthropic-cookbook',
-        ],
-        [
-          'claude-code — agente de código (además, plugins en /plugins)',
-          'https://github.com/anthropics/claude-code',
-        ],
-        [
-          'claude-plugins-official — marketplace de plugins',
-          'https://github.com/anthropics/claude-plugins-official',
-        ],
-        [
-          'Code — documentación de plugins (oficial)',
-          'https://code.claude.com/docs/en/plugins',
-        ],
-        [
-          'prompt-eng-interactive-tutorial (9 capítulos + apéndice)',
-          'https://github.com/anthropics/prompt-eng-interactive-tutorial',
-        ],
-        [
-          'Notebooks “Anthropic 1P” (Jupyter, curso interactivo)',
-          'https://github.com/anthropics/prompt-eng-interactive-tutorial/tree/master/Anthropic%201P',
-        ],
-        [
-          'Cap. 1 — Basic Prompt Structure (.ipynb)',
-          'https://github.com/anthropics/prompt-eng-interactive-tutorial/blob/master/Anthropic%201P/01_Basic_Prompt_Structure.ipynb',
-        ],
-        [
-          'Misma vía de curso con Amazon Bedrock (carpeta + README)',
-          'https://github.com/anthropics/prompt-eng-interactive-tutorial/tree/master/AmazonBedrock',
-        ],
-        [
-          'Clave de respuestas (PE) — hoja de cálculo',
-          'https://docs.google.com/spreadsheets/d/1jIxjzUWG-6xBVIa2ay6yDpLyeuOh_hR_ZB75a47KX_E/edit?usp=sharing',
-        ],
-        [
-          'Versión del tutorial en Google Sheets + Claude for Sheets',
-          'https://docs.google.com/spreadsheets/d/19jzLgRruG9kjUQNKtCg1ZjdD6l6weA6qRXG5zLIAhC8/edit?usp=sharing',
-        ],
-        [
-          'courses — índice: API, prompting, tool use, evals, Vertex… (rama master)',
-          'https://github.com/anthropics/courses',
-        ],
-        [
-          'Cursos en el sitio (Learn / catálogo público)',
-          'https://www.anthropic.com/learn/courses',
-        ],
-        [
-          'Curso: Anthropic API fundamentals (notebooks)',
-          'https://github.com/anthropics/courses/tree/master/anthropic_api_fundamentals',
-        ],
-        [
-          'Mismo “prompt interactivo” dentro de /courses',
-          'https://github.com/anthropics/courses/tree/master/prompt_engineering_interactive_tutorial',
-        ],
-        [
-          'Curso: real-world prompting',
-          'https://github.com/anthropics/courses/tree/master/real_world_prompting',
-        ],
-        [
-          'Rama Google Vertex (real-world prompting)',
-          'https://github.com/anthropics/courses/tree/vertex/real_world_prompting',
-        ],
-        [
-          'Curso: evaluación de prompts (producción)',
-          'https://github.com/anthropics/courses/tree/master/prompt_evaluations',
-        ],
-        [
-          'Curso: tool use (integración con herramientas)',
-          'https://github.com/anthropics/courses/tree/master/tool_use',
-        ],
-        [
-          'Workshop AWS: Prompt Engineering (versión alojada)',
-          'https://catalog.us-east-1.prod.workshops.aws/workshops/0644c9e9-5b82-45f2-8835-3b5aa30b1848/en-US',
-        ],
-        [
-          'Anthropic on AWS (ejemplos en infraestructura AWS)',
-          'https://github.com/aws-samples/anthropic-on-aws',
-        ],
-      ],
-    },
-  ]
-  return (
-    <Slide>
-      <SlideTitle>Recursos</SlideTitle>
-      <SlideSubtitle>Links esenciales para seguir después del workshop.</SlideSubtitle>
-      <SlideItem className="mt-10 w-full max-w-6xl text-left">
-        <div className="mx-auto grid w-full grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-10">
-          {blocks.map((b) => (
-            <section key={b.title}>
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/38">
-                {b.title}
-              </h3>
-              <ul className="mt-4 flex flex-col gap-2.5">
-                {b.links.map(([label, href], i) => (
-                  <li key={`${b.title}-${i}-${href}`}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm leading-snug text-[#00a7b5] underline-offset-[3px] hover:underline"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
       </SlideItem>
     </Slide>
   )
