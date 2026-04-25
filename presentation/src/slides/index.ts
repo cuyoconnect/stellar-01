@@ -6,6 +6,7 @@ import {
   Slide06Skills,
   Slide06FrontendDesignSkill,
   Slide07Validation,
+  Slide08FreeApi,
   Slide12SetupAi,
   Slide14Prompts,
   Slide16Installation,
@@ -25,6 +26,7 @@ export const slides = [
   { id: '06-frontend-design-skill', component: Slide06FrontendDesignSkill },
   { id: '06-skills', component: Slide06Skills },
   { id: '07-validation', component: Slide07Validation },
+  { id: '08-free-api', component: Slide08FreeApi },
   { id: '12-setup-ai', component: Slide12SetupAi },
   { id: '14-prompts', component: Slide14Prompts },
   ...(SHOW_INSTALLATION_SLIDE

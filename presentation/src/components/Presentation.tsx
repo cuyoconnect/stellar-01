@@ -80,10 +80,7 @@ export function Presentation({ slides }: Props) {
       <ProgressBar current={index} total={total} />
 
       <div className="relative z-10 flex min-h-dvh flex-col">
-        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[#0f0f0f]/10 bg-white/80 px-4 py-3 backdrop-blur-md md:px-8">
-          <div className="min-w-0 text-xs font-medium uppercase tracking-[0.2em] text-[#0f0f0f]/60">
-            Workshop · IA · Web3 · Stellar
-          </div>
+        <header className="flex shrink-0 items-center justify-end gap-3 px-4 py-3 md:px-8">
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <button
               type="button"
@@ -93,7 +90,6 @@ export function Presentation({ slides }: Props) {
               aria-label="Diapositiva anterior"
             >
               <ChevronLeft className="size-3.5 sm:size-4" />
-              <span className="hidden sm:inline">Anterior</span>
             </button>
             <button
               type="button"
@@ -102,13 +98,8 @@ export function Presentation({ slides }: Props) {
               className="inline-flex items-center gap-1 rounded-full bg-[#0f0f0f] px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition enabled:hover:bg-[#212121] disabled:cursor-not-allowed disabled:opacity-35 sm:px-3"
               aria-label="Diapositiva siguiente"
             >
-              <span className="hidden sm:inline">Siguiente</span>
               <ChevronRight className="size-3.5 sm:size-4" />
             </button>
-            <span className="mx-0.5 hidden h-4 w-px shrink-0 bg-[#0f0f0f]/15 sm:block" aria-hidden />
-            <span className="rounded-full border border-[#0f0f0f]/15 bg-[#f9f9f9] px-2.5 py-1 text-[11px] font-medium tabular-nums text-[#0f0f0f]/70">
-              {index + 1} / {total}
-            </span>
             <button
               type="button"
               onClick={toggleFullscreen}

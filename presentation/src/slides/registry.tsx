@@ -191,7 +191,7 @@ export function Slide03PromptCompare() {
 
   return (
     <Slide>
-      <SlideTitle>Mal vs bien</SlideTitle>
+      <SlideTitle className="text-6xl md:text-[5.5rem]">Mal vs bien</SlideTitle>
       <SlideSubtitle className="mt-2 max-w-2xl text-base leading-snug text-[#0f0f0f]/62 md:text-lg md:leading-snug">
         Un pedido vago genera una respuesta vaga. La diferencia suele estar en cómo lo encuadrás:
         contexto, límites y pasos.
@@ -400,6 +400,59 @@ export function Slide07Validation() {
           <LinkPill href="https://doc.rust-lang.org/cargo/">Cargo</LinkPill>
           <LinkPill href="https://coinfabrik.github.io/scout-audit/docs/intro">Scout Audit</LinkPill>
           <LinkPill href="https://developers.stellar.org/docs/tools/stellar-cli">Stellar CLI</LinkPill>
+        </div>
+      </SlideItem>
+    </Slide>
+  )
+}
+
+export function Slide08FreeApi() {
+  return (
+    <Slide>
+      <SlideTitle>APIs con free tier</SlideTitle>
+      <SlideSubtitle>
+        Capa gratuita para probar modelos desde código: límites de uso, no necesariamente “sin
+        tope”.
+      </SlideSubtitle>
+      <SlideItem className="mt-8 grid w-full max-w-5xl gap-5 text-left md:grid-cols-[1fr_1.05fr]">
+        <div className="space-y-4">
+          <div className="rounded-lg border border-[#0f0f0f]/10 bg-white p-4">
+            <h3 className="text-[15px] font-semibold text-[#0f0f0f]">Google AI Studio</h3>
+            <p className="mt-2 text-sm leading-6 text-[#0f0f0f]/65">
+              API key del Gemini API con cuota inicial para desarrollo; el techo depende del modelo
+              y de la política actual de Google.
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#0f0f0f]/10 bg-white p-4">
+            <h3 className="text-[15px] font-semibold text-[#0f0f0f]">Créditos y pruebas</h3>
+            <p className="mt-2 text-sm leading-6 text-[#0f0f0f]/65">
+              Algunos proveedores regalan créditos al alta o períodos de prueba; siempre revisá
+              precios y límites en la doc antes de mandar a producción.
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#0f0f0f]/10 bg-white p-4">
+            <h3 className="text-[15px] font-semibold text-[#0f0f0f]">Groq — free tier</h3>
+            <p className="mt-2 text-sm leading-6 text-[#0f0f0f]/65">
+              Groq Cloud ofrece un plan gratuito para desarrolladores: creás cuenta, generás API key
+              y consumís modelos alojados (p. ej. Llama, Qwen, Mixtral) con inferencia muy rápida.
+              No pagás por token mientras te movés dentro del tier; te frenan límites de uso
+              (requests y tokens por ventana de tiempo), que varían según el modelo. Sirve para
+              aprender, scripts y demos; los números exactos están en el panel y la documentación
+              oficial.
+            </p>
+            <div className="mt-3">
+              <LinkPill href="https://console.groq.com/">Groq Console</LinkPill>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col justify-center rounded-lg border border-[#0f0f0f]/10 bg-[#fafafa]/80 p-5 md:p-6">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0f0f0f]/40">
+            Regla para la charla
+          </p>
+          <p className="mt-3 text-sm leading-7 text-[#0f0f0f]/70">
+            Lo gratis alcanza para aprender, iterar y demostrar. Si el proyecto crece o necesitás
+            más throughput, conviene planificar costo o alternativas.
+          </p>
         </div>
       </SlideItem>
     </Slide>
@@ -731,21 +784,200 @@ export function Slide17Resources() {
         ['Discord dev community', 'https://discord.gg/stellardev'],
       ],
     },
+    {
+      title: 'Anthropic — web, docs y producto',
+      links: [
+        ['Documentación para desarrolladores (Claude)', 'https://docs.claude.com/'],
+        [
+          'Guía de recursos de prompt engineering (índice en docs)',
+          'https://docs.claude.com/claude/docs/guide-to-anthropics-prompt-engineering-resources',
+        ],
+        ['Consola (API keys y facturación)', 'https://console.anthropic.com/'],
+        ['Claude Code — documentación', 'https://code.claude.com/docs/en/overview'],
+        ['Claude Code — instalación y setup', 'https://code.claude.com/docs/en/setup'],
+        [
+          'Skills en la API (quickstart, skills personalizados)',
+          'https://docs.claude.com/en/api/skills-guide',
+        ],
+        [
+          'Soporte: qué son los Agent Skills en Claude',
+          'https://support.claude.com/en/articles/12512176-what-are-skills',
+        ],
+        [
+          'Soporte: usar skills en Claude',
+          'https://support.claude.com/en/articles/12512180-using-skills-in-claude',
+        ],
+        [
+          'Soporte: crear skills personalizados',
+          'https://support.claude.com/en/articles/12512198-creating-custom-skills',
+        ],
+        [
+          'Ingeniería: Agent Skills en el mundo real (blog)',
+          'https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills',
+        ],
+        ['Especificación Agent Skills (estándar)', 'https://agentskills.io/'],
+        [
+          'Especificación (Markdown, agentskills.io)',
+          'https://agentskills.io/specification.md',
+        ],
+        [
+          'Buenas prácticas al escribir skills',
+          'https://agentskills.io/skill-creation/best-practices.md',
+        ],
+        [
+          'Claude (docs) — visión de Claude Code',
+          'https://docs.claude.com/en/docs/claude-code/overview',
+        ],
+        [
+          'Plataforma Claude — visión de Agent Skills',
+          'https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview',
+        ],
+        [
+          'Claude Code — mapa de toda la documentación (llms.txt)',
+          'https://code.claude.com/docs/llms.txt',
+        ],
+        ['Claude Code — quickstart', 'https://code.claude.com/docs/en/quickstart'],
+        [
+          'Claude Code — costes, límites y equipos',
+          'https://code.claude.com/docs/en/costs',
+        ],
+        ['Claude Code — integración MCP', 'https://code.claude.com/docs/en/mcp'],
+        [
+          'Claude Code — skills en el agente',
+          'https://code.claude.com/docs/en/skills',
+        ],
+        [
+          'Claude Code — descubrir plugins (marketplaces)',
+          'https://code.claude.com/docs/en/discover-plugins',
+        ],
+        ['Soporte web (portal general Anthropic)', 'https://support.anthropic.com'],
+        [
+          'Intro a prompting (docs clásicos, Anthropic)',
+          'https://docs.anthropic.com/en/docs/intro-to-prompting',
+        ],
+        ['skills.sh — catálogo e instalación (CLI)', 'https://skills.sh'],
+        ['Cursor — context skills', 'https://cursor.com/docs/context/skills'],
+        ['Discord — desarrolladores', 'https://www.anthropic.com/discord'],
+        ['Política de datos — Claude Code', 'https://code.claude.com/docs/en/data-usage'],
+      ],
+    },
+    {
+      title: 'Anthropic — GitHub, cursos y manuales',
+      links: [
+        ['Organización GitHub: anthropics', 'https://github.com/anthropics'],
+        [
+          'Estándar Agent Skills (repo comunidad)',
+          'https://github.com/agentskills/agentskills',
+        ],
+        [
+          'skills — ejemplos, plugins marketplace y spec',
+          'https://github.com/anthropics/skills',
+        ],
+        [
+          'Especificación (repo) — ./spec',
+          'https://github.com/anthropics/skills/tree/main/spec',
+        ],
+        [
+          'claude-cookbooks — recetas, tool use, visión, RAG…',
+          'https://github.com/anthropics/claude-cookbooks',
+        ],
+        [
+          'anthropic-cookbook — muchos .ipynb enlazados desde el README de cookbooks',
+          'https://github.com/anthropics/anthropic-cookbook',
+        ],
+        [
+          'claude-code — agente de código (además, plugins en /plugins)',
+          'https://github.com/anthropics/claude-code',
+        ],
+        [
+          'claude-plugins-official — marketplace de plugins',
+          'https://github.com/anthropics/claude-plugins-official',
+        ],
+        [
+          'Code — documentación de plugins (oficial)',
+          'https://code.claude.com/docs/en/plugins',
+        ],
+        [
+          'prompt-eng-interactive-tutorial (9 capítulos + apéndice)',
+          'https://github.com/anthropics/prompt-eng-interactive-tutorial',
+        ],
+        [
+          'Notebooks “Anthropic 1P” (Jupyter, curso interactivo)',
+          'https://github.com/anthropics/prompt-eng-interactive-tutorial/tree/master/Anthropic%201P',
+        ],
+        [
+          'Cap. 1 — Basic Prompt Structure (.ipynb)',
+          'https://github.com/anthropics/prompt-eng-interactive-tutorial/blob/master/Anthropic%201P/01_Basic_Prompt_Structure.ipynb',
+        ],
+        [
+          'Misma vía de curso con Amazon Bedrock (carpeta + README)',
+          'https://github.com/anthropics/prompt-eng-interactive-tutorial/tree/master/AmazonBedrock',
+        ],
+        [
+          'Clave de respuestas (PE) — hoja de cálculo',
+          'https://docs.google.com/spreadsheets/d/1jIxjzUWG-6xBVIa2ay6yDpLyeuOh_hR_ZB75a47KX_E/edit?usp=sharing',
+        ],
+        [
+          'Versión del tutorial en Google Sheets + Claude for Sheets',
+          'https://docs.google.com/spreadsheets/d/19jzLgRruG9kjUQNKtCg1ZjdD6l6weA6qRXG5zLIAhC8/edit?usp=sharing',
+        ],
+        [
+          'courses — índice: API, prompting, tool use, evals, Vertex… (rama master)',
+          'https://github.com/anthropics/courses',
+        ],
+        [
+          'Cursos en el sitio (Learn / catálogo público)',
+          'https://www.anthropic.com/learn/courses',
+        ],
+        [
+          'Curso: Anthropic API fundamentals (notebooks)',
+          'https://github.com/anthropics/courses/tree/master/anthropic_api_fundamentals',
+        ],
+        [
+          'Mismo “prompt interactivo” dentro de /courses',
+          'https://github.com/anthropics/courses/tree/master/prompt_engineering_interactive_tutorial',
+        ],
+        [
+          'Curso: real-world prompting',
+          'https://github.com/anthropics/courses/tree/master/real_world_prompting',
+        ],
+        [
+          'Rama Google Vertex (real-world prompting)',
+          'https://github.com/anthropics/courses/tree/vertex/real_world_prompting',
+        ],
+        [
+          'Curso: evaluación de prompts (producción)',
+          'https://github.com/anthropics/courses/tree/master/prompt_evaluations',
+        ],
+        [
+          'Curso: tool use (integración con herramientas)',
+          'https://github.com/anthropics/courses/tree/master/tool_use',
+        ],
+        [
+          'Workshop AWS: Prompt Engineering (versión alojada)',
+          'https://catalog.us-east-1.prod.workshops.aws/workshops/0644c9e9-5b82-45f2-8835-3b5aa30b1848/en-US',
+        ],
+        [
+          'Anthropic on AWS (ejemplos en infraestructura AWS)',
+          'https://github.com/aws-samples/anthropic-on-aws',
+        ],
+      ],
+    },
   ]
   return (
     <Slide>
       <SlideTitle>Recursos</SlideTitle>
       <SlideSubtitle>Links esenciales para seguir después del workshop.</SlideSubtitle>
-      <SlideItem className="mt-10 w-full max-w-4xl text-left">
-        <div className="mx-auto grid w-full grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-8 md:gap-y-0 lg:gap-x-14">
+      <SlideItem className="mt-10 w-full max-w-6xl text-left">
+        <div className="mx-auto grid w-full grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-10">
           {blocks.map((b) => (
             <section key={b.title}>
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/38">
                 {b.title}
               </h3>
               <ul className="mt-4 flex flex-col gap-2.5">
-                {b.links.map(([label, href]) => (
-                  <li key={href}>
+                {b.links.map(([label, href], i) => (
+                  <li key={`${b.title}-${i}-${href}`}>
                     <a
                       href={href}
                       target="_blank"
