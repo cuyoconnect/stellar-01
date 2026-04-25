@@ -1,5 +1,6 @@
 import {
   Slide01Title,
+  Slide02InstallClaudeCode,
   Slide02Vibecoding,
   Slide03Models,
   Slide03PromptCompare,
@@ -17,7 +18,8 @@ export const SHOW_INSTALLATION_SLIDE = false
 
 export const slides = [
   { id: '01-title', component: Slide01Title },
-  { id: '02-ai-basics', component: Slide02Vibecoding },
+  { id: '02-claude-code-install', component: Slide02InstallClaudeCode },
+  { id: '03-ai-basics', component: Slide02Vibecoding },
   { id: '03-models', component: Slide03Models },
   { id: '03-prompt-compare', component: Slide03PromptCompare },
   { id: '05-mcps', component: Slide05Mcps },

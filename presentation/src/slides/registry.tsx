@@ -51,6 +51,92 @@ export function Slide01Title() {
   )
 }
 
+export function Slide02InstallClaudeCode() {
+  return (
+    <Slide>
+      <SlideTitle>Instalá Claude Code</SlideTitle>
+      <SlideSubtitle>
+        Necesitás <strong className="text-[#0f0f0f]">Node.js 18+</strong> y el paquete global de la
+        CLI. Usá la <strong className="text-[#0f0f0f]">API key que te enviamos por mail</strong> al
+        inscribirte: empieza con <code className="font-mono">sk-ant-</code> — no la compartas ni la
+        subas a repositorios.
+      </SlideSubtitle>
+
+      <SlideItem className="mt-6 w-full max-w-5xl text-left">
+        <div className="grid w-full gap-5 md:grid-cols-2">
+          <div className="flex flex-col gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
+              macOS (Terminal / zsh)
+            </p>
+            <p className="text-sm leading-relaxed text-[#0f0f0f]/62">
+              Si usás bash, reemplazá <code className="font-mono">~/.zshrc</code> por{' '}
+              <code className="font-mono">~/.bash_profile</code>.
+            </p>
+            <CodeBlock
+              className="w-full"
+              code="npm install -g @anthropic-ai/claude-code"
+              language="bash"
+              title="Instalar la CLI"
+            />
+            <CodeBlock
+              className="w-full"
+              code={`# Pegá el valor de la clave del mail (entre comillas)\nexport ANTHROPIC_API_KEY="sk-ant-..."\n# Persistir en sesiones futuras\necho 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc`}
+              language="bash"
+              title="Clave de API (variable de entorno)"
+              hint="Copiá el texto exacto del mail. La primera línea aplica a esta ventana; la segunda guarda el export."
+            />
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
+              Windows 10/11 (PowerShell)
+            </p>
+            <p className="text-sm leading-relaxed text-[#0f0f0f]/62">
+              Abrí PowerShell o el terminal integrado de VS Code / Cursor. Tras <code className="font-mono">setx</code>,
+              cerrá y volvé a abrir la terminal.
+            </p>
+            <CodeBlock
+              className="w-full"
+              code="npm install -g @anthropic-ai/claude-code"
+              language="powershell"
+              title="Instalar la CLI"
+            />
+            <CodeBlock
+              className="w-full"
+              code={`# Sesión actual (pegar la clave del mail)\n$env:ANTHROPIC_API_KEY = "sk-ant-..."\n# Guardar para la próxima vez (después, cerrar y reabrir la terminal)\nsetx ANTHROPIC_API_KEY "sk-ant-..."`}
+              language="powershell"
+              title="Clave de API (variable de entorno)"
+              hint="Usá el mismo sk-ant-... del correo. setx aplica a terminales nuevas."
+            />
+          </div>
+        </div>
+      </SlideItem>
+
+      <SlideItem className="mt-6 w-full max-w-3xl text-left">
+        <CodeBlock
+          className="w-full"
+          code="claude"
+          language="bash"
+          title="Probar"
+          hint="En la carpeta de un proyecto, si arranca el asistente, la clave se leyó bien."
+        />
+        <p className="mt-3 text-[11px] leading-relaxed text-[#0f0f0f]/45">
+          ¿Perdiste el mail o no te llegó? Generá otra clave en{' '}
+          <a
+            href="https://console.anthropic.com/settings/keys"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#00a7b5] underline-offset-2 hover:underline"
+          >
+            console.anthropic.com/settings/keys
+          </a>{' '}
+          (misma variable <code className="font-mono">ANTHROPIC_API_KEY</code>).
+        </p>
+      </SlideItem>
+    </Slide>
+  )
+}
+
 function ConceptCard({
   index,
   title,
@@ -118,84 +204,6 @@ export function Slide02Vibecoding() {
           validación real; menos ruido, más señal.
         </p>
       </SlideItem>
-
-      <SlideItem className="mt-10 w-full max-w-5xl text-left md:mt-12">
-        <div className="mb-4 flex flex-col gap-1">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#00a7b5]">
-            Setup
-          </p>
-          <h3 className="font-serif text-2xl tracking-tight text-[#0f0f0f] md:text-3xl">
-            Instalar Claude Code y configurar tu API key
-          </h3>
-          <p className="text-sm leading-relaxed text-[#0f0f0f]/60">
-            Requiere Node.js 18+. Elegí tu sistema, instalá la CLI y exportá la clave para dejar
-            todo listo antes del workshop.
-          </p>
-        </div>
-
-        <div className="grid w-full gap-5 md:grid-cols-2">
-          <div className="flex flex-col gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
-              macOS / Linux
-            </p>
-            <CodeBlock
-              className="w-full"
-              code="npm install -g @anthropic-ai/claude-code"
-              language="bash"
-              title="Instalar Claude Code"
-            />
-            <CodeBlock
-              className="w-full"
-              code={`export ANTHROPIC_API_KEY="sk-ant-..."\necho 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc`}
-              language="bash"
-              title="Configurar API key (zsh)"
-              hint="La primera línea la usa esta sesión; la segunda la deja persistente."
-            />
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f0f0f]/55">
-              Windows (PowerShell)
-            </p>
-            <CodeBlock
-              className="w-full"
-              code="npm install -g @anthropic-ai/claude-code"
-              language="powershell"
-              title="Instalar Claude Code"
-            />
-            <CodeBlock
-              className="w-full"
-              code={`$env:ANTHROPIC_API_KEY = "sk-ant-..."\nsetx ANTHROPIC_API_KEY "sk-ant-..."`}
-              language="powershell"
-              title="Configurar API key"
-              hint="$env:... aplica a la sesión actual; setx la guarda para futuras terminales."
-            />
-          </div>
-        </div>
-
-        <div className="mt-5 flex flex-col gap-2">
-          <CodeBlock
-            className="w-full"
-            code="claude"
-            language="bash"
-            title="Verificar la instalación"
-            hint="Abrí cualquier proyecto y ejecutá `claude` en la terminal."
-          />
-          <p className="text-[11px] leading-relaxed text-[#0f0f0f]/45">
-            Generá tu clave en{' '}
-            <a
-              href="https://console.anthropic.com/settings/keys"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#00a7b5] underline-offset-2 hover:underline"
-            >
-              console.anthropic.com/settings/keys
-            </a>
-            . Reemplazá <code className="font-mono">sk-ant-...</code> por tu clave real y reabrí la
-            terminal después de <code className="font-mono">setx</code>.
-          </p>
-        </div>
-      </SlideItem>
     </Slide>
   )
 }
@@ -209,7 +217,11 @@ export function Slide03Models() {
       input: 'US$ 5',
       output: 'US$ 25',
       swe: '80.9%',
-      use: 'Refactors grandes, debugging profundo, agentes con muchos pasos. Más caro pero el que menos se traba en tareas largas.',
+      when: 'El más potente (y el más caro). Cuando el problema es grande o enredado.',
+      bullets: [
+        'Cambios que atraviesan muchos archivos o carpetas.',
+        'Si Sonnet no alcanzó: problemas raros o poco documentados.',
+      ],
       accent: '#00a7b5',
     },
     {
@@ -219,7 +231,11 @@ export function Slide03Models() {
       input: 'US$ 3',
       output: 'US$ 15',
       swe: '77.2%',
-      use: 'Día a día de coding: features, tests, revisión. Mejor relación precio / calidad para trabajar con Claude Code.',
+      when: 'El equilibrio habitual: buen resultado sin ir al modelo más caro.',
+      bullets: [
+        'Día a día: nuevas piezas, pruebas, repasar o mejorar lo que escribiste.',
+        'Empezá acá; pasá a Opus si se complica o a Haiku si es muy repetitivo.',
+      ],
       accent: '#0f0f0f',
     },
     {
@@ -229,7 +245,11 @@ export function Slide03Models() {
       input: 'US$ 1',
       output: 'US$ 5',
       swe: '73.3%',
-      use: 'Tareas chicas y de alto volumen: clasificar, extraer datos, autocompletar, loops de validación.',
+      when: 'El más barato y rápido. Para tareas chicas o muchas idas y vueltas seguidas.',
+      bullets: [
+        'Ajustes simples: nombres, comentarios, ordenar, dar formato.',
+        'Para armar toda la arquitectura de un producto, mejor Sonnet u Opus.',
+      ],
       accent: '#fdda24',
     },
   ]
@@ -293,14 +313,27 @@ export function Slide03Models() {
               </div>
             </div>
 
-            <p className="mt-3 text-sm leading-6 text-[#0f0f0f]/62">{m.use}</p>
+            <div className="mt-3 flex flex-col gap-2.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#0f0f0f]/50">
+                Cuándo usarlo
+              </p>
+              <p className="text-sm leading-6 text-[#0f0f0f]/75">{m.when}</p>
+              <ul className="space-y-1.5 text-sm leading-[1.45] text-[#0f0f0f]/62">
+                {m.bullets.map((line) => (
+                  <li key={line} className="flex gap-2">
+                    <span className="mt-2 size-1 shrink-0 rounded-full bg-[#0f0f0f]/25" />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         ))}
       </SlideItem>
 
       <SlideItem className="mt-6 max-w-3xl">
         <p className="text-[11px] leading-relaxed text-[#0f0f0f]/45">
-          Precios por millón de tokens (MTok) según{' '}
+          Precios de referencia en{' '}
           <a
             href="https://www.anthropic.com/pricing"
             target="_blank"
@@ -309,8 +342,8 @@ export function Slide03Models() {
           >
             anthropic.com/pricing
           </a>
-          . Output cuesta 5× más que input: si el modelo escribe mucho código, el costo se va
-          principalmente por ahí. Empezá con Sonnet y subí a Opus solo cuando el problema lo pida.
+          . Escribir texto (sobre todo código) suele costar más que leer; por eso conviene empezar
+          con Sonnet y subir a Opus solo si hace falta.
         </p>
       </SlideItem>
     </Slide>
